@@ -1,0 +1,8 @@
+# Compilation
+*.o
+*.so
+
+# Temp files
+.DS_Store
+._*
+
