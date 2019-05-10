@@ -222,6 +222,9 @@ namespace PFTIII
 		 * Contents of the proprietary template.
 		 * @param message
 		 * Optional explanatory message.
+		 *
+		 * @return
+		 * A CreateProprietaryTemplateResult that indicates success.
 		 */
 		static CreateProprietaryTemplateResult
 		success(
@@ -234,6 +237,9 @@ namespace PFTIII
 		 *
 		 * @param message
 		 * Optional explanatory message regarding the failure.
+		 *
+		 * @return
+		 * A CreateProprietaryTemplateResult that indicates failure.
 		 */
 		static CreateProprietaryTemplateResult
 		failure(
@@ -268,7 +274,14 @@ namespace PFTIII
 		    const Result result = Result::Success,
 		    const std::string &message = "");
 
-		/** Convenience method for comparison success. */
+		/**
+		 * @brief
+		 * Convenience method for comparison success.
+		 *
+		 * @return
+		 * A CompareProprietaryTemplatesStatus that indicates
+		 * success.
+		 */
 		static CompareProprietaryTemplatesStatus
 		success();
 
@@ -278,6 +291,9 @@ namespace PFTIII
 		 *
 		 * @param message
 		 * Optional explanatory message regarding the failure.
+		 *
+		 * @return
+		 * A CompareProprietaryTemplatesStatus that indicates failure.
 		 */
 		static CompareProprietaryTemplatesStatus
 		failure(
@@ -311,7 +327,7 @@ namespace PFTIII
 		 * @param versionNumber
 		 * Version number of this submission. Required to be unique
 		 * for each new submission.
-		 * @param identifier
+		 * @param libraryIdentifier
 		 * Non-infringing identifier of this submission. Should be the
 		 * same for all submissions. Case sensitive. Must match the
 		 * regular expression "[:alnum:]+".
