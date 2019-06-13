@@ -582,10 +582,12 @@ namespace PFTIII
 		getImplementation(
 		    const std::string &configurationDirectory);
 
+		/** @cond SUPPRESS_FROM_DOXYGEN */
 		/** Suppress copying polymorphic class (C.63). */
 		Interface(const Interface&) = delete;
 		/** Suppress copying polymorphic class (C.63). */
 		Interface& operator=(const Interface&) = delete;
+		/** @endcond */
 		/** Default constructor. */
 		Interface();
 	};
