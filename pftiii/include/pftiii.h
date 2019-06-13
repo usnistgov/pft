@@ -154,8 +154,6 @@ namespace PFTIII
 		FrictionRidgeGeneralizedPosition frgp{
 		    FrictionRidgeGeneralizedPosition::Unknown};
 	};
-	/** Convenience definition for struct FingerImage. */
-	using FingerImage = struct FingerImage;
 
 	/** Information about whether a FingerImage is supported. */
 	struct FingerImageStatus
@@ -199,8 +197,6 @@ namespace PFTIII
 		/** Explanatory message. */
 		std::string message{};
 	};
-	/** Convenience definition for struct FingerImageStatus. */
-	using FingerImageStatus = struct FingerImageStatus;
 
 	/** Possible outcomes when performing operations. */
 	enum class Result
@@ -252,11 +248,6 @@ namespace PFTIII
 		/** Explanatory message (optional). */
 		std::string message{};
 	};
-	/**
-	 * Convenience definition for struct CreateProprietaryTemplateResult.
-	 */
-	using CreateProprietaryTemplateResult =
-	    struct CreateProprietaryTemplateResult;
 
 	/** Information about the execution of template comparison. */
 	struct CompareProprietaryTemplatesStatus
@@ -304,12 +295,6 @@ namespace PFTIII
 		/** Explanatory message (optional). */
 		std::string message{};
 	};
-	/**
-	 * Convenience definition for struct
-	 * CompareProprietaryTemplatesStatus.
-	 */
-	using CompareProprietaryTemplatesStatus =
-	    struct CompareProprietaryTemplatesStatus;
 
 	/**
 	 * Identifying information about this submission that will be included
@@ -446,8 +431,6 @@ namespace PFTIII
 		std::tuple<uint16_t, bool> cbeffComparisonAlgorithmIdentifier{
 		    0x0000, false};
 	};
-	/** Convenience definition for struct SubmissionIdentification. */
-	using SubmissionIdentification = struct SubmissionIdentification;
 
 	/** PFT III Interface. */
 	class Interface
