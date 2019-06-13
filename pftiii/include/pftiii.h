@@ -576,6 +576,13 @@ namespace PFTIII
 		static
 		std::shared_ptr<Interface>
 		getImplementation();
+
+		/** Suppress copying polymorphic class (C.63). */
+		Interface(const Interface&) = delete;
+		/** Suppress copying polymorphic class (C.63). */
+		Interface& operator=(const Interface&) = delete;
+		/** Default constructor. */
+		Interface();
 	};
 
 	/*

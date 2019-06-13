@@ -140,6 +140,11 @@ PFTIII::CompareProprietaryTemplatesStatus::success()
 
 /******************************************************************************/
 
+PFTIII::Interface::Interface()
+{
+
+}
+
 PFTIII::Interface::~Interface()
 {
 
