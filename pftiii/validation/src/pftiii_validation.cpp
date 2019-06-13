@@ -53,7 +53,7 @@ PFTIII::Validation::create(
 		    "template from " + name);
 	}
 
-	std::string logLine{name + ',' +
+	std::string logLine{'"' + name + "\"," +
 	    std::to_string(std::chrono::duration_cast<
 	        std::chrono::microseconds>(stop - start).count()) + ',' +
 	    e2i2s(std::get<0>(rv).code) + ',' +
@@ -67,7 +67,7 @@ PFTIII::Validation::create(
 		else
 			logLine += "NA";
 	} else
-		logLine += "NA,\"NA\",NA";
+		logLine += "NA,\"\",NA";
 
 	/* Write template */
 	if ((std::get<0>(rv).code == FingerImageStatus::Code::Supported) &&
@@ -107,8 +107,8 @@ PFTIII::Validation::compare(
 		    std::get<1>(Data::Pairs.at(pairsIndex)));
 	}
 
-	return {std::get<0>(Data::Pairs.at(pairsIndex)) + ',' +
-	    std::get<1>(Data::Pairs.at(pairsIndex)) + ',' +
+	return {'"' + std::get<0>(Data::Pairs.at(pairsIndex)) + "\",\"" +
+	    std::get<1>(Data::Pairs.at(pairsIndex)) + "\"," +
 	    std::to_string(std::chrono::duration_cast<
 	        std::chrono::microseconds>(stop - start).count()) + ',' +
 	    e2i2s(std::get<0>(rv).result) + ',' +
@@ -351,10 +351,11 @@ PFTIII::Validation::runCompare(
 std::string
 PFTIII::Validation::sanitizeMessage(
     const std::string &message,
-    const bool escapeQuotes)
+    const bool escapeQuotes,
+    const bool wrapInQuotes)
 {
 	if (message.empty())
-		return {"\"\""};
+		return (wrapInQuotes ? "\"\"" : message);
 
 	std::string sanitized{message};
 
@@ -378,7 +379,7 @@ PFTIII::Validation::sanitizeMessage(
 			position += to.length();
 		}
 	}
-	return (sanitized);
+	return (wrapInQuotes ? '"' + sanitized + '"' : sanitized);
 }
 
 std::vector<std::vector<uint64_t>>

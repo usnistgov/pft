@@ -206,6 +206,8 @@ namespace PFTIII
 		 * Message to sanitize.
 		 * @param escapeQuotes
 		 * Whether or not to escape the " character.
+		 * @param wrapInQuotes
+		 * Whether or not to wrap result in ".
 		 *
 		 * @return
 		 * Sanitized version of message that can be placed into a
@@ -214,7 +216,8 @@ namespace PFTIII
 		std::string
 		sanitizeMessage(
 		    const std::string &message,
-		    const bool escapeQuotes = true);
+		    const bool escapeQuotes = true,
+		    const bool wrapInQuotes = true);
 
 		/**
 		 * @brief
