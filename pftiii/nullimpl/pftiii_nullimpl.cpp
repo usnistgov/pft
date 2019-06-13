@@ -10,6 +10,14 @@
 
 #include <pftiii_nullimpl.h>
 
+PFTIII::NullImplementation::NullImplementation(
+    const std::string &configurationDirectory) :
+    PFTIII::Interface(),
+    configurationDirectory{configurationDirectory}
+{
+
+}
+
 PFTIII::SubmissionIdentification
 PFTIII::NullImplementation::getIdentification()
     const
@@ -92,9 +100,17 @@ PFTIII::NullImplementation::compareProprietaryTemplates(
 }
 
 std::shared_ptr<PFTIII::Interface>
-PFTIII::Interface::getImplementation()
+PFTIII::Interface::getImplementation(
+    const std::string &configurationDirectory)
 {
-	return (std::make_shared<PFTIII::NullImplementation>());
+	return (std::make_shared<PFTIII::NullImplementation>(
+	    configurationDirectory));
+
+	/*
+	 * If you don't have any configuration files, you may safely ignore
+	 * configurationDirectory.
+	 */
+// 	return (std::make_shared<PFTIII::NullImplementation>());
 }
 
 /******************************************************************************/

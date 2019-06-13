@@ -34,10 +34,13 @@ namespace PFTIII
 		    const std::vector<uint8_t> &referenceTemplate)
 		    override;
 
-		NullImplementation() = default;
+		NullImplementation(
+		    const std::string &configurationDirectory = "");
 		~NullImplementation() = default;
 
 	private:
+		const std::string configurationDirectory{};
+
 		/*
 		 * These are some local convenience methods that you may copy
 		 * into your code to reduce typing when returning results

@@ -561,6 +561,10 @@ namespace PFTIII
 		 * Obtain a managed pointer to an object implementing
 		 * PFTIII::Interface.
 		 *
+		 * @param configurationDirectory
+		 * Path to a read-only directory populated with configuration
+		 * files provided in validation.
+		 *
 		 * @return
 		 * Shared pointer to an instance of Interface containing the
 		 * participant's biometric template generation and biometric
@@ -575,7 +579,8 @@ namespace PFTIII
 		 */
 		static
 		std::shared_ptr<Interface>
-		getImplementation();
+		getImplementation(
+		    const std::string &configurationDirectory);
 
 		/** Suppress copying polymorphic class (C.63). */
 		Interface(const Interface&) = delete;
