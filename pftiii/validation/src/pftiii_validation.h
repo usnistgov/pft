@@ -47,6 +47,8 @@ namespace PFTIII
 			Operation operation{};
 			/** Number of processes to run. */
 			uint8_t numProcs{1};
+			/** Configuration directory. */
+			std::string configDir{};
 		};
 
 		/**
@@ -95,12 +97,17 @@ namespace PFTIII
 		 * Format identification information about a PFTIII
 		 * implementation.
 		 *
+		 * @param args
+		 * Arguments parsed from command line (needed to retrieve
+		 * configuration directory).
+		 *
 		 * @return
 		 * Multiple "key = value" lines of information about the linked
 		 * PFTIII implementation.
 		 */
 		std::string
-		getIdentificationString();
+		getIdentificationString(
+		    const Arguments &args);
 
 		/**
 		 * @brief

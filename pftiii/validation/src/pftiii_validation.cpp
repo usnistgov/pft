@@ -118,9 +118,10 @@ PFTIII::Validation::compare(
 }
 
 std::string
-PFTIII::Validation::getIdentificationString()
+PFTIII::Validation::getIdentificationString(
+    const Arguments &args)
 {
-	const auto id = PFTIII::Interface::getImplementation()->
+	const auto id = PFTIII::Interface::getImplementation(args.configDir)->
 	    getIdentification();
 
 	std::stringstream ss{};
@@ -169,11 +170,15 @@ std::string
 PFTIII::Validation::getUsageString(
     const std::string &name)
 {
+	const std::string prefix(name.size() + 8, ' ');
+
 	std::stringstream ss{};
-	ss << "Usage:\t" << name << " -i (identify)\n";
-	ss << "\t" << name << " -e (create)   [-r random_seed] [-f num_procs]"
-	    "\n";
-	ss << "\t" << name << " -c (compare)  [-r random_seed] [-f num_procs]";
+	ss << "Usage: " << name << "\n";
+	ss << prefix << "# Identify\n" << prefix << "-i -z <configDir>\n";
+	ss << prefix << "# createProprietaryTemplate()\n" << prefix <<
+	    "-e -z <configDir> [-r random_seed] [-f num_procs]\n";
+	ss << prefix << "# compareProprietaryTemplates()\n" << prefix <<
+	    "-c -z <configDir> [-r random_seed] [-f num_procs]";
 
 	return (ss.str());
 }
@@ -183,7 +188,7 @@ PFTIII::Validation::parseArguments(
     const int argc,
     char * const argv[])
 {
-	static const char options[] {"ceir:f:"};
+	static const char options[] {"ceir:f:z:"};
 
 	bool seenOperation{false};
 	Validation::Arguments args{};
@@ -243,11 +248,17 @@ PFTIII::Validation::parseArguments(
 				    std::string(optarg) + "\""};
 			}
 			break;
+		case 'z':
+			args.configDir = optarg;
+			break;
 		}
 	}
 
 	if (!seenOperation)
 		args.operation = Operation::Usage;
+	if (args.configDir.empty() && (args.operation != Operation::Usage))
+		throw std::invalid_argument{"Must provide path to "
+		     "configuration directory"};
 
 	return (args);
 }
@@ -426,7 +437,7 @@ PFTIII::Validation::testOperation(
 		}
 	}
 
-	const auto impl = PFTIII::Interface::getImplementation();
+	const auto impl = PFTIII::Interface::getImplementation(args.configDir);
 	const auto containerSize = (args.operation == Operation::Create ?
 	    Data::Images.size() : Data::Pairs.size());
 	const auto indicies = randomizeIndicies(containerSize, args.randomSeed);
@@ -575,7 +586,7 @@ main(
 	case PFTIII::Validation::Operation::Identify:
 		try {
 			std::cout << PFTIII::Validation::
-			    getIdentificationString() << '\n';
+			    getIdentificationString(args) << '\n';
 			rv = EXIT_SUCCESS;
 		} catch (const std::exception &e) {
 			std::cerr << "Interface::getIdentification(): " <<
