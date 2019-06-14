@@ -8,7 +8,6 @@
 
 
 INC_DIR = ../include
-LIB_DIR = ../../lib
 
 CXXFLAGS += -fPIC -Wall -pedantic -std=c++11 -I$(INC_DIR) -DNIST_EXTERN_API_VERSION
 
@@ -20,16 +19,12 @@ LIBRARY = libpftiii
 all: $(LIBRARY)
 
 $(LIBRARY): $(OBJECTS)
-	test -d $(LIB_DIR) || mkdir $(LIB_DIR)
 ifeq ($(OS), Darwin)
 	$(CXX) $(LDFLAGS) -dynamiclib $(OBJECTS) -o $(LIBRARY).dylib
-	cp $(LIBRARY).dylib $(LIB_DIR)
 else
 	$(CXX) $(LDFLAGS) -shared $(OBJECTS) -o $(LIBRARY).so
-	cp $(LIBRARY).so $(LIB_DIR)
 endif
 
 clean:
 	$(RM) $(OBJECTS) $(LIBRARY).{so,dylib}
-	$(RM) $(LIB_DIR)/$(LIBRARY).{so,dylib}
 
