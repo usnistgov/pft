@@ -11,6 +11,13 @@ INC_DIR = ../../include
 LIB_DIR = ../lib
 BIN_DIR = ../bin
 
+LIBPFTIII_DIR=../../libpftiii
+ifeq ($(OS), Darwin)
+        LIBPFTIII=libpftiii.dylib
+else
+        LIBPFTIII=libpftiii.so
+endif
+
 LIB_PREFIX = libpftiii_
 ifeq ($(shell ls $(LIB_DIR) | grep -E $(LIB_PREFIX)[A-Za-z0-9]\+_\([0-9A-Fa-f]\+\|[0-9A-Fa-f]\{4\}\)\.\(so\|dylib\) | wc -l | awk '{print $$1}'),1)
         CORE_LIB := $(shell ls $(LIB_DIR) | grep -E $(LIB_PREFIX)[A-Za-z0-9]\+_\([0-9A-Fa-f]\+\|[0-9A-Fa-f]\{4\}\)\.\(so\|dylib\))
@@ -39,12 +46,13 @@ debug: CXXFLAGS += -g
 debug: all
 
 $(BINARY): $(OBJECTS)
-	$(MAKE) -C ../../libpftiii
+	$(MAKE) -C $(LIBPFTIII_DIR)
+	cp $(LIBPFTIII_DIR)/$(LIBPFTIII) $(LIB_DIR)
 	mkdir -p $(BIN_DIR)
 	$(CXX) $(LDFLAGS) $(OBJECTS) -o $(BIN_DIR)/$(BINARY)
 
 clean:
-	$(MAKE) -C ../../libpftiii clean
-	$(RM) $(OBJECTS) $(BIN_DIR)/$(BINARY)
+	$(MAKE) -C $(LIBPFTIII_DIR) clean
+	$(RM) $(OBJECTS) $(BIN_DIR)/$(BINARY) $(LIB_DIR)/$(LIBPFTIII)
 	$(RM) -r $(BIN_DIR)
 
