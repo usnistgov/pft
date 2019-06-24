@@ -312,8 +312,8 @@ PFTIII::Validation::runCreate(
 		}
 	}
 
-	std::ofstream file{OutputDir + "/create-" + std::to_string(getpid()) +
-	    ".log"};
+	std::ofstream file{OutputDir + "/createProprietaryTemplate-" +
+	    std::to_string(getpid()) + ".log"};
 	if (!file)
 		throw std::runtime_error(std::to_string(getpid()) + ": Error "
 		    "creating log file");
@@ -338,8 +338,8 @@ PFTIII::Validation::runCompare(
     std::shared_ptr<Interface> impl,
     const std::vector<uint64_t> &indicies)
 {
-	std::ofstream file{OutputDir + "/compare-" + std::to_string(getpid()) +
-	    ".log"};
+	std::ofstream file{OutputDir + "/compareProprietaryTemplates-" +
+	    std::to_string(getpid()) + ".log"};
 	if (!file)
 		throw std::runtime_error(std::to_string(getpid()) + ": Error "
 		    "creating log file");
