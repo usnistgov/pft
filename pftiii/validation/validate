@@ -1,0 +1,911 @@
+#!/bin/bash
+################################################################################
+# Proprietary Fingerprint Template III Validation                              #
+#                                                                              #
+# Place your properly-named library in to lib/ and then execute this script.   #
+# If your implementation meets the tested requirements, an archive will be     #
+# created for you to send to NIST for evaluation. The output of your           #
+# implementation on your hardware must match the output generated at NIST      #
+# exactly, so "forcing" the creation of the archive will not speed along your  #
+# evaluation results.                                                          #
+#                                                                              #
+#  E-mail: pft@nist.gov                                                        #
+#     URL: https://github.com/usnistgov/pft                                    #
+# License: This software was developed at the National Institute of Standards  #
+#          and Technology (NIST) by employees of the Federal Government in the #
+#          course of their official duties.  Pursuant to title 17 Section 105  #
+#          of the United States Code, this software is not subject to          #
+#          copyright protection and is in the public domain.  NIST assumes no  #
+#          responsibility whatsoever for its use by other parties, and makes   #
+#          no guarantees, expressed or implied, about its quality,             #
+#          reliability, or any other characteristic.                           #
+################################################################################
+
+################################################################################
+# Constants                                                                    #
+################################################################################
+
+# URL where the complete validation package can be downloaded
+validation_dl_url="https://github.com/usnistgov/pft/releases"
+# URL where the validation imagery is requested
+validation_image_request_url="mailto:pft@nist.gov"
+
+# Directory containing validation materials
+wd="$(readlink -f $(dirname ${0}))"
+# Directory containing validation images
+validation_image_dir="images"
+# Directory where libraries go
+lib_dir="${wd}"/lib
+# Directory where validation driver sourcecode lives
+src_dir="${wd}"/src
+# Directory where validation driver is built
+bin_dir="${wd}"/bin
+# Output directory for validation driver logs
+output_dir="${wd}"/output
+# Configuration directory provided to PFTIII::Interface implementation
+config_dir="${wd}"/config
+# Path to the compiled validation driver binary
+binary="${bin_dir}"/"pftiii_validation"
+
+# Dimmed text color
+font_dim='\e[2m'
+# Green text color
+font_green='\e[32m'
+# Red text color
+font_red='\e[31m'
+# Light red text color
+font_lightred='\e[91m'
+# Yellow text color
+font_yellow='\e[33m'
+# Underline the text
+font_underline='\e[4m'
+# Reset to default text color
+font_reset='\e[0m'
+
+# Symbol name for function that creates proprietary templates
+create_func="createProprietaryTemplate"
+# Symbol name for function that compares two proprietary templates
+compare_func="compareProprietaryTemplates"
+# Prefix for downloaded validation imagery tarballs
+validation_image_download_prefix=pftiii_validation_images
+
+# Make failing return codes persist across pipes
+set -o pipefail
+
+################################################################################
+# Functions                                                                    #
+################################################################################
+
+# Print the path of the argument relative to the current working directory
+rp()
+{
+	realpath --relative-to="${PWD}" "$1"
+}
+
+# Convenience function to print a failure method and exit
+# All params are echoed, one per line.
+fail()
+{
+	echo -e "${font_red}[FAIL]${font_reset}"
+	if [ ${#} -ne 0 ]; then
+		echo
+		printline '=' 80
+		echo
+		for i in $(seq 1 ${#}); do
+			echo "${!i}" | fold -s
+		done
+	fi
+	printline '=' 80
+	echo
+	date
+	exit 1
+}
+
+# Print [WARN] with any arguments in parenthesis before.
+warn()
+{
+	if [ $# -ne 0 ]; then
+		for i in "${@}"; do
+			echo -n -e "${font_dim}(${i})${font_reset} "
+		done
+	fi
+	echo -e "${font_lightred}[WARN]${font_reset}"
+}
+
+# Print [OKAY] with any arguments in parenthesis before.
+okay()
+{
+	if [ $# -ne 0 ]; then
+		for i in "${@}"; do
+			echo -n -e "${font_dim}(${i})${font_reset} "
+		done
+	fi
+	echo -e "${font_green}[OKAY]${font_reset}"
+}
+
+# Print a repeated line
+printline()
+{
+	if [ $# -ne 2 ]; then
+		echo "Usage: ${FUNCNAME} <char> <times>"
+		return 1
+	fi
+
+	printf "${1}%.0s" $(seq 1 ${2})
+}
+
+# Check that images have been downloaded, placed in the correct spot, etc.
+check_for_images()
+{
+	# Check for data
+	echo -n "Checking for validation images... "
+	if ! [ -d "${wd}"/${validation_image_dir} ]; then
+		# If directory doesn't exist, maybe user didn't expand archive
+		local image_archive=$(ls -r \
+		    "${wd}"/${validation_image_download_prefix}* 2> /dev/null)
+		if [ "${image_archive}" != "" ]; then
+			echo -e "${font_yellow}[DEFER]${font_reset}"
+			for i in $(find "${wd}" -maxdepth 1 -name \
+			    "${validation_image_download_prefix}*"); do
+				echo -n "Expanding $(basename \""${i}\"")... "
+				tar xf "${i}" > /dev/null 2>&1
+
+				if [ $? -ne 0 ]; then
+					fail "Failed to expand ${i}"
+				else
+					okay
+				fi
+			done
+
+			check_for_images
+			return
+		else
+			msg="Cannot find validation images. You must request "
+			msg+="them from NIST's website and place them within:"
+			fail "${msg}" "${wd}" "The URL is:" \
+			    ${validation_image_request_url}
+		fi
+	else
+		# If the directory does exist, check that every archive present
+		# has been expanded
+		local has_deferred=0
+		for i in $(find "${wd}" -maxdepth 1 -name \
+		    "${validation_image_download_prefix}*"); do
+		    	local regex=".*\/${validation_image_download_prefix}"
+		    	regex+="\(.*\)-.\+.tar.gz"
+			if ! [ -e "${wd}"/${validation_image_dir}/VERSION ];
+			    then
+			    	if [ $has_deferred -eq 0 ]; then
+	    				echo -n -e "${font_yellow}[DEFER]"
+	    				echo -e "${font_reset}"
+	    				has_deferred=1
+	    			fi
+
+				echo -n "Expanding $(basename \""${i}\"")... "
+				tar xf "${i}" > /dev/null 2>&1
+
+				if [ $? -ne 0 ]; then
+					fail "Failed to expand ${i}"
+					return
+				else
+					okay
+					return
+				fi
+			fi
+		done
+	fi
+
+	okay
+}
+
+# Ensure that the imagery versions downloaded are compatible with this
+# version of the validation script.
+check_image_versions()
+{
+	# Version of image dataset compatible with this script
+	local expected_image_version="201906130118"
+
+	echo -n "Checking validation image versions... "
+
+	if ! [ -e "${wd}"/${validation_image_dir}/VERSION ]; then
+		msg="No images were found within within ${wd}/"
+		msg+="${validation_image_dir}.  If you have images, please "
+		msg+="move them to the appropriate location. If you don't have "
+		msg+="images, please request the latest versions from NIST: "
+		fail "${msg}" ${validation_image_request_url}
+	fi
+
+	local image_version="UNKNOWN"
+	read image_version < "${wd}"/${validation_image_dir}/VERSION
+	if [ "${expected_image_version}" != "${image_version}" ]; then
+		msg="The version of validation images within ${wd}/"
+		msg+="${validation_image_dir} (${image_version}) is not "
+		msg+="compatible with this version of the validation script "
+		msg+="(${validation_version}). Please request the latest "
+		msg+="version from the NIST website: "
+		fail "${msg}" ${validation_image_request_url}
+	fi
+
+	okay
+}
+
+# Record MD5 of randomly-generated files to ensure that you truly have the
+# latest version of the validation imagery
+log_canaries()
+{
+	local canary_prefix="canary"
+	find "${wd}"/${validation_image_dir} -name "${canary_prefix}*" \
+	    -exec md5sum {} \; >> "${output_dir}"/canary.log
+}
+
+# Check that CentOS packages used in this file have been installed.
+check_required_packages()
+{
+	echo -n "Checking for required packages... "
+
+	# Packages required to run this script
+	local pkgs="binutils centos-release coreutils curl file gawk gcc-c++ "
+	local pkgs+="grep iputils make sed which yum"
+
+	which yum > /dev/null
+	if [ $? -ne 0 ]; then
+		fail "which and yum are required to be installed for validation"
+	fi
+
+	for pkg in ${pkgs}; do
+		yum -q list installed "${pkg}" > /dev/null 2>&1
+		if [ $? -ne 0 ]; then
+			msg="The required package \"${pkg}\" was not "
+			msg+="installed. Try \`yum install $pkg\` to install "
+			msg+="\"$pkg.\""
+			fail "${msg}"
+		fi
+	done
+
+	okay
+}
+
+# If the user has Internet access, check that this script is the latest version.
+# @return 1 if version could be checked, 0 if not.
+check_validation_version()
+{
+	# URL with the most recent version number of the validation package
+	local version_url="https://raw.githubusercontent.com/usnistgov/pft/"
+	local version_url+="master/pftiii/validation/VERSION"
+	# Confirm validation package version, if possible
+	local checked=0
+
+	echo -n "Checking validation version... "
+	# d.root-servers.net -> 199.7.91.13
+	ping -W 1 -c 1 199.7.91.13 > /dev/null 2>&1
+	if [ $? -eq 0 ]; then
+		local internet_version=0
+		internet_version=$(curl -m 10 -f $version_url 2>/dev/null)
+		if [ $? -ne 0 ]; then
+			echo -e -n "${font_dim}(connection failure)"
+			echo -e -n "${font_reset} ${font_yellow}[SKIP]"
+			echo -e "${font_reset}"
+		else
+			if [ "${internet_version}" != "${validation_version}" ];
+			then
+				msg="You are running an old version of the "
+				msg+="validation package (${validation_version}"
+				msg+="). Please download ${internet_version} "
+				msg+="from:"
+				fail "${msg}" "${validation_dl_url}"
+			else
+				okay "${validation_version}"
+				checked=1
+			fi
+		fi
+	else
+		echo -e -n "${font_dim}(no Internet connection)${font_reset} "
+		echo -e "${font_yellow}[SKIP]${font_reset}"
+	fi
+
+	return ${checked}
+}
+
+# Check that the version of CentOS is the correct version.
+check_os()
+{
+	local expected="7.6.1810"
+	echo -n "Checking OS and version... "
+	if [ ! -e /etc/redhat-release ]; then
+		msg="You do not appear to be using the appropriate operating "
+		msg+="system. Please use CentOS ${expected}."
+		fail "${msg}"
+	fi
+	if [ "$(tr -C -d '[:digit:].' < /etc/redhat-release)" != \
+	    "${expected}" ]; then
+		msg="You do not appear to be using the appropriate version of "
+		msg+="CentOS. Please use ${expected}."
+		fail "${msg}"
+	fi
+	okay "CentOS ${expected}"
+}
+
+# Check that a core library exists
+core_library_present()
+{
+	local lib_regex="libpftiii_[A-Za-z0-9]+_[0-9A-Fa-f]{4}.so"
+
+	if ! [ -d "${lib_dir}" ]; then
+		return 1
+	fi
+
+	local count=$(find "${lib_dir}" -type f -regextype posix-extended \
+	    -regex "${lib_dir}/${lib_regex}" -printf "%P\n" | wc -l)
+	if [ ${count} -ne 1 ]; then
+		return 1
+	fi
+
+	return 0
+}
+
+# Get the name of the core library
+get_core_library_name()
+{
+	core_library_present
+	if [ $? -ne 0 ]; then
+		return 1
+	fi
+
+	local lib_regex="libpftiii_[A-Za-z0-9]+_[0-9A-Fa-f]{4}.so"
+
+	if ! [ -d "${lib_dir}" ]; then
+		local msg="Library directory not found. Create it and place "
+		msg+="the core library inside."
+		fail "${msg}" "" "The library directory is:" "${lib_dir}"
+		return 1
+	fi
+
+	local core_lib=""
+	local count=$(find "${lib_dir}" -type f -regextype posix-extended \
+	    -regex "${lib_dir}/${lib_regex}" -printf "%P\n" | wc -l)
+	if [ ${count} -gt 1 ]; then
+		fail "More than one core library found in ${lib_dir}"
+		return 1
+	fi
+
+	local core_lib=$(find "${lib_dir}" -type f -regextype posix-extended \
+	    -regex "${lib_dir}/${lib_regex}" -printf "%P\n")
+	if [ "${core_lib}" == "" ]; then
+		local msg="No core library found in the library directory. "
+		msg+="Please review the PFT III library naming conventions."
+		fail "${msg}" "" "The library directory is:" "${lib_dir}"
+		return 1
+	fi
+
+	echo "${core_lib}"
+	return 0
+}
+
+# Get the name of the organization from the core library.
+get_organization_name()
+{
+	name="$(get_core_library_name)"
+	if [ $? -ne 0 ]; then
+		return 1
+	fi
+
+	cut -f2 -d_ <<< "${name}"
+}
+
+# Get the version of the library from the core library.
+get_lib_version()
+{
+	name="$(get_core_library_name)"
+	if [ $? -ne 0 ]; then
+		return 1
+	fi
+
+	(cut -f3 -d_ <<< "${name}") | sed 's/\(.*\).so/\1/'
+}
+
+# Ensure that a library in the lib directory implements the required naming
+# convention.
+check_library()
+{
+	echo -n "Looking for core library... "
+
+	local core_lib=""
+	core_library_present
+	if [ $? -eq 0 ]; then
+		core_lib=$(get_core_library_name)
+		if [ $? -ne 0 ]; then
+			echo ${core_lib}
+			return 1
+		fi
+	else
+		get_core_library_name
+		if [ $? -ne 0 ]; then
+                	local msg="No core library found in the library "
+			msg+="directory. Please review the PFT III library "
+			msg+="naming conventions."
+                	fail "${msg}" "" "The library directory is:" \
+			    "${lib_dir}"
+			return 1
+		fi
+
+		return 1
+	fi
+
+	# If SONAME is present, check that it is the same as the lib name
+	local SONAME=$(objdump -p "${lib_dir}/${core_lib}" | grep SONAME | \
+	    awk '{print $2}')
+	if [ "${SONAME}" != "" ]; then
+		if [ "${SONAME}" != "${core_lib}" ]; then
+			local msg="The SONAME of ${core_lib} is not valid. "
+			msg+="${core_lib} was likely renamed after being "
+			msg+="built. The SONAME must be the same name as the "
+			msg+="core library."
+			fail "${msg}"
+		fi
+	fi
+
+	okay "${core_lib}"
+}
+
+# Check the environment for known variables, and echo them.
+check_environment()
+{
+	echo -n "Checking for known environment variables... "
+	okay
+}
+
+# Get a random number.
+random_number()
+{
+	od -A n -t uL -N 4 /dev/urandom | tr -d -C '[:digit:]'
+}
+
+# Check and warn if files from a previous validation attempt are still present
+# in the current working directory.
+check_for_previous_attempts()
+{
+	echo -n "Checking for previous validation attempts... "
+	local output_found=$(find "${wd}" -maxdepth 1 -type d -name \
+	    "$(basename ${output_dir})*" -print -quit)
+	if [ "$output_found" != "" ]; then
+		fail "Previous attempt at validation found:" \
+		    $(rp ${output_found}) "" \
+		    "You can remove it by running: '$0 clean'"
+	fi
+	output_found=$(find "${wd}" -maxdepth 1 -name "validation_*" -print \
+	    -quit)
+	if [ "${output_found}" != "" ]; then
+		fail "Previous attempt at validation found:" \
+		    "$(rp \""${output_found}\"")" "" \
+		    "You can remove it by running: '$0 clean'"
+	fi
+
+	okay
+}
+
+# Compile the validation driver.
+compile()
+{
+	echo -n "Building... "
+
+	if [ $# -ne 1 ]; then
+		fail "Usage: ${FUNCNAME} <random_seed>"
+	fi
+
+	# Expected MD5 checksum of libpftiii.cpp.
+	local expected_lib_md5="c16ef1de059d4a73c2b21cd62acce9e4"
+	local actual_lib_md5=$(md5sum \
+	    "${wd}"/../libpftiii/libpftiii.cpp | cut -f 1 -d ' ')
+	if [ "${expected_lib_md5}" != "${actual_lib_md5}" ]; then
+		local msg="Your copy of libpftiii.cpp appears to be modified. "
+		msg+="Please restore the original copy. Making changes will "
+		msg+="almost certainly cause errors."
+		fail "${msg}"
+	fi
+
+	# Expected MD5 checksum of pftiii.h.
+	local expected_h_md5="99a0bb9260c141d515dc569a4df522f3"
+	local actual_h_md5=$(md5sum \
+	    "${wd}"/../include/pftiii.h | cut -f 1 -d ' ')
+	if [ "${expected_h_md5}" != "${actual_h_md5}" ]; then
+		local msg="Your copy of pftiii.h appears to be modified. "
+		msg+="Please restore the original copy. Making changes will "
+		msg+="almost certainly cause errors."
+		fail "${msg}"
+	fi
+
+	if [ -e "${lib_dir}"/libpftiii.so ]; then
+		local msg="The library 'libpftiii.so' is in the directory "
+		msg+="$(rp ${lib_dir}). This script will build its own copy of "
+		msg+="the library to ensure that modifications have not been "
+		msg+="made, since doing so may cause issues during the "
+		msg+="evaluation."
+		fail "${msg}"
+	fi
+
+	# Compile
+	local log="${output_dir}/compile.log"
+	make -C "${src_dir}" 2>&1 | tee "${log}" > /dev/null
+	if [ $? -ne 0 ]; then
+		fail "An error occurred during compilation. Please review:" \
+		    "${log}"
+	fi
+
+	# Check that binary shows a dependency on the core library
+	local core_lib="$(get_core_library_name)"
+	ldd "${binary}" | \
+	    grep "${lib_dir}/$(get_core_library_name)" > /dev/null 2>&1
+	if [ $? -ne 0 ]; then
+		msg="${core_lib} is not a dependency of the compiled binary. "
+		msg+="${core_lib} was either renamed after being built, or the "
+		msg+="binary is linking against a version of ${core_lib} from "
+		msg+="a directory outside of the validation package. "
+		msg+="Please review:"
+		fail "${msg}" "${log}"
+	fi
+
+	# Log some extra compilation information that may be useful in helping
+	# to debug future issues
+	{
+		find "${lib_dir}" -type f -exec md5sum {} \;
+		find "${config_dir}" -type f -exec md5sum {} \;
+		cat /etc/redhat-release
+		ldd "${binary}"
+		echo "Validation Version = ${validation_version}"
+		echo "Random Seed = $1"
+	} >> "${log}"
+
+	okay
+}
+
+check_api_level()
+{
+	echo -n "Checking API version... "
+
+	# If API level is incorrect, text is printed to stderr on execution
+	local tempfile="$(mktemp)"
+	local output=$(${binary} 2> ${tempfile})
+	if [ $(grep -c "Incompatible " "${tempfile}") -ne 0 ]; then
+		output=$(<${tempfile})
+		rm ${tempfile}
+		fail "${output}"
+		return 1
+	fi
+
+	rm ${tempfile}
+	okay
+}
+
+# Remove files from previous validation attempts.
+clean_previous_attempts()
+{
+	echo -n "Removing output directories... "
+	rm -rf "${bin_dir}"
+	if [ -d "${bin_dir}" ]; then
+		fail "Failed to remove" "${bin_dir}"
+		return 1
+	fi
+
+	rm -rf "${output_dir}"
+	if [ -d "${output_dir}" ]; then
+		fail "Failed to remove" "${output_dir}"
+		return 1
+	fi
+
+ 	rm -rf "${wd}"/pftiii_validation_$(get_organization_name)_*
+	if [ $(find "${wd}" -name \
+	    "pftiii_validation_$(get_organization_name)_*" | wc -l) -ne 0 ];
+	    then
+	    	fail "Failed to remove some output. Please delete it manually."
+		return 1
+	fi
+
+	okay
+
+	core_library_present
+	if [ $? -ne 0 ]; then
+		return 0
+	fi
+
+	echo -n "Cleaning compilation... "
+	make -j -C "${src_dir}" clean > /dev/null
+	if [ $? -ne 0 ]; then
+		fail "Unable to `make clean` in" "$(rp ${src_dir})"
+		return 1
+	fi
+
+	okay
+}
+
+# Log identification information to a log file.
+record_identification_information()
+{
+	local log="${output_dir}"/id.log
+
+	echo "Core Library = $(get_core_library_name)" >> ${log}
+	chmod -w ${config_dir}
+	${binary} -i -z ${config_dir} >> ${log}
+	chmod +w ${config_dir}
+}
+
+# Run an arbitrary test operation on the compiled binary
+run_operation()
+{
+	if [ $# -ne 3 ]; then
+		fail "Usage: ${FUNCNAME} <function> <op_flag> <random_seed>"
+	fi
+
+	local seed=$1
+	local function=$2
+	local op_flag=$3
+
+	echo -n "Testing ${function}()... "
+
+	# We want to fork regardless to be sure that implementations can handle
+	# forking, but we don't need to spawn a ton of processes either.
+	forks=$(( $(nproc --all) > 4 ? 4 : 2 ))
+
+	local log="${output_dir}"/run-$(tr -c -d '[:alnum:]' <<< \
+	    ${function}).log
+	local command="${binary} ${op_flag} -r ${seed} -f ${forks} "
+	command+="-z ${config_dir}"
+	echo $command >> ${log}
+	chmod -w ${config_dir}
+	${command} >> ${log} 2>&1
+	if [ $? -ne 0 ]; then
+		local msg="An error occurred during tests of ${function}. "
+		msg+="Please investigate:"
+		fail "${msg}" "${log}"
+	fi
+	chmod +w ${config_dir}
+
+	# Check for runtime error messages
+	if [ $(wc -l < "${log}") -ne 1 ]; then
+		local msg="Unexpected output was logged during test of "
+		msg+="${function}. Please review:"
+		fail "${msg}" "$(rp \""${log}\"")"
+	fi
+
+	okay
+}
+
+# Check logs for potential errors
+check_logs()
+{
+	if [ $# -ne 1 ]; then
+		fail "Usage: ${FUNCNAME} <function>"
+	fi
+	operation="${1}"
+
+	echo -n "Checking ${operation}() logs... "
+	merge_logs "$(tr -c -d '[:alnum:]' <<< ${operation})"
+	check_log_counts "${operation}"
+
+	okay
+}
+
+# Check the segmentation logs for the appropriate number of lines.
+check_log_counts()
+{
+	if [ $# -ne 1 ]; then
+		fail "Usage: ${FUNCNAME} <function>"
+	fi
+	func="${1}"
+
+	local expected_num_lines=0
+	if [ "${func}" == "${create_func}" ]; then
+		expected_num_lines=904
+	elif [ "${func}" == "${compare_func}" ]; then
+		expected_num_lines=1261
+	fi
+
+	local log="${output_dir}"/${func}.log
+	if ! [ -e "${log}" ]; then
+		fail "An expected log was not generated." "${log}"
+	fi
+
+	if [ $(wc -l < "${log}") -ne ${expected_num_lines} ]; then
+		local msg="A log does not have the expected number of lines "
+		msg+="inside. Please review:"
+		fail "${msg}" $(rp "${log}")
+	fi
+}
+
+# Merge forked logs into a single file.
+merge_logs()
+{
+	if [ $# -ne 1 ]; then
+		fail "Usage: ${FUNCNAME} <log_prefix>"
+	fi
+
+	local log_prefix="${1}"
+
+	exists=$(find "${output_dir}" -type f -name "${log_prefix}-*" \
+	    -print -quit)
+
+	if [ "${exists}" == "" ]; then
+		fail "Could not merge ${log_prefix} logs."
+	fi
+
+	# Get the header
+	local log="${output_dir}/${log_prefix}.log"
+	head -n 1 "${exists}" >> "${log}"
+
+	# Merge the logs, minus the header
+	for f in $(find "${output_dir}" -type f -name "${log_prefix}-*"); do
+		tail -n +2 $f >> "${log}"
+		rm "${f}"
+	done
+
+	# Sort, ignoring the header
+	(head -n 1 "${log}" && tail -n +2 "${log}" | sort) > "${log}.sort"
+	rm "${log}"
+	mv "${log}.sort" "${log}"
+}
+
+# Generate the name of the validation tarball.
+get_tarball_name()
+{
+	local name="pftiii_validation_$(get_organization_name)_"
+	name+="$(get_lib_version).tar.gz"
+	echo "${name}"
+}
+
+# Make a tarball of all libraries and logfiles to send to NIST.
+make_tarball()
+{
+	echo -n "Creating validation submission... "
+
+	local tar_file=$(get_tarball_name)
+	local new_name="${wd}"/"$(basename $(get_tarball_name) .tar.gz)"
+
+	mv "${output_dir}" "${new_name}"
+	cp -pr "${lib_dir}" "${new_name}"
+	cp -pr "${config_dir}" "${new_name}"
+
+	# NIST will build a fresh libpftiii.so
+	rm "${new_name}"/$(basename "${lib_dir}")/libpftiii.so
+
+	if [ ${?} -ne 0 ]; then
+		local msg="An error occurred while copying libraries. Check "
+		msg+="file permissions."
+		fail "${msg}"
+	fi
+	cd "${wd}" &&  tar czf "${tar_file}" "$(basename ${new_name})" > \
+	    /dev/null && cd - > /dev/null
+	if [ $? -ne 0 ]; then
+		fail "There was an issue creating the validation submission."
+	fi
+
+	okay "${tar_file}"
+}
+
+# Print success message.
+print_final_success()
+{
+	local tar_file="$(get_tarball_name)"
+
+	echo
+	printline '=' 80
+	echo
+
+	local msg="You have successfully completed the first step in PFT III "
+	msg+="validation. Please sign and encrypt the file listed below, send "
+	msg+="it to ${font_underline}pft@nist.gov${font_reset}, and await a "
+	msg+="notification.\n\n -> "
+	msg+=$(rp "${wd}"/"${tar_file}")
+	msg+="\n\nExample of signing and encrypting with GnuPG:\n"
+	msg+="gpg --output ${tar_file}.asc \\\\\n"
+	msg+="    --default-key jdoe@$(get_organization_name).com \\\\\n"
+	msg+="    --recipient pft@nist.gov \\\\\n"
+	msg+="    --recipient jdoe@$(get_organization_name).com \\\\\n"
+	msg+="    --armor --sign --encrypt \\\\\n"
+	msg+="    $(rp ${wd}/${tar_file})\n\n"
+	msg+="Additionally, be sure to include the public key of the identity "
+	msg+="that signed the validation package. This key must be the key "
+	msg+="whose key fingerprint was printed on the PFT III application."
+	msg+="\n\nExample of extracting public key with GnuPG:\n"
+	msg+="gpg --output $(get_organization_name)_$(get_lib_version)_pftiii_"
+	msg+="public_key.asc --armor \\\\\n"
+	msg+="    --export jdoe@$(get_organization_name).com\n\n"
+
+	echo -e "${msg}" | fold -s
+	printline '=' 80
+	echo
+}
+
+# Print validation script header message
+print_header()
+{
+	echo -n "PFT III Validation (${validation_version}) -- "
+	date
+	printline '=' 80
+	echo
+}
+
+# Print message when validation version couldn't be checked
+print_couldnt_check_version()
+{
+	# URL where information about the validation package can be found
+	local info_url="https://github.com/usnistgov/pft/tree/master/pftiii/"
+	info_url+="validation"
+
+	# URL where the version of the validation driver can be found
+	local vers_url="https://github.com/usnistgov/pft/tree/master/pftiii/"
+	vers_url+="validation/VERSION"
+
+	local msg="IMPORTANT: This script was unable to check, so please "
+	msg+="ensure that you are using the latest version of the PFT III "
+	msg+="validation package before submitting. Using the latest version "
+	msg+="of the validation package is a requirement. You are currently "
+	msg+="running with version ${font_underline}${validation_version}"
+	msg+="${font_reset}."
+	msg+="\n\nInformation:\n${info_url}\n"
+	msg+="Version:\n${vers_url}\n"
+	msg+="Download:\n${validation_dl_url}\n"
+
+	echo
+	printline '=' 80
+	echo
+	echo -e -n ${msg} | fold -s
+	printline '=' 80
+	echo
+}
+
+# Prevent against possible issues when not using GNU realpath
+check_wd()
+{
+	if [ "${wd}" == "" ]; then
+		msg="The directory containing \"validate\" could not be found, "
+		msg+="possibly because you are not using GNU realpath under "
+		msg+="CentOS. If you are, please report an issue on the "
+		msg+="PFT GitHub repository."
+		fail "${msg}"
+	fi
+}
+
+###############################################################################
+###############################################################################
+###############################################################################
+
+check_wd
+read validation_version < "${wd}"/VERSION
+print_header
+
+if [ $# -ne 0 ]; then
+	if [ "$1" == "clean" ]; then
+		clean_previous_attempts
+		printline '=' 80
+		echo
+		exit
+	else
+		echo "Usage: $0 [clean]"
+		exit 1
+	fi
+fi
+
+check_required_packages
+check_for_previous_attempts
+check_validation_version; validation_version_checked=$?
+check_os
+check_for_images
+check_image_versions
+check_library
+check_environment
+mkdir -p "${output_dir}"
+log_canaries
+seed=$(random_number)
+compile "${seed}"
+check_api_level
+record_identification_information
+run_operation "${seed}" "${create_func}" "-e"
+check_logs "${create_func}"
+run_operation "${seed}" "${compare_func}" "-c"
+check_logs "${compare_func}"
+make_tarball
+print_final_success
+
+if [ ${validation_version_checked} -eq 0 ]; then
+	print_couldnt_check_version
+fi
+date
