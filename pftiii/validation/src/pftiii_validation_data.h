@@ -82,6 +82,62 @@ namespace PFTIII
 			/* Validation imagery. */
 			const std::vector<std::pair<std::string,
 			    ImageMetadata>> Images {
+				{"00001000_SD300_273x421_500_00_02_05.gray",
+				    {273, 421, 500,
+				    Impression::PlainContact,
+				    FrictionRidgeCaptureTechnology::
+				        ScannedInkOnPaper,
+				    FrictionRidgeGeneralizedPosition::
+				        RightLittle}},
+				{"00001000_SD300_256x306_500_00_02_04.gray",
+				    {256, 306, 500,
+				    Impression::PlainContact,
+				    FrictionRidgeCaptureTechnology::
+				        ScannedInkOnPaper,
+				    FrictionRidgeGeneralizedPosition::
+				        RightRing}},
+				{"00001000_SD300_282x256_500_00_02_03.gray",
+				    {282, 256, 500,
+				    Impression::PlainContact,
+				    FrictionRidgeCaptureTechnology::
+				        ScannedInkOnPaper,
+				    FrictionRidgeGeneralizedPosition::
+				        RightMiddle}},
+				{"00001000_SD300_734x687_500_01_02_04.gray",
+				    {734, 687, 500,
+				    Impression::RolledContact,
+				    FrictionRidgeCaptureTechnology::
+				        ScannedInkOnPaper,
+				    FrictionRidgeGeneralizedPosition::
+				        RightRing}},
+				{"00001000_SD300_843x666_500_01_02_05.gray",
+				    {843, 666, 500,
+				    Impression::RolledContact,
+				    FrictionRidgeCaptureTechnology::
+				        ScannedInkOnPaper,
+				    FrictionRidgeGeneralizedPosition::
+				        RightLittle}},
+				{"00001000_SD300_742x687_500_01_02_02.gray",
+				    {742, 687, 500,
+				    Impression::RolledContact,
+				    FrictionRidgeCaptureTechnology::
+				        ScannedInkOnPaper,
+				    FrictionRidgeGeneralizedPosition::
+				        RightIndex}},
+				{"00001000_SD300_734x680_500_01_02_03.gray",
+				    {734, 680, 500,
+				    Impression::RolledContact,
+				    FrictionRidgeCaptureTechnology::
+				        ScannedInkOnPaper,
+				    FrictionRidgeGeneralizedPosition::
+				        RightMiddle}},
+				{"00001000_SD300_257x429_500_00_02_02.gray",
+				    {257, 429, 500,
+				    Impression::PlainContact,
+				    FrictionRidgeCaptureTechnology::
+				        ScannedInkOnPaper,
+				    FrictionRidgeGeneralizedPosition::
+				        RightIndex}},
 				{"00002445_N_285x452_500_00_03_08.gray",
 				    {285, 452, 500,
 				    Impression::PlainContact,
@@ -6353,6 +6409,10 @@ namespace PFTIII
 			const std::vector<std::pair<std::string, std::string>>
 			    Pairs = {
 				/* Mated */
+				{"00001000_SD300_256x306_500_00_02_04.gray",
+				    "00001000_SD300_734x687_500_01_02_04.gray"},
+				{"00001000_SD300_843x666_500_01_02_05.gray",
+				    "00001000_SD300_273x421_500_00_02_05.gray"},
 				{"00002472_S_256x322_500_00_03_02.gray",
 				    "00002472_N_311x384_500_00_03_02.gray"},
 				{"00002472_S_256x344_500_00_03_03.gray",
@@ -6823,6 +6883,8 @@ namespace PFTIII
 				    "00002488_N_310x508_500_00_03_09.gray"},
 
 				/* Same subject, different finger */
+				{"00001000_SD300_257x429_500_00_02_02.gray",
+				    "00001000_SD300_734x680_500_01_02_03.gray"},
 				{"00002448_A_512x512_500_41_05_07.gray",
 				    "00002448_U_1600x1500_1000_01_03_06.gray"},
 				{"00002449_A_512x512_500_41_05_09.gray",
@@ -6905,6 +6967,8 @@ namespace PFTIII
 				    "00002504_N_286x481_500_00_03_08.gray"},
 
 				/* Same image */
+				{"00001000_SD300_742x687_500_01_02_02.gray",
+				    "00001000_SD300_742x687_500_01_02_02.gray"},
 				{"00002448_M_256x360_500_00_09_09.gray",
 				    "00002448_M_256x360_500_00_09_09.gray"},
 				{"00002449_S_302x436_500_00_03_03.gray",
@@ -7005,6 +7069,8 @@ namespace PFTIII
 				    "00002488_S_296x461_500_00_03_04.gray"},
 
 				/* Nonmated */
+				{"00001000_SD300_742x687_500_01_02_02.gray",
+				    "00002547_N_299x452_500_00_03_08.gray"},
 				{"00002547_N_299x452_500_00_03_08.gray",
 				    "00002579_S_279x461_500_00_03_08.gray"},
 				{"00002561_N_301x413_500_00_03_07.gray",
