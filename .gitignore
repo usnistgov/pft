@@ -6,3 +6,9 @@
 .DS_Store
 ._*
 
+# PFT III Validation Files
+pftiii/validation/bin
+pftiii/validation/images
+pftiii/validation/output
+pftiii/validation/pftiii_validation_*_*
+
