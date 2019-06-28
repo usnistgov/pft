@@ -680,7 +680,7 @@ check_logs()
 	echo -n "Checking ${operation}() logs... "
 	merge_logs "$(tr -c -d '[:alnum:]' <<< ${operation})"
 	check_log_counts "${operation}"
-
+	check_unknown "${operation}"
 	okay
 }
 
@@ -694,9 +694,9 @@ check_log_counts()
 
 	local expected_num_lines=0
 	if [ "${func}" == "${create_func}" ]; then
-		expected_num_lines=904
+		expected_num_lines=905
 	elif [ "${func}" == "${compare_func}" ]; then
-		expected_num_lines=1261
+		expected_num_lines=1262
 	fi
 
 	local log="${output_dir}"/${func}.log
@@ -861,6 +861,31 @@ check_wd()
 		msg+="CentOS. If you are, please report an issue on the "
 		msg+="PFT GitHub repository."
 		fail "${msg}"
+	fi
+}
+
+# Check that participant did not skip image with unknown metadata
+# @param operation
+check_unknown()
+{
+	local unknown_img="00002579_S_265x431_500_29_00_00.gray"
+
+	local line=$(grep "${unknown_img}" "${output_dir}/${1}.log")
+	if [ "${1}" == "${create_func}" ]; then
+		if [ $(cut -f3 -d, <<< $line) -ne 0 ]; then
+			local err="Extracting features from images with "
+			err+="unknown metadata is required. Please examine "
+			err+="creation log entry for name = \"${unknown_img}.\""
+			fail "${err}" "${output_dir}/${create_func}.log"
+		fi
+	else
+		if [ $(cut -f4 -d, <<< $line) -ne 0 ]; then
+			local err="Unable to match a template generated from "
+			err+="an image with no metadata. Please examine "
+			err+="comparison log entry for probe name = "
+			err+="\"${unknown_img}.\""
+			fail "${err}" "${output_dir}/${create_func}.log"
+		fi
 	fi
 }
 

@@ -1125,6 +1125,13 @@ namespace PFTIII
 				        OpticalTIRBright,
 				    FrictionRidgeGeneralizedPosition::
 				        RightMiddle}},
+				{"00002579_S_265x431_500_29_00_00.gray",
+				    {265, 431, 500,
+				    Impression::Unknown,
+				    FrictionRidgeCaptureTechnology::
+				        Unknown,
+				    FrictionRidgeGeneralizedPosition::
+				        RightMiddle}},
 				{"00002515_S_256x419_500_00_03_07.gray",
 				    {256, 419, 500,
 				    Impression::PlainContact,
@@ -6524,6 +6531,8 @@ namespace PFTIII
 				{"00002579_S_99x99_500_00_03_02.gray",
 				    "00002579_N_315x419_500_00_03_02.gray"},
 				{"00002579_S_265x431_500_00_03_03.gray",
+				    "00002579_N_336x452_500_00_03_03.gray"},
+				{"00002579_S_265x431_500_29_00_00.gray",
 				    "00002579_N_336x452_500_00_03_03.gray"},
 				{"00002579_S_292x465_500_00_03_07.gray",
 				    "00002579_N_296x438_500_00_03_07.gray"},
