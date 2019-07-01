@@ -562,8 +562,8 @@ compile()
 	# Log some extra compilation information that may be useful in helping
 	# to debug future issues
 	{
-		find "${lib_dir}" -type f -exec md5sum {} \;
-		find "${config_dir}" -type f -exec md5sum {} \;
+		find "${lib_dir}" -type f \! -name README -exec md5sum {} \;
+		find "${config_dir}" -type f \! -name README -exec md5sum {} \;
 		cat /etc/redhat-release
 		ldd "${binary}"
 		echo "Validation Version = ${validation_version}"
