@@ -822,7 +822,7 @@ print_final_success()
 	msg+="\n\nExample of extracting public key with GnuPG:\n"
 	msg+="gpg --output $(get_organization_name)_$(get_lib_version)_pftiii_"
 	msg+="public_key.asc --armor \\\\\n"
-	msg+="    --export jdoe@$(get_organization_name).com\n\n"
+	msg+="    --export jdoe@$(get_organization_name).com"
 
 	echo -e "${msg}" | fold -s
 	printline '=' 80
