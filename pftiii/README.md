@@ -16,6 +16,8 @@ Contents
 - [nullimpl]
    - A stub library compliant with the [PFT III API] that can be used as a
      starting point for development.
+- [validation]
+   - Package used to verify and submit PFT III libraries for testing at NIST.
 
 Communication
 -------------
@@ -33,8 +35,8 @@ License
 The items in this repository are released in the public domain. See the
 [LICENSE] for details.
 
-[Validation]: https://github.com/usnistgov/pft/blob/master/pftiii/validation/
-[`libpftiii`]: https://github.com/usnistgov/pft/blob/master/pftiii/validation/src/libpftiii
+[validation]: https://github.com/usnistgov/pft/blob/master/pftiii/validation/
+[`libpftiii`]: https://github.com/usnistgov/pft/blob/master/pftiii/validation/libpftiii
 [nullimpl]: https://github.com/usnistgov/pft/tree/master/pftiii/nullimpl
 [PFT III API]: https://pages.nist.gov/pft/doc/pftiii/api
 [open an issue]: https://github.com/usnistgov/pft/issues
