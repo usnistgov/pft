@@ -19,10 +19,10 @@ else
 endif
 
 LIB_PREFIX = libpftiii_
-ifeq ($(shell ls $(LIB_DIR) | grep -E $(LIB_PREFIX)[A-Za-z0-9]\+_\([0-9A-Fa-f]\+\|[0-9A-Fa-f]\{4\}\)\.\(so\|dylib\) | wc -l | awk '{print $$1}'),1)
-        CORE_LIB := $(shell ls $(LIB_DIR) | grep -E $(LIB_PREFIX)[A-Za-z0-9]\+_\([0-9A-Fa-f]\+\|[0-9A-Fa-f]\{4\}\)\.\(so\|dylib\))
+ifeq ($(shell ls $(LIB_DIR) | grep -c -E $(LIB_PREFIX)[A-Za-z0-9]\+_[0-9A-F]\{4\}\.\(so\|dylib\)),1)
+        CORE_LIB := $(shell ls $(LIB_DIR) | grep -E $(LIB_PREFIX)[A-Za-z0-9]\+_[0-9A-F]\{4\}\.\(so\|dylib\))
 else
-        ifeq ($(shell ls $(LIB_DIR) | grep -E $(LIB_PREFIX)[A-Za-z0-9]\+_\([0-9A-Fa-f]\+\|[0-9A-Fa-f]\{4\}\)\.\(so\|dylib\) | wc -l | awk '{print $$1}'),0)
+        ifeq ($(shell ls $(LIB_DIR) | grep -c -E $(LIB_PREFIX)[A-Za-z0-9]\+_[0-9A-F]\{4\}\.\(so\|dylib\)),0)
                 $(error No core library found in $(LIB_DIR). Please review the PFT III naming conventions)
         else
                 $(error More than one core library found in $(LIB_DIR). Please review PFT III naming conventions)

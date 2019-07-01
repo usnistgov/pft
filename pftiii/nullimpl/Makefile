@@ -18,7 +18,7 @@ SOURCES = $(BASENAME).cpp
 OBJECTS = $(SOURCES:%.cpp=%.o)
 
 IDENTIFIER = $(shell grep libraryIdentifier $(BASENAME).cpp | cut -d= -f2 | cut -dx -f2 | tr -C -d '[:alnum:]')
-VERSION = $(shell grep versionNumber $(BASENAME).cpp | cut -d= -f2 | cut -dx -f2 | tr -C -d '[:digit:]')
+VERSION = $(shell grep versionNumber $(BASENAME).cpp | cut -d= -f2 | cut -dx -f2 | tr -C -d '[:xdigit:]' | tr '[:lower:]' '[:upper:]')
 
 
 LIBRARY = libpftiii_$(IDENTIFIER)_$(VERSION)
