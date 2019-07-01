@@ -431,6 +431,21 @@ check_library()
 		return 1
 	fi
 
+	# Some file systems are case-sensitive
+	local vers="$(get_lib_version)"
+	if [ "${vers}" != "$(tr '[:lower:]' '[:upper:]' <<< ${vers})" ]; then
+		local correct="$(cut -f1 -d_ <<< ${core_lib})_"
+		correct+="$(cut -f2 -d_ <<< ${core_lib})_"
+		correct+="$(tr '[:lower:]' '[:upper:]' <<< ${vers})."
+		correct+="$(cut -f2 -d. <<< ${core_lib})"
+
+		local msg="Please use uppercase hexadecimal digits "
+		msg+="(\"ABCDEF\", not \"abcdef\") for the version in your "
+		msg+="library name. Please rebuild \"${core_lib}\" as "
+		msg+="\"${correct}.\""
+		fail "${msg}"
+	fi
+
 	# If SONAME is present, check that it is the same as the lib name
 	local SONAME=$(objdump -p "${lib_dir}/${core_lib}" | grep SONAME | \
 	    awk '{print $2}')
