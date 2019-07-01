@@ -8,10 +8,10 @@
 
 
 INC_DIR = ../include
-LIB_DIR = ../../lib
+LIBPFTIII_DIR = ../libpftiii
 
 CXXFLAGS += -fPIC -Wall -pedantic -std=c++11 -I$(INC_DIR) -I.
-LDFLAGS += -L$(LIB_DIR) -lpftiii
+LDFLAGS += -L$(LIBPFTIII_DIR) -lpftiii
 
 BASENAME = pftiii_nullimpl
 SOURCES = $(BASENAME).cpp
@@ -26,16 +26,12 @@ LIBRARY = libpftiii_$(IDENTIFIER)_$(VERSION)
 all: $(LIBRARY)
 
 $(LIBRARY): $(OBJECTS)
-	test -d $(LIB_DIR) || mkdir $(LIB_DIR)
 ifeq ($(OS), Darwin)
 	$(CXX) $(LDFLAGS) -dynamiclib $(OBJECTS) -o $(LIBRARY).dylib
-	cp $(LIBRARY).dylib $(LIB_DIR)
 else
 	$(CXX) $(LDFLAGS) -shared $(OBJECTS) -o $(LIBRARY).so
-	cp $(LIBRARY).so $(LIB_DIR)
 endif
 
 clean:
 	$(RM) $(OBJECTS) $(LIBRARY).{so,dylib}
-	$(RM) $(LIB_DIR)/$(LIBRARY).{so,dylib}
 
