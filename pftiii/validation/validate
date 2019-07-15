@@ -234,7 +234,7 @@ check_image_versions()
 log_canaries()
 {
 	local canary_prefix="canary"
-	find "${wd}"/${validation_image_dir} -name "${canary_prefix}*" \
+	find -L "${wd}"/${validation_image_dir} -name "${canary_prefix}*" \
 	    -exec md5sum {} \; >> "${output_dir}"/canary.log
 }
 
