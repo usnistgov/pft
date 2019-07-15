@@ -711,7 +711,7 @@ check_log_counts()
 	if [ "${func}" == "${create_func}" ]; then
 		expected_num_lines=905
 	elif [ "${func}" == "${compare_func}" ]; then
-		expected_num_lines=1262
+		expected_num_lines=1259
 	fi
 
 	local log="${output_dir}"/${func}.log
