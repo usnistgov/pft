@@ -76,8 +76,10 @@ PFTIII::SubmissionIdentification::SubmissionIdentification(
     const std::tuple<std::string, bool>
         &featureExtractionAlgorithmMarketingIdentifier,
     const std::tuple<std::string, bool> &comparisonAlgorithmMarketingIdentifier,
-    const std::tuple<uint16_t, bool> &cbeffProductOwner,
+    const std::tuple<uint16_t, bool>
+        &cbeffFeatureExtractionAlgorithmProductOwner,
     const std::tuple<uint16_t, bool> &cbeffFeatureExtractionAlgorithmIdentifier,
+    const std::tuple<uint16_t, bool> &cbeffComparisonAlgorithmProductOwner,
     const std::tuple<uint16_t, bool> &cbeffComparisonAlgorithmIdentifier):
     versionNumber{versionNumber},
     libraryIdentifier{libraryIdentifier},
@@ -85,9 +87,11 @@ PFTIII::SubmissionIdentification::SubmissionIdentification(
         featureExtractionAlgorithmMarketingIdentifier},
     comparisonAlgorithmMarketingIdentifier{
         comparisonAlgorithmMarketingIdentifier},
-    cbeffProductOwner{cbeffProductOwner},
+    cbeffFeatureExtractionAlgorithmProductOwner{
+        cbeffFeatureExtractionAlgorithmProductOwner},
     cbeffFeatureExtractionAlgorithmIdentifier{
         cbeffFeatureExtractionAlgorithmIdentifier},
+    cbeffComparisonAlgorithmProductOwner{cbeffComparisonAlgorithmProductOwner},
     cbeffComparisonAlgorithmIdentifier{cbeffComparisonAlgorithmIdentifier}
 {
 

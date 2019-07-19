@@ -140,16 +140,24 @@ PFTIII::Validation::getIdentificationString(
 		ss << std::get<0>(id.comparisonAlgorithmMarketingIdentifier);
 	ss << '\n';
 
-	ss << "CBEFF Product Owner =";
-	if (std::get<1>(id.cbeffProductOwner))
+	ss << "CBEFF Feature Extraction Algorithm Product Owner =";
+	if (std::get<1>(id.cbeffFeatureExtractionAlgorithmProductOwner))
 		ss << " 0x" << std::setw(4) << std::setfill('0') << std::hex <<
-		    std::get<0>(id.cbeffProductOwner) << std::dec;
+		    std::get<0>(
+		    id.cbeffFeatureExtractionAlgorithmProductOwner) << std::dec;
 	ss << '\n';
 
 	ss << "CBEFF Feature Extraction Algorithm Identifier =";
 	if (std::get<1>(id.cbeffFeatureExtractionAlgorithmIdentifier))
 		ss << " 0x" << std::setw(4) << std::setfill('0') << std::hex <<
 		    std::get<0>(id.cbeffFeatureExtractionAlgorithmIdentifier) <<
+		    std::dec;
+	ss << '\n';
+
+	ss << "CBEFF Comparison Algorithm Product Owner =";
+	if (std::get<1>(id.cbeffComparisonAlgorithmProductOwner))
+		ss << " 0x" << std::setw(4) << std::setfill('0') << std::hex <<
+		    std::get<0>(id.cbeffComparisonAlgorithmProductOwner) <<
 		    std::dec;
 	ss << '\n';
 
