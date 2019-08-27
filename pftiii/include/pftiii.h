@@ -169,12 +169,6 @@ namespace PFTIII
 			Supported = 0,
 			/** Failure: Image data was not parsable. */
 			InvalidImageData,
-			/** Failure: Capture type is not supported. */
-			UnsupportedCaptureType,
-			/** Failure: Impression type is not supported. */
-			UnsupportedImpressionType,
-			/** Failure: Image resolution not supported. */
-			UnsupportedResolution,
 			/** Failure: Other reason. See error message. */
 			VendorDefined
 		};
@@ -467,7 +461,7 @@ namespace PFTIII
 		 * `FingerImageStatus.code` set to
 		 * FingerImageStatus::Code::Supported when input FingerImage
 		 * data is supported, or another FingerImageStatus::Code if
-		 * not) and whose second member  is a
+		 * not) and whose second member is a
 		 * `CreateProprietaryTemplateResult` object containing the
 		 * status of extracting and encoding fingerprint features and a
 		 * biometric template suitable to be passed as either the probe
@@ -492,10 +486,11 @@ namespace PFTIII
 		 * @note
 		 * This method shall, on average, return in <= TODO seconds.
 		 *
-		 * @note Unknown types shall be supported. It is not acceptable
-		 * to set FingerImageStatus::Code::UnsupportedCaptureType or
-		 * FingerImageStatus::Code::UnsupportedImpressionType if either
-		 * value is Unknown.
+		 * @note All metadata, including Unknown, shall be supported. It
+		 * is not acceptable to not set
+		 * `FingerImageStatus::Code::Success`
+		 * if value is `Unknown` or for an entire classification of data
+		 * (e.g., 1000 PPI, `RolledContactlessMoving`, etc.)
 		 *
 		 * @note
 		 * This method shall be deterministic (e.g., providing the same
