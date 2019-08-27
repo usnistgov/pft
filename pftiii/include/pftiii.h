@@ -345,8 +345,8 @@ namespace PFTIII
 		 *
 		 * @note
 		 * The name of the core library submitted for evaluation shall
-		 * be "libpftiii_<libraryIdentifier>_<versionNumber (hex)>.so".
-		 * Refer to the test plan for more information.
+		 * be "libpftiii_<libraryIdentifier>_<versionNumber (capital
+		 * hex)>.so". Refer to the test plan for more information.
 		 */
 		SubmissionIdentification(
 		    const uint16_t versionNumber,
