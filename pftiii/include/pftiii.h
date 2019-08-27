@@ -484,7 +484,8 @@ namespace PFTIII
 		 * reference templates.
 		 *
 		 * @note
-		 * This method shall, on average, return in <= TODO seconds.
+		 * This method shall, on average, return in <= 0.5 seconds on a
+		 * dedicated timing sample.
 		 *
 		 * @note All metadata, including Unknown, shall be supported. It
 		 * is not acceptable to not set
@@ -540,7 +541,8 @@ namespace PFTIII
 		 * two templates shall result in the same similarity score).
 		 *
 		 * @note
-		 * This method shall, on average, return in <= TODO seconds.
+		 * This method shall, on average, return in <= 0.01 seconds,
+		 * on a dedicated timing sample.
 		 */
 		virtual
 		std::tuple<CompareProprietaryTemplatesStatus, double>
