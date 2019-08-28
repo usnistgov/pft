@@ -322,16 +322,20 @@ namespace PFTIII
 		 * match the regular expression "[[:graph:] ]*". First tuple
 		 * member is value and second is boolean indicating the
 		 * initialization status of the value.
-		 * @param cbeffProductOwner
-		 * CBEFF Product Owner, if registered.  First tuple member is
-		 * value and second is boolean indicating the initialization
-		 * status of the value. Optional, unless
-		 * `cbeffFeatureExtractionAlgorithmIdentifier` or
-		 * `cbeffComparisonAlgorithmIdentifier` are supplied.
+		 * @param cbeffFeatureExtractionAlgorithmProductOwner
+		 * CBEFF Product Owner of the feature extraction algorithm, if
+		 * registered. First tuple member is value and second is boolean
+		 * indicating the initialization status of the value. Optional,
+		 * unless`cbeffFeatureExtractionAlgorithmIdentifier`is supplied.
 		 * @param cbeffFeatureExtractionAlgorithmIdentifier
 		 * CBEFF Feature Extraction Algorithm Identifier, if registered.
 		 * First tuple member is value and second is boolean indicating
 		 * the initialization status of the value.
+		 * @param cbeffComparisoinAlgorithmProductOwner
+		 * CBEFF Product Owner of the feature extraction algorithm, if
+		 * registered. First tuple member is value and second is boolean
+		 * indicating the initialization status of the value. Optional,
+		 * unless `cbeffComparisonAlgorithmIdentifier`is supplied.
 		 * @param cbeffComparisonAlgorithmIdentifier
 		 * CBEFF Comparison Algorithm Identifier, if registered. First
 		 * tuple member is value and second is boolean indicating the
