@@ -1,5 +1,4 @@
 var searchData=
 [
-  ['vendordefined',['VendorDefined',['../struct_p_f_t_i_i_i_1_1_finger_image_status.html#abd9b30337ec1e25002a07858adcebdecafa2e75d0ec2eff8aaf7be40134ecceac',1,'PFTIII::FingerImageStatus']]],
-  ['versionnumber',['versionNumber',['../struct_p_f_t_i_i_i_1_1_submission_identification.html#ac9a2cfa2054a0a9a040127d8069da727',1,'PFTIII::SubmissionIdentification']]]
+  ['width',['width',['../struct_p_f_t_i_i_i_1_1_finger_image.html#a9123ece5d219f6ec33dd9f2e46e41702',1,'PFTIII::FingerImage']]]
 ];
