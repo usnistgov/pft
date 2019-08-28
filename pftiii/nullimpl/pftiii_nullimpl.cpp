@@ -37,9 +37,13 @@ PFTIII::NullImplementation::getIdentification()
 	    "NIST Stub Implementation Extractor 0.1", true);
 	si.comparisonAlgorithmMarketingIdentifier = std::make_tuple(
 	    "NIST Stub Implementation Comparator 0.1", true);
-	si.cbeffProductOwner = std::make_tuple(0x000F, true);
+
+	si.cbeffFeatureExtractionAlgorithmProductOwner = std::make_tuple(
+	    0x000F, true);
 	si.cbeffFeatureExtractionAlgorithmIdentifier = std::make_tuple(0xFFFE,
 	    true);
+
+	si.cbeffComparisonAlgorithmProductOwner = std::make_tuple(0x000F, true);
 	si.cbeffComparisonAlgorithmIdentifier = std::make_tuple(0xFFFE, true);
 
 	return (si);

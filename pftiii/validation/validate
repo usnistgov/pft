@@ -508,7 +508,7 @@ compile()
 	fi
 
 	# Expected MD5 checksum of libpftiii.cpp.
-	local expected_lib_md5="c16ef1de059d4a73c2b21cd62acce9e4"
+	local expected_lib_md5="54b314d85b3c8889365736500301fde5"
 	local actual_lib_md5=$(md5sum \
 	    "${wd}"/../libpftiii/libpftiii.cpp | cut -f 1 -d ' ')
 	if [ "${expected_lib_md5}" != "${actual_lib_md5}" ]; then
@@ -519,7 +519,7 @@ compile()
 	fi
 
 	# Expected MD5 checksum of pftiii.h.
-	local expected_h_md5="99a0bb9260c141d515dc569a4df522f3"
+	local expected_h_md5="7ac1bee5529209650205276ba19e436b"
 	local actual_h_md5=$(md5sum \
 	    "${wd}"/../include/pftiii.h | cut -f 1 -d ' ')
 	if [ "${expected_h_md5}" != "${actual_h_md5}" ]; then

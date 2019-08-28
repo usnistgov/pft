@@ -351,10 +351,14 @@ namespace PFTIII
 		    const std::tuple<std::string, bool>
 		        &comparisonAlgorithmMarketingIdentifier =
 		        std::make_tuple("", false),
-		    const std::tuple<uint16_t, bool> &cbeffProductOwner =
+		    const std::tuple<uint16_t, bool>
+		        &cbeffFeatureExtractionAlgorithmProductOwner =
 		        std::make_tuple(0x0000, false),
 		    const std::tuple<uint16_t, bool>
 		        &cbeffFeatureExtractionAlgorithmIdentifier =
+		        std::make_tuple(0x0000, false),
+		    const std::tuple<uint16_t, bool>
+		        &cbeffComparisoinAlgorithmProductOwner =
 		        std::make_tuple(0x0000, false),
 		    const std::tuple<uint16_t, bool>
 		        &cbeffComparisonAlgorithmIdentifier =
@@ -395,15 +399,16 @@ namespace PFTIII
 		 */
 
 		/**
-		 * CBEFF Product Owner, if registered. Optional, unless
-		 * `cbeffFeatureExtractionAlgorithmIdentifier` or
-		 * `cbeffComparisonAlgorithmIdentifier` are supplied.  First
-		 * tuple member is value and second is boolean indicating the
-		 * initialization status of the value.
+		 * CBEFF Product Owner of the feature extraction algorithm, if
+		 * registered.  Optional, unless
+		 * `cbeffFeatureExtractionAlgorithmIdentifier` is supplied.
+		 * First tuple member is value and second is boolean indicating
+		 * the initialization status of the value.
 		 *
 		 * @see https://www.ibia.org/cbeff/biometric-identifier-overview
 		 */
-		std::tuple<uint16_t, bool> cbeffProductOwner{0x0000, false};
+		std::tuple<uint16_t, bool>
+		    cbeffFeatureExtractionAlgorithmProductOwner{0x0000, false};
 		/**
 		 * CBEFF Feature Extraction Algorithm Identifier, if registered.
 		 * Optional. First tuple member is value and second is boolean
@@ -414,6 +419,18 @@ namespace PFTIII
 		 */
 		std::tuple<uint16_t, bool>
 		    cbeffFeatureExtractionAlgorithmIdentifier{0x0000, false};
+
+		/**
+		 * CBEFF Product Owner of the template comparison algorithm, if
+		 * registered.  Optional, unless
+		 * `cbeffComparisonAlgorithmIdentifier` is supplied. First
+		 * supplied. First tuple member is value and second is boolean
+		 * indicating the initialization status of the value.
+		 *
+		 * @see https://www.ibia.org/cbeff/biometric-identifier-overview
+		 */
+		std::tuple<uint16_t, bool>
+		    cbeffComparisonAlgorithmProductOwner{0x0000, false};
 		/**
 		 * CBEFF Comparison Algorithm Identifier, if registered.
 		 * Optional.  First tuple member is value and second is boolean
