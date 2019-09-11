@@ -641,6 +641,8 @@ record_identification_information()
 	chmod -w ${config_dir}
 	${binary} -i -z ${config_dir} >> ${log}
 	chmod +w ${config_dir}
+
+	check_cbeff_dependencies
 }
 
 # Run an arbitrary test operation on the compiled binary
@@ -826,6 +828,27 @@ print_final_success()
 
 	echo -e "${msg}" | fold -s
 	printline '=' 80
+
+	echo
+	echo
+	printline '=' 80
+	msg="\nPlease review the marketing and CBEFF information compiled into "
+	msg+="your library to make sure it is correct:\n\n"
+	local line_num=0
+	while read i; do
+		k=$(cut -f1 -d= <<< "${i}" | sed 's/ \{1,\}$//')
+		v=$(cut -f2 -d= <<< "${i}" | sed -e 's/^ //' -e 's/ \{1,\}$//')
+		if [ "${v}" == "" ]; then
+			v="${font_reset}${font_red}${font_underline}"
+			v+="Unspecified"
+		fi
+		msg+=" -> ${k}:\n    ${font_green}${v}${font_reset}";
+		if [ ${line_num} -ne 5 ]; then msg+="\n"; fi
+		line_num=$(( ${line_num} + 1 ))
+	done < <("${binary}" -i -z "${config_dir}" | head -n 8 | tail -n 6)
+	echo -e "${msg}" | fold -s
+	printline '=' 80
+
 	echo
 }
 
@@ -902,6 +925,45 @@ check_unknown()
 			fail "${err}" "${output_dir}/${create_func}.log"
 		fi
 	fi
+}
+
+# Check that all required CBEFF information appears to be set
+check_cbeff_dependencies()
+{
+	echo -n "Checking CBEFF algorithm identifiers for product owners... "
+	local log="${output_dir}"/id.log
+	local key=""
+	local key_dependent=""
+
+	key="CBEFF Feature Extraction Algorithm Identifier"
+	key_dependent="CBEFF Feature Extraction Algorithm Product Owner"
+	value=$(grep "${key}" "${log}" | cut -f2 -d= | tr -d '[:space:]')
+	value=$(sed -e 's/0x//' <<< "${value}")
+	if [ "${value}" != "" ]; then
+		value=$(grep "${key_dependent}" "${log}" | cut -f2 -d=)
+		value=$(tr -d '[:space:]' <<< "${value}" | sed -e 's/0x//')
+		if [ "${value}" == "" ] || [ "${value}" == "0000" ]; then
+			local err="Setting ${key} requires you to also set "
+			err+="${key_dependent}"
+			fail "${err}"
+		fi
+	fi
+
+	key="CBEFF Comparison Algorithm Identifier"
+	key_dependent="CBEFF Comparison Algorithm Product Owner"
+	value=$(grep "${key}" "${log}" | cut -f2 -d= | tr -d '[:space:]')
+	value=$(sed 's/0x//' <<< "${value}")
+	if [ "${value}" != "" ]; then
+		value=$(grep "${key_dependent}" "${log}" | cut -f2 -d=)
+		value=$(tr -d '[:space:]' <<< "${value}" | sed -e 's/0x//')
+		if [ "${value}" == "" ] || [ "${value}" == "0000" ]; then
+			local err="Setting ${key} requires you to also set "
+			err+="${key_dependent}"
+			fail "${err}"
+		fi
+	fi
+
+	okay
 }
 
 ###############################################################################

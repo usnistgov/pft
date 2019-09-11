@@ -76,12 +76,12 @@ How to Run
   <summary><em>Expand to view the output from an example run.</em></summary>
 
 ```
-$ cp /path/to/libpftiii_nfseg_5001.so lib/
+$ cp /path/to/libpftiii_nullimpl_0001.so lib/
 $ cp /path/to/config.txt config/
 $ cp /path/to/pftiii_validation_images_*.tar.gz .
 $ ./validate
 
-PFT III Validation (201906141310) -- Mon Jul  1 13:09:36 EDT 2019
+PFT III Validation (201907151344) -- Wed Sep 11 11:16:42 EDT 2019
 ================================================================================
 Checking for required packages... [OKAY]
 Checking for previous validation attempts... [OKAY]
@@ -89,45 +89,64 @@ Checking validation version... (no Internet connection) [SKIP]
 Checking OS and version... (CentOS 7.6.1810) [OKAY]
 Checking for validation images... [OKAY]
 Checking validation image versions... [OKAY]
-Looking for core library... (libpftiii_nbispftiii_5001.so) [OKAY]
+Looking for core library... (libpftiii_nullimpl_0001.so) [OKAY]
 Checking for known environment variables... [OKAY]
 Building... [OKAY]
 Checking API version... [OKAY]
+Checking CBEFF algorithm identifiers for product owners... [OKAY]
 Testing createProprietaryTemplate()... [OKAY]
 Checking createProprietaryTemplate() logs... [OKAY]
 Testing compareProprietaryTemplates()... [OKAY]
 Checking compareProprietaryTemplates() logs... [OKAY]
-Creating validation submission... (pftiii_validation_nbispftiii_5001.tar.gz) [OKAY]
+Creating validation submission... (pftiii_validation_nullimpl_0001.tar.gz) [OKAY]
 
 ================================================================================
 You have successfully completed the first step in PFT III validation. Please
 sign and encrypt the file listed below, send it to pft@nist.gov, and
 await a notification.
 
- -> pftiii_validation_nbispftiii_5001.tar.gz
+ -> pftiii_validation_nullimpl_0001.tar.gz
 
 Example of signing and encrypting with GnuPG:
-gpg --output pftiii_validation_nbispftiii_5001.tar.gz.asc \
-    --default-key jdoe@nbispftiii.com \
+gpg --output pftiii_validation_nullimpl_0001.tar.gz.asc \
+    --default-key jdoe@nullimpl.com \
     --recipient pft@nist.gov \
-    --recipient jdoe@nbispftiii.com \
+    --recipient jdoe@nullimpl.com \
     --armor --sign --encrypt \
-    pftiii_validation_nbispftiii_5001.tar.gz
+    pftiii_validation_nullimpl_0001.tar.gz
 
 Additionally, be sure to include the public key of the identity that signed the
 validation package. This key must be the key whose key fingerprint was printed
 on the PFT III application.
 
 Example of extracting public key with GnuPG:
-gpg --output nbispftiii_5001_pftiii_public_key.asc --armor \
-    --export jdoe@nbispftiii.com
+gpg --output nullimpl_0001_pftiii_public_key.asc --armor \
+    --export jdoe@nullimpl.com
+================================================================================
+
+================================================================================
+Please review the marketing and CBEFF information compiled into your library to
+make sure it is correct:
+
+ -> Feature Extraction Algorithm Marketing Identifier:
+    NIST Stub Implementation Extractor 0.1
+ -> Comparison Marketing Identifier:
+    Unspecified
+ -> CBEFF Feature Extraction Algorithm Product Owner:
+    0x000F
+ -> CBEFF Feature Extraction Algorithm Identifier:
+    0xFFFE
+ -> CBEFF Comparison Algorithm Product Owner:
+    0x000F
+ -> CBEFF Comparison Algorithm Identifier:
+    0xFFFE
 ================================================================================
 
 ================================================================================
 IMPORTANT: This script was unable to check, so please ensure that you are using
 the latest version of the PFT III validation package before submitting. Using
 the latest version of the validation package is a requirement. You are
-currently running with version 201906141310.
+currently running with version 201907151344.
 
 Information:
 https://github.com/usnistgov/pft/tree/master/pftiii/validation
@@ -136,6 +155,7 @@ https://github.com/usnistgov/pft/tree/master/pftiii/validation/VERSION
 Download:
 https://github.com/usnistgov/pft/releases
 ================================================================================
+Wed Sep 11 11:17:01 EDT 2019
 ```
 </details>
 
