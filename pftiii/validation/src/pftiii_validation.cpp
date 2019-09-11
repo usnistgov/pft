@@ -127,7 +127,8 @@ PFTIII::Validation::getIdentificationString(
 	std::stringstream ss{};
 	ss << "Identifier = " << id.libraryIdentifier << '\n' <<
 	    "Version = 0x" << std::setw(4)  << std::setfill('0') << std::hex <<
-	    id.versionNumber << std::dec << '\n';
+	    std::uppercase << id.versionNumber;
+	ss << std::dec << std::nouppercase << '\n';
 
 	ss << "Feature Extraction Algorithm Marketing Identifier = ";
 	if (std::get<1>(id.featureExtractionAlgorithmMarketingIdentifier))
@@ -143,30 +144,30 @@ PFTIII::Validation::getIdentificationString(
 	ss << "CBEFF Feature Extraction Algorithm Product Owner =";
 	if (std::get<1>(id.cbeffFeatureExtractionAlgorithmProductOwner))
 		ss << " 0x" << std::setw(4) << std::setfill('0') << std::hex <<
-		    std::get<0>(
-		    id.cbeffFeatureExtractionAlgorithmProductOwner) << std::dec;
-	ss << '\n';
+		    std::uppercase << std::get<0>(
+		    id.cbeffFeatureExtractionAlgorithmProductOwner);
+	ss << std::dec << std::nouppercase << '\n';
 
 	ss << "CBEFF Feature Extraction Algorithm Identifier =";
 	if (std::get<1>(id.cbeffFeatureExtractionAlgorithmIdentifier))
 		ss << " 0x" << std::setw(4) << std::setfill('0') << std::hex <<
-		    std::get<0>(id.cbeffFeatureExtractionAlgorithmIdentifier) <<
-		    std::dec;
-	ss << '\n';
+		    std::uppercase << std::get<0>(
+		    id.cbeffFeatureExtractionAlgorithmIdentifier);
+	ss << std::dec << std::nouppercase << '\n';
 
 	ss << "CBEFF Comparison Algorithm Product Owner =";
 	if (std::get<1>(id.cbeffComparisonAlgorithmProductOwner))
 		ss << " 0x" << std::setw(4) << std::setfill('0') << std::hex <<
-		    std::get<0>(id.cbeffComparisonAlgorithmProductOwner) <<
-		    std::dec;
-	ss << '\n';
+		    std::uppercase << std::get<0>(
+		    id.cbeffComparisonAlgorithmProductOwner);
+	ss << std::dec << std::nouppercase << '\n';
 
 	ss << "CBEFF Comparison Algorithm Identifier =";
 	if (std::get<1>(id.cbeffComparisonAlgorithmIdentifier))
 		ss << " 0x" << std::setw(4) << std::setfill('0') << std::hex <<
-		    std::get<0>(id.cbeffComparisonAlgorithmIdentifier) <<
-		    std::dec;
-	ss << '\n';
+		    std::uppercase << std::get<0>(
+		    id.cbeffComparisonAlgorithmIdentifier);
+	ss << std::dec << std::nouppercase << '\n';
 
 	ss << "API Version = " << API_MAJOR_VERSION << '.' <<
 	    API_MINOR_VERSION << '.' << API_PATCH_VERSION;
