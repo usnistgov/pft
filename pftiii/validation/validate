@@ -328,7 +328,7 @@ check_os()
 # Check that a core library exists
 core_library_present()
 {
-	local lib_regex="libpftiii_[A-Za-z0-9]+_[0-9A-Fa-f]{4}.so"
+	local lib_regex="libpftiii_[A-Za-z0-9]+_[0-9A-F]{4}.so"
 
 	if ! [ -d "${lib_dir}" ]; then
 		return 1
@@ -351,7 +351,7 @@ get_core_library_name()
 		return 1
 	fi
 
-	local lib_regex="libpftiii_[A-Za-z0-9]+_[0-9A-Fa-f]{4}.so"
+	local lib_regex="libpftiii_[A-Za-z0-9]+_[0-9A-F]{4}.so"
 
 	if ! [ -d "${lib_dir}" ]; then
 		local msg="Library directory not found. Create it and place "
