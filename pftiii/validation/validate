@@ -971,7 +971,7 @@ check_cbeff_dependencies()
 ###############################################################################
 
 check_wd
-cd ${wd}
+cd "${wd}"
 read validation_version < "${wd}"/VERSION
 print_header
 
