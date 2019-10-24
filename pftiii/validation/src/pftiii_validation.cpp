@@ -224,7 +224,7 @@ PFTIII::Validation::parseArguments(
 		case 'f': {	/* Number of processes */
 			try {
 				args.numProcs = std::stol(optarg);
-			} catch (const std::exception) {
+			} catch (const std::exception&) {
 				throw std::invalid_argument{"Number of "
 				    "processes (-f): an error occurred when "
 				    "parsing \"" + std::string(optarg) + "\""};
@@ -251,7 +251,7 @@ PFTIII::Validation::parseArguments(
 		case 'r':	/* Random seed */
 			try {
 				args.randomSeed = std::stoll(optarg);
-			} catch (std::exception) {
+			} catch (const std::exception&) {
 				throw std::invalid_argument{"Random seed (-r): "
 				    "an error occurred when parsing \"" +
 				    std::string(optarg) + "\""};
