@@ -47,10 +47,14 @@ Requirements
      conditions, the required fingerprint imagery is not included in this GitHub
      repository. Download the data by requesting it from the PFT III test
      staff and [agreeing to the terms].
- * CentOS 7.6.1810
+ * CentOS 8.0.1905
    - Even if this is not the latest version of CentOS, it will be the version
      used to run the evaluation. Direct downloads are available from the [CentOS
-     Vault] ([🇺🇸 USA], [🇪🇺 Europe]).
+     Vault] ([🇺🇸 USA], [🇪🇺 Europe]). We will be using the base CentOS
+     Linux distribution (frozen) **not CentOS Stream**.
+   - We **highly suggest** installing this version of CentOS Linux directly from
+     the ISO without a network connection so that versions of all packages
+     are consistent with our operating environment.
    - The [validate] script  requires these base CentOS packages:
       - `binutils`, `centos-release`, `coreutils`, `curl`, `file`, `gawk`,
         `gcc-c++`, `grep`, `iputils`, `make`, `sed`, `which`, `yum`
@@ -86,7 +90,7 @@ PFT III Validation (201907151344) -- Wed Sep 11 11:16:42 EDT 2019
 Checking for required packages... [OKAY]
 Checking for previous validation attempts... [OKAY]
 Checking validation version... (no Internet connection) [SKIP]
-Checking OS and version... (CentOS 7.6.1810) [OKAY]
+Checking OS and version... (CentOS 8.0.1905) [OKAY]
 Checking for validation images... [OKAY]
 Checking validation image versions... [OKAY]
 Looking for core library... (libpftiii_nullimpl_0001.so) [OKAY]
@@ -222,8 +226,8 @@ The items in this repository are released in the public domain. See the
 
 [API]: https://pages.nist.gov/pft/doc/pftiii/api/
 [CentOS Vault]: http://vault.centos.org/
-[🇺🇸 USA]: http://mirror.umd.edu/centos/7.6.1810/isos/x86_64/CentOS-7-x86_64-Everything-1810.iso
-[🇪🇺 Europe]: http://centos.mirrors.proxad.net/7.6.1810/isos/x86_64/CentOS-7-x86_64-Everything-1810.iso
+[🇺🇸 USA]: http://mirror.umd.edu/8.0.1905/isos/x86_64/CentOS-8-x86_64-1905-dvd1.iso
+[🇪🇺 Europe]: http://centos.mirrors.proxad.net/8.0.1905/isos/x86_64/CentOS-8-x86_64-1905-dvd1.iso
 [lib/]: https://github.com/usnistgov/pft/blob/master/pftiii/validation/lib
 [../libpftiii/]: https://github.com/usnistgov/pft/blob/master/pftiii/libpftiii
 [../include/pftiii.h]: https://github.com/usnistgov/pft/blob/master/pftiii/include/pftiii.h

@@ -309,7 +309,7 @@ check_validation_version()
 # Check that the version of CentOS is the correct version.
 check_os()
 {
-	local expected="7.6.1810"
+	local expected="8.0.1905"
 	echo -n "Checking OS and version... "
 	if [ ! -e /etc/redhat-release ]; then
 		msg="You do not appear to be using the appropriate operating "
