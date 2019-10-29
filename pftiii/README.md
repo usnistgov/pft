@@ -13,6 +13,8 @@ Contents
    - Library containing required implementations of methods from the
      [PFT III API]. Submitted libraries must link against **but not include**
      this library.
+- [mineximpl]
+   - Starter code that wraps the MINEX III API with the PFT III API.
 - [nullimpl]
    - A stub library compliant with the [PFT III API] that can be used as a
      starting point for development.
@@ -38,6 +40,7 @@ The items in this repository are released in the public domain. See the
 [validation]: https://github.com/usnistgov/pft/blob/master/pftiii/validation/
 [`libpftiii`]: https://github.com/usnistgov/pft/blob/master/pftiii/validation/libpftiii
 [nullimpl]: https://github.com/usnistgov/pft/tree/master/pftiii/nullimpl
+[mineximpl]: https://github.com/usnistgov/pft/tree/master/pftiii/mineximpl
 [PFT III API]: https://pages.nist.gov/pft/doc/pftiii/api
 [open an issue]: https://github.com/usnistgov/pft/issues
 [mailing list site]: https://groups.google.com/a/list.nist.gov/forum/#!forum/pft/join
