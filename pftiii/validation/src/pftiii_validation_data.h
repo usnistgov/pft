@@ -6410,6 +6410,34 @@ namespace PFTIII
 				        OpticalTIRBright,
 				    FrictionRidgeGeneralizedPosition::
 				        RightMiddle}},
+				{"00002458_U_160x150_100_01_03_10.gray",
+				    {160, 150, 100,
+				    Impression::RolledContact,
+				    FrictionRidgeCaptureTechnology::
+				        OpticalTIRBright,
+				    FrictionRidgeGeneralizedPosition::
+				        LeftLittle}},
+				{"00002458_U_400x375_250_01_03_10.gray",
+				    {400, 375, 250,
+				    Impression::RolledContact,
+				    FrictionRidgeCaptureTechnology::
+				        OpticalTIRBright,
+				    FrictionRidgeGeneralizedPosition::
+				        LeftLittle}},
+				{"00002458_U_533x500_333_01_03_10.gray",
+				    {533, 500, 333,
+				    Impression::RolledContact,
+				    FrictionRidgeCaptureTechnology::
+				        OpticalTIRBright,
+				    FrictionRidgeGeneralizedPosition::
+				        LeftLittle}},
+				{"00002458_U_960x900_600_01_03_10.gray",
+				    {960, 900, 600,
+				    Impression::RolledContact,
+				    FrictionRidgeCaptureTechnology::
+				        OpticalTIRBright,
+				    FrictionRidgeGeneralizedPosition::
+				        LeftLittle}},
 			};
 
 			/** Validation matching pairs */
@@ -8878,6 +8906,43 @@ namespace PFTIII
 				    "00002556_S_256x432_500_00_03_04.gray"},
 				{"00002480_N_334x463_500_00_03_02.gray",
 				    "00002466_N_290x427_500_00_03_02.gray"},
+
+				/* Variable resolution */
+				{"00002458_U_160x150_100_01_03_10.gray",
+				    "00002458_U_1600x1500_1000_01_03_10.gray"},
+				{"00002458_U_400x375_250_01_03_10.gray",
+				    "00002458_U_1600x1500_1000_01_03_10.gray"},
+				{"00002458_U_533x500_333_01_03_10.gray",
+				    "00002458_U_1600x1500_1000_01_03_10.gray"},
+				{"00002458_U_960x900_600_01_03_10.gray",
+				    "00002458_U_1600x1500_1000_01_03_10.gray"},
+
+				{"00002458_U_160x150_100_01_03_10.gray",
+				    "00002458_U_400x375_250_01_03_10.gray"},
+				{"00002458_U_1600x1500_1000_01_03_10.gray",
+				    "00002458_U_400x375_250_01_03_10.gray"},
+				{"00002458_U_533x500_333_01_03_10.gray",
+				    "00002458_U_400x375_250_01_03_10.gray"},
+				{"00002458_U_960x900_600_01_03_10.gray",
+				    "00002458_U_400x375_250_01_03_10.gray"},
+
+				{"00002458_U_160x150_100_01_03_10.gray",
+				    "00002458_U_533x500_333_01_03_10.gray"},
+				{"00002458_U_400x375_250_01_03_10.gray",
+				    "00002458_U_533x500_333_01_03_10.gray"},
+				{"00002458_U_1600x1500_1000_01_03_10.gray",
+				    "00002458_U_533x500_333_01_03_10.gray"},
+				{"00002458_U_960x900_600_01_03_10.gray",
+				    "00002458_U_533x500_333_01_03_10.gray"},
+
+				{"00002458_U_160x150_100_01_03_10.gray",
+				    "00002458_U_960x900_600_01_03_10.gray"},
+				{"00002458_U_400x375_250_01_03_10.gray",
+				    "00002458_U_960x900_600_01_03_10.gray"},
+				{"00002458_U_533x500_333_01_03_10.gray",
+				    "00002458_U_960x900_600_01_03_10.gray"},
+				{"00002458_U_1600x1500_1000_01_03_10.gray",
+				    "00002458_U_960x900_600_01_03_10.gray"},
 
 				/* Other */
 				{"00002480_S_283x419_500_00_03_02.gray",

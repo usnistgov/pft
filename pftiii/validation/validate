@@ -698,6 +698,7 @@ check_logs()
 	merge_logs "$(tr -c -d '[:alnum:]' <<< ${operation})"
 	check_log_counts "${operation}"
 	check_unknown "${operation}"
+	check_variable_resolution "${operation}"
 	okay
 }
 
@@ -711,9 +712,9 @@ check_log_counts()
 
 	local expected_num_lines=0
 	if [ "${func}" == "${create_func}" ]; then
-		expected_num_lines=905
+		expected_num_lines=909
 	elif [ "${func}" == "${compare_func}" ]; then
-		expected_num_lines=1259
+		expected_num_lines=1275
 	fi
 
 	local log="${output_dir}"/${func}.log
@@ -925,6 +926,57 @@ check_unknown()
 			fail "${err}" "${output_dir}/${1}.log"
 		fi
 	fi
+}
+
+# Check that participant did not fail on all images != 500 or 1000 PPI
+check_variable_resolution()
+{
+	local var_res="_100_ _250_ _333_ _600_"
+	local success=0
+	local failure=0
+
+	for res in ${var_res}; do
+		while read line; do
+			if [ "${1}" == "${create_func}" ]; then
+				if [ $(cut -f3 -d, <<< "${line}") -eq 0 ]; then
+					success=$(( ${success} + 1 ))
+				else
+					failure=$(( ${failure} + 1 ))
+				fi
+			else
+				if [ $(cut -f4 -d, <<< "${line}") -eq 0 ]; then
+					success=$(( ${success} + 1 ))
+				else
+					failure=$(( ${failure} + 1 ))
+				fi
+			fi
+		done <<< $(grep "${res}" "${output_dir}/${1}.log")
+	done
+
+	if [ "${failure}" -eq 0 ]; then
+		return 0
+	fi
+
+	# Maybe participant had an issue with some images
+	local percentage=$(( (${failure} * 100) / (${success} + ${failure}) ))
+	if [ "${percentage}" -lt 25 ]; then
+		return 0
+	fi
+
+	local all_res+="PFT III reports results on images of variable "
+	all_res+="resolutions and algorithms are expected to deal with all "
+	all_res+="resolutions natively."
+
+	local err=""
+	if [ "${1}" == "${create_func}" ]; then
+		err+="Attempts to create a template from an image that was not "
+		err+="acquired at a resolution of 500 or 1 000 PPI failed."
+	else
+		err+="Attempts to compare templates generated from images not "
+		err+="acquired at a resolution of 500 or 1 000 PPI failed."
+	fi
+
+	fail "${err} ${all_res}" "${output_dir}/${1}.log"
 }
 
 # Check that all required CBEFF information appears to be set
