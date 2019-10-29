@@ -203,7 +203,7 @@ check_for_images()
 check_image_versions()
 {
 	# Version of image dataset compatible with this script
-	local expected_image_version="201906130118"
+	local expected_image_version="201910291353"
 
 	echo -n "Checking validation image versions... "
 
