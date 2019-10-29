@@ -29,7 +29,9 @@ PFTIII::MINEXImplementation::getIdentification()
     const
 {
 	SubmissionIdentification si{};
+	/* TODO: Replace with your version number. */
 	si.versionNumber = 0xFFFF;
+	/* TODO: Replace with your identifier. */
 	si.libraryIdentifier = "mineximpl";
 
 	return (si);
@@ -51,8 +53,11 @@ PFTIII::MINEXImplementation::createProprietaryTemplate(
 	 *         - There were advertised minimum and maximum dimensions.
 	 *	 * Image Quality:
 	 *	   - Image quality is not provided by the PFT III API.
+	 *       * Image Resolution:
+	 *         - All images were 500 PPI. PFT III images can be of any
+	 *           resolution.
 	 *
-	 * If the MINEX algorithm made these assumptions, it should be revised.
+	 * If the MINEX algorithm made these assumptions, it must be revised.
 	 */
 
 	uint8_t incitsTemplate[MINEX_MAX_TEMPLATE_SIZE];
