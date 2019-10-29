@@ -73,12 +73,11 @@ PFTIII::NullImplementation::createProprietaryTemplate(
 
 	/* "Unsupported" using local convenience method */
 //	return (createUnsupported(
-//	    FingerImageStatus::Code::UnsupportedResolution,
-//	    "333 ppi unsupported"));
+//	    FingerImageStatus::Code::VendorDefined, "Too many gray levels"));
 
 	/* "Unsupported" using libpftiii */
-//	FingerImageStatus status{FingerImageStatus::Code::UnsupportedResolution,
-//	    "333 ppi unsupported"};
+//	FingerImageStatus status{FingerImageStatus::Code::VendorDefined,
+//	    "Too many gray levels"};
 //	return (std::make_tuple(status,
 //	    CreateProprietaryTemplateResult::failure()));
 }
