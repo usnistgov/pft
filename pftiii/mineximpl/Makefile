@@ -12,9 +12,9 @@ ifeq ($(shell ls $(MINEX_LIB_DIR) | grep -c -E libminexiii_[A-Za-z0-9]\+_[0-9A-F
 	MINEX_LIB_ARGS := -L$(MINEX_LIB_DIR) -l$(patsubst lib%.so,%, $(CORE_LIB:%.a=%.so))
 else
         ifeq ($(shell ls $(MINEX_LIB_DIR) | grep -c -E libminexiii_[A-Za-z0-9]\+_[0-9A-F]\{4\}\.\(a\|so\) | awk '{print $$1}'),0)
-                $(error No core library found in "$(MINEX_LIB_DIR)". Please review MINEX III naming conventions)
+                $(error No core MINEX III library found in "$(MINEX_LIB_DIR)". Please review MINEX III naming conventions)
         else
-                $(error More than one core library found in "$(MINEX_LIB_DIR)". Please review MINEX III naming conventions)
+                $(error More than one core MINEX III library found in "$(MINEX_LIB_DIR)". Please review MINEX III naming conventions)
         endif
 endif
 
