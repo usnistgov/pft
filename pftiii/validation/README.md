@@ -1,13 +1,6 @@
 PFT III Validation
 ==================
 
-
-<p style="text-align:center;font-weight:bold;border-color:red;border-style:dashed;padding:15px;">
-NOTE: PFT III is not currently accepting submissions. Please check back
-in fall 2019 or sign up for our
-<a href="https://groups.google.com/a/list.nist.gov/forum/#!forum/pft/join">e-mail list</a> to be notified.
-</p>
-
 We require exercising PFT III [API] implementations with the PFT III validation
 package. Validation is mutually-beneficial to NIST and PFT III participants. The
 hope is that successful execution of validation ensures your algorithm:

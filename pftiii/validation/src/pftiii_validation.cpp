@@ -569,10 +569,11 @@ main(
 {
 	int rv{EXIT_FAILURE};
 
-	if (!((PFTIII::API_MAJOR_VERSION == 0) &&
-	    (PFTIII::API_MINOR_VERSION == 0))) {
+	if (!((PFTIII::API_MAJOR_VERSION == 1) &&
+	    (PFTIII::API_MINOR_VERSION == 0) &&
+	    (PFTIII::API_PATCH_VERSION == 0))) {
 		std::cerr << "Incompatible API version encountered.\n "
-		    "- Validation: 0.0.*\n - Participant: " <<
+		    "- Validation: 1.0.0\n - Participant: " <<
 		    PFTIII::API_MAJOR_VERSION << '.' <<
 		    PFTIII::API_MINOR_VERSION << '.' <<
 		    PFTIII::API_PATCH_VERSION << '\n';

@@ -519,7 +519,7 @@ compile()
 	fi
 
 	# Expected MD5 checksum of pftiii.h.
-	local expected_h_md5="f3bea9978b02f842d2f82e13961b87e3"
+	local expected_h_md5="a5a96e9f928ec01ebd22adef9f164953"
 	local actual_h_md5=$(md5sum \
 	    "${wd}"/../include/pftiii.h | cut -f 1 -d ' ')
 	if [ "${expected_h_md5}" != "${actual_h_md5}" ]; then
