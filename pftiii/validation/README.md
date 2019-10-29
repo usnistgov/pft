@@ -62,7 +62,7 @@ Requirements
 It is **highly suggested** that you make sure your submission will build and run
 as expected on environments as close as possible to the NIST evaluation
 machines, in order to avoid validation delays. The CPUs used for PFT III are
-**Intel Xeon E5-2680** and **Intel Xeon E5-4650**.
+**Intel Xeon Gold 6140**, **Intel Xeon E5-2680**, **Intel Xeon E5-4650**.
 
 How to Run
 ----------
@@ -85,12 +85,14 @@ $ cp /path/to/config.txt config/
 $ cp /path/to/pftiii_validation_images_*.tar.gz .
 $ ./validate
 
-PFT III Validation (201907151344) -- Wed Sep 11 11:16:42 EDT 2019
+PFT III Validation (201910291353) -- Tue Oct 29 14:38:45 EDT 2019
 ================================================================================
 Checking for required packages... [OKAY]
 Checking for previous validation attempts... [OKAY]
 Checking validation version... (no Internet connection) [SKIP]
 Checking OS and version... (CentOS 8.0.1905) [OKAY]
+Checking for validation images... [DEFER]
+Expanding pftiii_validation_images_201910291353.tar.gz"... [OKAY]
 Checking for validation images... [OKAY]
 Checking validation image versions... [OKAY]
 Looking for core library... (libpftiii_nullimpl_0001.so) [OKAY]
@@ -135,7 +137,7 @@ make sure it is correct:
  -> Feature Extraction Algorithm Marketing Identifier:
     NIST Stub Implementation Extractor 0.1
  -> Comparison Marketing Identifier:
-    Unspecified
+    NIST Stub Implementation Comparator 0.1
  -> CBEFF Feature Extraction Algorithm Product Owner:
     0x000F
  -> CBEFF Feature Extraction Algorithm Identifier:
@@ -150,7 +152,7 @@ make sure it is correct:
 IMPORTANT: This script was unable to check, so please ensure that you are using
 the latest version of the PFT III validation package before submitting. Using
 the latest version of the validation package is a requirement. You are
-currently running with version 201907151344.
+currently running with version 201910291353.
 
 Information:
 https://github.com/usnistgov/pft/tree/master/pftiii/validation
@@ -159,7 +161,7 @@ https://github.com/usnistgov/pft/tree/master/pftiii/validation/VERSION
 Download:
 https://github.com/usnistgov/pft/releases
 ================================================================================
-Wed Sep 11 11:17:01 EDT 2019
+Tue Oct 29 14:39:18 EDT 2019
 ```
 </details>
 
