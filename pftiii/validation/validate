@@ -910,19 +910,19 @@ check_unknown()
 
 	local line=$(grep "${unknown_img}" "${output_dir}/${1}.log")
 	if [ "${1}" == "${create_func}" ]; then
-		if [ $(cut -f3 -d, <<< $line) -ne 0 ]; then
+		if [ $(cut -f3 -d, <<< "${line}") -ne 0 ]; then
 			local err="Extracting features from images with "
 			err+="unknown metadata is required. Please examine "
 			err+="creation log entry for name = \"${unknown_img}.\""
-			fail "${err}" "${output_dir}/${create_func}.log"
+			fail "${err}" "${output_dir}/${1}.log"
 		fi
 	else
-		if [ $(cut -f4 -d, <<< $line) -ne 0 ]; then
+		if [ $(cut -f4 -d, <<< "${line}") -ne 0 ]; then
 			local err="Unable to match a template generated from "
 			err+="an image with no metadata. Please examine "
 			err+="comparison log entry for probe name = "
 			err+="\"${unknown_img}.\""
-			fail "${err}" "${output_dir}/${create_func}.log"
+			fail "${err}" "${output_dir}/${1}.log"
 		fi
 	fi
 }
