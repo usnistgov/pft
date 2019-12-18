@@ -78,15 +78,14 @@ $ cp /path/to/libpftiii_nullimpl_0001.so lib/
 $ cp /path/to/config.txt config/
 $ cp /path/to/pftiii_validation_images_*.tar.gz .
 $ ./validate
-
-PFT III Validation (201910291353) -- Tue Oct 29 14:38:45 EDT 2019
+PFT III Validation (201912181452) -- Wed Dec 18 14:53:20 EST 2019
 ================================================================================
 Checking for required packages... [OKAY]
 Checking for previous validation attempts... [OKAY]
 Checking validation version... (no Internet connection) [SKIP]
 Checking OS and version... (CentOS 8.0.1905) [OKAY]
 Checking for validation images... [DEFER]
-Expanding pftiii_validation_images_201910291353.tar.gz"... [OKAY]
+Expanding pftiii_validation_images_201912181310.tar.gz"... [OKAY]
 Checking for validation images... [OKAY]
 Checking validation image versions... [OKAY]
 Looking for core library... (libpftiii_nullimpl_0001.so) [OKAY]
@@ -146,7 +145,7 @@ make sure it is correct:
 IMPORTANT: This script was unable to check, so please ensure that you are using
 the latest version of the PFT III validation package before submitting. Using
 the latest version of the validation package is a requirement. You are
-currently running with version 201910291353.
+currently running with version 201912181452.
 
 Information:
 https://github.com/usnistgov/pft/tree/master/pftiii/validation
@@ -155,7 +154,7 @@ https://github.com/usnistgov/pft/tree/master/pftiii/validation/VERSION
 Download:
 https://github.com/usnistgov/pft/releases
 ================================================================================
-Tue Oct 29 14:39:18 EDT 2019
+Wed Dec 18 14:53:46 EST 2019
 ```
 </details>
 
