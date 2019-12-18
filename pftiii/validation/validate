@@ -77,6 +77,28 @@ set -o pipefail
 # Functions                                                                    #
 ################################################################################
 
+# Disable color output if not in tty
+check_color_output()
+{
+	if [ -t 1 ]; then
+		font_dim='\e[2m'
+		font_green='\e[32m'
+		font_red='\e[31m'
+		font_lightred='\e[91m'
+		font_yellow='\e[33m'
+		font_underline='\e[4m'
+		font_reset='\e[0m'
+	else
+		font_dim=""
+		font_green=""
+		font_red=""
+		font_lightred=""
+		font_yellow=""
+		font_underline=""
+		font_reset=""
+	fi
+}
+
 # Print the path of the argument relative to the current working directory
 rp()
 {
@@ -1038,6 +1060,7 @@ check_cbeff_dependencies()
 ###############################################################################
 ###############################################################################
 
+check_color_output
 check_wd
 cd "${wd}"
 read validation_version < "${wd}"/VERSION
