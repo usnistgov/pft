@@ -700,7 +700,9 @@ check_logs()
 	check_log_counts "${operation}"
 	check_unknown "${operation}"
 	check_variable_resolution "${operation}"
-	okay
+	if [ $? -eq 0 ]; then
+		okay
+	fi
 }
 
 # Check the segmentation logs for the appropriate number of lines.
@@ -960,7 +962,7 @@ check_variable_resolution()
 
 	# Maybe participant had an issue with some images
 	local percentage=$(( (${failure} * 100) / (${success} + ${failure}) ))
-	if [ "${percentage}" -lt 25 ]; then
+	if [ "${percentage}" -eq 0 ]; then
 		return 0
 	fi
 
@@ -977,7 +979,12 @@ check_variable_resolution()
 		err+="acquired at a resolution of 500 or 1 000 PPI failed."
 	fi
 
-	fail "${err} ${all_res}" "${output_dir}/${1}.log"
+	if [ "${percentage}" -lt 25 ]; then
+		warn "${err} ${all_res}" "${output_dir}/${1}.log"
+		return 1
+	else
+		fail "${err} ${all_res}" "${output_dir}/${1}.log"
+	fi
 }
 
 # Check that all required CBEFF information appears to be set
