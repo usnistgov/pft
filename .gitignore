@@ -11,4 +11,5 @@ pftiii/validation/bin
 pftiii/validation/images
 pftiii/validation/output
 pftiii/validation/pftiii_validation_*_*
-
+pftiii/validation/config
+!pftiii/validation/config/README
