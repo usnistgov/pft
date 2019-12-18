@@ -203,7 +203,7 @@ check_for_images()
 check_image_versions()
 {
 	# Version of image dataset compatible with this script
-	local expected_image_version="201910291353"
+	local expected_image_version="201912181310"
 
 	echo -n "Checking validation image versions... "
 
@@ -712,9 +712,9 @@ check_log_counts()
 
 	local expected_num_lines=0
 	if [ "${func}" == "${create_func}" ]; then
-		expected_num_lines=909
+		expected_num_lines=910
 	elif [ "${func}" == "${compare_func}" ]; then
-		expected_num_lines=1275
+		expected_num_lines=1284
 	fi
 
 	local log="${output_dir}"/${func}.log
@@ -931,7 +931,7 @@ check_unknown()
 # Check that participant did not fail on all images != 500 or 1000 PPI
 check_variable_resolution()
 {
-	local var_res="_100_ _250_ _333_ _600_"
+	local var_res="_100_ _250_ _300_ _333_ _600_"
 	local success=0
 	local failure=0
 
