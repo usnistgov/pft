@@ -176,7 +176,7 @@ check_for_images()
 		if [ "${image_archive}" != "" ]; then
 			echo -e "${font_yellow}[DEFER]${font_reset}"
 			for i in $(find "${wd}" -maxdepth 1 -name \
-			    "${validation_image_download_prefix}*"); do
+			    "${validation_image_download_prefix}*" | sort); do
 				echo -n "Expanding $(basename \""${i}\"")... "
 				tar xf "${i}" > /dev/null 2>&1
 
