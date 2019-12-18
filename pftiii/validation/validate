@@ -105,12 +105,19 @@ fail()
 # Print [WARN] with any arguments in parenthesis before.
 warn()
 {
-	if [ $# -ne 0 ]; then
-		for i in "${@}"; do
-			echo -n -e "${font_dim}(${i})${font_reset} "
+	echo -e "${font_lightred}[WARN]${font_reset}"
+	if [ ${#} -ne 0 ]; then
+		echo -e "${font_lightred}"
+		printline '=' 80
+		echo
+		for i in $(seq 1 ${#}); do
+			echo -e "${font_lightred}${!i}${font_reset}" | fold -s
 		done
 	fi
-	echo -e "${font_lightred}[WARN]${font_reset}"
+	echo -n -e "${font_lightred}"
+	printline '=' 80
+	echo -e "${font_reset}"
+	echo
 }
 
 # Print [OKAY] with any arguments in parenthesis before.
