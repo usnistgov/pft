@@ -941,7 +941,8 @@ check_variable_resolution()
 	for res in ${var_res}; do
 		while read line; do
 			if [ "${1}" == "${create_func}" ]; then
-				if [ $(cut -f3 -d, <<< "${line}") -eq 0 ]; then
+				if [ $(cut -f3 -d, <<< "${line}") -eq 0 ] && \
+				    [ $(cut -f5 -d, <<< "${line}") -eq 0 ]; then
 					success=$(( ${success} + 1 ))
 				else
 					failure=$(( ${failure} + 1 ))
