@@ -15,8 +15,8 @@ Tests
 The current iteration of PFT is [*PFT III*][pft3-gh], which incorporates
 testing of variable resolution imagery including 1 000 pixels per inch (393.7
 pixel per centimeter), images from non-contact fingerprint acquisition devices,
-and significantly faster testing. Previous tests include [PFT II](2010–2019)
-and the original [PFT](2003–2010).
+and significantly faster testing. Previous tests include [PFT II] (2010–2019)
+and the original [PFT] (2003–2010).
 
 Communication
 -------------
