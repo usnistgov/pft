@@ -679,7 +679,7 @@ record_identification_information()
 run_operation()
 {
 	if [ $# -ne 3 ]; then
-		fail "Usage: ${FUNCNAME} <function> <op_flag> <random_seed>"
+		fail "Usage: ${FUNCNAME} <random_seed> <function> <op_flag>"
 	fi
 
 	local seed=$1
