@@ -32,7 +32,7 @@ validation_image_request_url="https://nigos.nist.gov/datasets/"
 validation_image_request_url+="pftiii_validation/request"
 
 # Directory containing validation materials
-wd="$(readlink -f $(dirname ${0}))"
+wd="$(cd "$(dirname "${0}")" && pwd)"
 # Directory containing validation images
 validation_image_dir="images"
 # Directory where libraries go
@@ -46,7 +46,7 @@ output_dir="${wd}"/output
 # Configuration directory provided to PFTIII::Interface implementation
 config_dir="${wd}"/config
 # Path to the compiled validation driver binary
-binary="${bin_dir}"/"pftiii_validation"
+binary="${bin_dir}/pftiii_validation"
 
 # Dimmed text color
 font_dim='\e[2m'
@@ -161,7 +161,7 @@ printline()
 		return 1
 	fi
 
-	printf "${1}%.0s" $(seq 1 ${2})
+	printf "${1}%.0s" $(seq 1 "${2}")
 }
 
 # Check that images have been downloaded, placed in the correct spot, etc.
@@ -177,7 +177,7 @@ check_for_images()
 			echo -e "${font_yellow}[DEFER]${font_reset}"
 			for i in $(find "${wd}" -maxdepth 1 -name \
 			    "${validation_image_download_prefix}*" | sort); do
-				echo -n "Expanding $(basename \""${i}\"")... "
+				echo -n "Expanding $(basename "${i}")... "
 				tar xf "${i}" > /dev/null 2>&1
 
 				if [ $? -ne 0 ]; then
@@ -199,8 +199,7 @@ check_for_images()
 		# If the directory does exist, check that every archive present
 		# has been expanded
 		local has_deferred=0
-		for i in $(find "${wd}" -maxdepth 1 -name \
-		    "${validation_image_download_prefix}*"); do
+		while read -r i; do
 		    	local regex=".*\/${validation_image_download_prefix}"
 		    	regex+="\(.*\)-.\+.tar.gz"
 			if ! [ -e "${wd}"/${validation_image_dir}/VERSION ];
@@ -211,7 +210,7 @@ check_for_images()
 	    				has_deferred=1
 	    			fi
 
-				echo -n "Expanding $(basename \""${i}\"")... "
+				echo -n "Expanding $(basename "${i}")... "
 				tar xf "${i}" > /dev/null 2>&1
 
 				if [ $? -ne 0 ]; then
@@ -222,7 +221,8 @@ check_for_images()
 					return
 				fi
 			fi
-		done
+		done < <(find "${wd}" -maxdepth 1 -name \
+		    "${validation_image_download_prefix}*")
 	fi
 
 	okay
@@ -246,7 +246,7 @@ check_image_versions()
 	fi
 
 	local image_version="UNKNOWN"
-	read image_version < "${wd}"/${validation_image_dir}/VERSION
+	read -r image_version < "${wd}"/${validation_image_dir}/VERSION
 	if [ "${expected_image_version}" != "${image_version}" ]; then
 		msg="The version of validation images within ${wd}/"
 		msg+="${validation_image_dir} (${image_version}) is not "
@@ -366,7 +366,7 @@ core_library_present()
 
 	local count=$(find "${lib_dir}" -type f -regextype posix-extended \
 	    -regex "${lib_dir}/${lib_regex}" -printf "%P\n" | wc -l)
-	if [ ${count} -ne 1 ]; then
+	if [ "${count}" != "1" ]; then
 		return 1
 	fi
 
@@ -393,7 +393,7 @@ get_core_library_name()
 	local core_lib=""
 	local count=$(find "${lib_dir}" -type f -regextype posix-extended \
 	    -regex "${lib_dir}/${lib_regex}" -printf "%P\n" | wc -l)
-	if [ ${count} -gt 1 ]; then
+	if [ "${count}" != "1" ]; then
 		fail "More than one core library found in ${lib_dir}"
 		return 1
 	fi
@@ -444,7 +444,7 @@ check_library()
 	if [ $? -eq 0 ]; then
 		core_lib=$(get_core_library_name)
 		if [ $? -ne 0 ]; then
-			echo ${core_lib}
+			echo "${core_lib}"
 			return 1
 		fi
 	else
@@ -463,11 +463,11 @@ check_library()
 
 	# Some file systems are case-sensitive
 	local vers="$(get_lib_version)"
-	if [ "${vers}" != "$(tr '[:lower:]' '[:upper:]' <<< ${vers})" ]; then
-		local correct="$(cut -f1 -d_ <<< ${core_lib})_"
-		correct+="$(cut -f2 -d_ <<< ${core_lib})_"
-		correct+="$(tr '[:lower:]' '[:upper:]' <<< ${vers})."
-		correct+="$(cut -f2 -d. <<< ${core_lib})"
+	if [ "${vers}" != "$(tr '[:lower:]' '[:upper:]' <<< "${vers}")" ]; then
+		local correct="$(cut -f1 -d_ <<< "${core_lib}")_"
+		correct+="$(cut -f2 -d_ <<< "${core_lib}")_"
+		correct+="$(tr '[:lower:]' '[:upper:]' <<< "${vers}")."
+		correct+="$(cut -f2 -d. <<< "${core_lib}")"
 
 		local msg="Please use uppercase hexadecimal digits "
 		msg+="(\"ABCDEF\", not \"abcdef\") for the version in your "
@@ -511,17 +511,17 @@ check_for_previous_attempts()
 {
 	echo -n "Checking for previous validation attempts... "
 	local output_found=$(find "${wd}" -maxdepth 1 -type d -name \
-	    "$(basename ${output_dir})*" -print -quit)
+	    "$(basename "${output_dir}")*" -print -quit)
 	if [ "$output_found" != "" ]; then
 		fail "Previous attempt at validation found:" \
-		    $(rp ${output_found}) "" \
+		    "$(rp "${output_found}")" \
 		    "You can remove it by running: '$0 clean'"
 	fi
 	output_found=$(find "${wd}" -maxdepth 1 -name "validation_*" -print \
 	    -quit)
 	if [ "${output_found}" != "" ]; then
 		fail "Previous attempt at validation found:" \
-		    "$(rp \""${output_found}\"")" "" \
+		    "$(rp "${output_found}")" "" \
 		    "You can remove it by running: '$0 clean'"
 	fi
 
@@ -561,9 +561,9 @@ compile()
 
 	if [ -e "${lib_dir}"/libpftiii.so ]; then
 		local msg="The library 'libpftiii.so' is in the directory "
-		msg+="$(rp ${lib_dir}). This script will build its own copy of "
-		msg+="the library to ensure that modifications have not been "
-		msg+="made, since doing so may cause issues during the "
+		msg+="$(rp "${lib_dir}"). This script will build its own copy "
+		msg+="of the library to ensure that modifications have not "
+		msg+="been made, since doing so may cause issues during the "
 		msg+="evaluation."
 		fail "${msg}"
 	fi
@@ -609,15 +609,15 @@ check_api_level()
 
 	# If API level is incorrect, text is printed to stderr on execution
 	local tempfile="$(mktemp)"
-	local output=$(${binary} 2> ${tempfile})
-	if [ $(grep -c "Incompatible " "${tempfile}") -ne 0 ]; then
-		output=$(<${tempfile})
-		rm ${tempfile}
+	local output=$(${binary} 2> "${tempfile}")
+	if [ "$(grep -c "Incompatible " "${tempfile}")" -ne 0 ]; then
+		output=$(<"${tempfile}")
+		rm "${tempfile}"
 		fail "${output}"
 		return 1
 	fi
 
-	rm ${tempfile}
+	rm "${tempfile}"
 	okay
 }
 
@@ -637,9 +637,9 @@ clean_previous_attempts()
 		return 1
 	fi
 
- 	rm -rf "${wd}"/pftiii_validation_$(get_organization_name)_*
-	if [ $(find "${wd}" -name \
-	    "pftiii_validation_$(get_organization_name)_*" | wc -l) -ne 0 ];
+ 	rm -rf "${wd}"/pftiii_validation_"$(get_organization_name)"_*
+	if [ "$(find "${wd}" -name \
+	    "pftiii_validation_$(get_organization_name)_*" | wc -l)" != "0" ];
 	    then
 	    	fail "Failed to remove some output. Please delete it manually."
 		return 1
@@ -655,7 +655,7 @@ clean_previous_attempts()
 	echo -n "Cleaning compilation... "
 	make -j -C "${src_dir}" clean > /dev/null
 	if [ $? -ne 0 ]; then
-		fail "Unable to `make clean` in" "$(rp ${src_dir})"
+		fail "Unable to 'make clean' in" "$(rp "${src_dir}")"
 		return 1
 	fi
 
@@ -667,10 +667,10 @@ record_identification_information()
 {
 	local log="${output_dir}"/id.log
 
-	echo "Core Library = $(get_core_library_name)" >> ${log}
-	chmod -w ${config_dir}
-	${binary} -i -z ${config_dir} >> ${log}
-	chmod +w ${config_dir}
+	echo "Core Library = $(get_core_library_name)" >> "${log}"
+	chmod -w "${config_dir}"
+	${binary} -i -z "${config_dir}" >> "${log}"
+	chmod +w "${config_dir}"
 
 	check_cbeff_dependencies
 }
@@ -693,24 +693,24 @@ run_operation()
 	forks=$(( $(nproc --all) > 4 ? 4 : 2 ))
 
 	local log="${output_dir}"/run-$(tr -c -d '[:alnum:]' <<< \
-	    ${function}).log
+	    "${function}").log
 	local command="${binary} ${op_flag} -r ${seed} -f ${forks} "
 	command+="-z ${config_dir}"
-	echo $command >> ${log}
-	chmod -w ${config_dir}
-	${command} >> ${log} 2>&1
+	echo "${command}" >> "${log}"
+	chmod -w "${config_dir}"
+	${command} >> "${log}" 2>&1
 	if [ $? -ne 0 ]; then
 		local msg="An error occurred during tests of ${function}. "
 		msg+="Please investigate:"
 		fail "${msg}" "${log}"
 	fi
-	chmod +w ${config_dir}
+	chmod +w "${config_dir}"
 
 	# Check for runtime error messages
-	if [ $(wc -l < "${log}") -ne 1 ]; then
+	if [ "$(wc -l < "${log}")" != "1" ]; then
 		local msg="Unexpected output was logged during test of "
 		msg+="${function}. Please review:"
-		fail "${msg}" "$(rp \""${log}\"")"
+		fail "${msg}" "$(rp "${log}")"
 	fi
 
 	okay
@@ -720,12 +720,12 @@ run_operation()
 check_logs()
 {
 	if [ $# -ne 1 ]; then
-		fail "Usage: ${FUNCNAME} <function>"
+		fail "Usage: ${FUNCNAME[0]} <function>"
 	fi
 	operation="${1}"
 
 	echo -n "Checking ${operation}() logs... "
-	merge_logs "$(tr -c -d '[:alnum:]' <<< ${operation})"
+	merge_logs "$(tr -c -d '[:alnum:]' <<< "${operation}")"
 	check_log_counts "${operation}"
 	check_unknown "${operation}"
 	check_variable_resolution "${operation}"
@@ -738,7 +738,7 @@ check_logs()
 check_log_counts()
 {
 	if [ $# -ne 1 ]; then
-		fail "Usage: ${FUNCNAME} <function>"
+		fail "Usage: ${FUNCNAME[0]} <function>"
 	fi
 	func="${1}"
 
@@ -754,10 +754,10 @@ check_log_counts()
 		fail "An expected log was not generated." "${log}"
 	fi
 
-	if [ $(wc -l < "${log}") -ne ${expected_num_lines} ]; then
+	if [ "$(wc -l < "${log}")" -ne "${expected_num_lines}" ]; then
 		local msg="A log does not have the expected number of lines "
 		msg+="inside. Please review:"
-		fail "${msg}" $(rp "${log}")
+		fail "${msg}" "$(rp "${log}")"
 	fi
 }
 
@@ -765,7 +765,7 @@ check_log_counts()
 merge_logs()
 {
 	if [ $# -ne 1 ]; then
-		fail "Usage: ${FUNCNAME} <log_prefix>"
+		fail "Usage: ${FUNCNAME[0]} <log_prefix>"
 	fi
 
 	local log_prefix="${1}"
@@ -782,10 +782,10 @@ merge_logs()
 	head -n 1 "${exists}" >> "${log}"
 
 	# Merge the logs, minus the header
-	for f in $(find "${output_dir}" -type f -name "${log_prefix}-*"); do
-		tail -n +2 $f >> "${log}"
+	while read -r f; do
+		tail -n +2 "${f}" >> "${log}"
 		rm "${f}"
-	done
+	done < <(find "${output_dir}" -type f -name "${log_prefix}-*")
 
 	# Sort, ignoring the header
 	(head -n 1 "${log}" && tail -n +2 "${log}" | sort) > "${log}.sort"
@@ -807,22 +807,23 @@ make_tarball()
 	echo -n "Creating validation submission... "
 
 	local tar_file=$(get_tarball_name)
-	local new_name="${wd}"/"$(basename $(get_tarball_name) .tar.gz)"
+	local new_name="${wd}/$(basename "$(get_tarball_name)" .tar.gz)"
 
 	mv "${output_dir}" "${new_name}"
 	cp -pr "${lib_dir}" "${new_name}"
 	cp -pr "${config_dir}" "${new_name}"
 
 	# NIST will build a fresh libpftiii.so
-	rm "${new_name}"/$(basename "${lib_dir}")/libpftiii.so
+	rm "${new_name}/$(basename "${lib_dir}")/libpftiii.so"
 
 	if [ ${?} -ne 0 ]; then
 		local msg="An error occurred while copying libraries. Check "
 		msg+="file permissions."
 		fail "${msg}"
 	fi
-	cd "${wd}" &&  tar czf "${tar_file}" "$(basename ${new_name})" > \
-	    /dev/null && cd - > /dev/null
+	cd "${wd}" || exit && \
+	    tar czf "${tar_file}" "$(basename "${new_name}")" > /dev/null && \
+	    cd - || exit > /dev/null
 	if [ $? -ne 0 ]; then
 		fail "There was an issue creating the validation submission."
 	fi
@@ -850,7 +851,7 @@ print_final_success()
 	msg+="    --recipient pft@nist.gov \\\\\n"
 	msg+="    --recipient jdoe@$(get_organization_name).com \\\\\n"
 	msg+="    --armor --sign --encrypt \\\\\n"
-	msg+="    $(rp ${wd}/${tar_file})\n\n"
+	msg+="    $(rp "${wd}/${tar_file}")\n\n"
 	msg+="Additionally, be sure to include the public key of the identity "
 	msg+="that signed the validation package. This key must be the key "
 	msg+="whose key fingerprint was printed on the PFT III application."
@@ -868,7 +869,7 @@ print_final_success()
 	msg="\nPlease review the marketing and CBEFF information compiled into "
 	msg+="your library to make sure it is correct:\n\n"
 	local line_num=0
-	while read i; do
+	while read -r i; do
 		k=$(cut -f1 -d= <<< "${i}" | sed 's/ \{1,\}$//')
 		v=$(cut -f2 -d= <<< "${i}" | sed -e 's/^ //' -e 's/ \{1,\}$//')
 		if [ "${v}" == "" ]; then
@@ -877,7 +878,7 @@ print_final_success()
 		fi
 		msg+=" -> ${k}:\n    ${font_green}${v}${font_reset}";
 		if [ ${line_num} -ne 5 ]; then msg+="\n"; fi
-		line_num=$(( ${line_num} + 1 ))
+		line_num=$(( line_num + 1 ))
 	done < <("${binary}" -i -z "${config_dir}" | head -n 8 | tail -n 6)
 	echo -e "${msg}" | fold -s
 	printline '=' 80
@@ -943,14 +944,14 @@ check_unknown()
 
 	local line=$(grep "${unknown_img}" "${output_dir}/${1}.log")
 	if [ "${1}" == "${create_func}" ]; then
-		if [ $(cut -f3 -d, <<< "${line}") -ne 0 ]; then
+		if [ "$(cut -f3 -d, <<< "${line}")" != "0" ]; then
 			local err="Extracting features from images with "
 			err+="unknown metadata is required. Please examine "
 			err+="creation log entry for name = \"${unknown_img}.\""
 			fail "${err}" "${output_dir}/${1}.log"
 		fi
 	else
-		if [ $(cut -f4 -d, <<< "${line}") -ne 0 ]; then
+		if [ "$(cut -f4 -d, <<< "${line}")" != "0" ]; then
 			local err="Unable to match a template generated from "
 			err+="an image with no metadata. Please examine "
 			err+="comparison log entry for probe name = "
@@ -968,22 +969,25 @@ check_variable_resolution()
 	local failure=0
 
 	for res in ${var_res}; do
-		while read line; do
+		while read -r line; do
 			if [ "${1}" == "${create_func}" ]; then
-				if [ $(cut -f3 -d, <<< "${line}") -eq 0 ] && \
-				    [ $(cut -f5 -d, <<< "${line}") -eq 0 ]; then
-					success=$(( ${success} + 1 ))
+				if [ "$(cut -f3 -d, <<< "${line}")" == "0" ] \
+				    && \
+				    [ "$(cut -f5 -d, <<< "${line}")" == "0" ];
+				    then
+					success=$(( success + 1 ))
 				else
-					failure=$(( ${failure} + 1 ))
+					failure=$(( failure + 1 ))
 				fi
 			else
-				if [ $(cut -f4 -d, <<< "${line}") -eq 0 ]; then
-					success=$(( ${success} + 1 ))
+				if [ "$(cut -f4 -d, <<< "${line}")" == "0" ];
+				then
+					success=$(( success + 1 ))
 				else
-					failure=$(( ${failure} + 1 ))
+					failure=$(( failure + 1 ))
 				fi
 			fi
-		done <<< $(grep "${res}" "${output_dir}/${1}.log")
+		done <<< "$(grep "${res}" "${output_dir}/${1}.log")"
 	done
 
 	if [ "${failure}" -eq 0 ]; then
@@ -991,7 +995,7 @@ check_variable_resolution()
 	fi
 
 	# Maybe participant had an issue with some images
-	local percentage=$(( (${failure} * 100) / (${success} + ${failure}) ))
+	local percentage=$(( (failure * 100) / (success + failure) ))
 	if [ "${percentage}" -eq 0 ]; then
 		return 0
 	fi
@@ -1062,8 +1066,8 @@ check_cbeff_dependencies()
 
 check_color_output
 check_wd
-cd "${wd}"
-read validation_version < "${wd}"/VERSION
+cd "${wd}" || exit 1
+read -r validation_version < "${wd}"/VERSION
 print_header
 
 if [ $# -ne 0 ]; then
