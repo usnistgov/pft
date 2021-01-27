@@ -880,9 +880,9 @@ print_final_success()
 			v+="Unspecified"
 		fi
 		msg+=" -> ${k}:\n    ${font_green}${v}${font_reset}";
-		if [ ${line_num} -ne 5 ]; then msg+="\n"; fi
+		if [ ${line_num} -ne 6 ]; then msg+="\n"; fi
 		line_num=$(( line_num + 1 ))
-	done < <(head -n 8 "${tar_file//.tar.gz/}/id.log" | tail -n 6)
+	done < <(head -n 9 "${tar_file//.tar.gz/}/id.log" | tail -n 7)
 	echo -e "${msg}" | fold -s
 	printline '=' 80
 
