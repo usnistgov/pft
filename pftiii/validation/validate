@@ -668,7 +668,12 @@ record_identification_information()
 
 	echo "Core Library = $(get_core_library_name)" >> "${log}"
 	chmod -w "${config_dir}"
-	${binary} -i -z "${config_dir}" >> "${log}"
+	if ! ${binary} -i -z "${config_dir}" >> "${log}"; then
+		local msg="Your algorithm did not exit cleanly when retrieving "
+		msg+="version information. Please check your implementation of "
+		msg+="getIdentification()."
+		fail "${msg}"
+	fi
 	chmod +w "${config_dir}"
 
 	check_cbeff_dependencies
@@ -877,7 +882,7 @@ print_final_success()
 		msg+=" -> ${k}:\n    ${font_green}${v}${font_reset}";
 		if [ ${line_num} -ne 5 ]; then msg+="\n"; fi
 		line_num=$(( line_num + 1 ))
-	done < <("${binary}" -i -z "${config_dir}" | head -n 8 | tail -n 6)
+	done < <(head -n 8 "${tar_file//.tar.gz/}/id.log" | tail -n 6)
 	echo -e "${msg}" | fold -s
 	printline '=' 80
 
