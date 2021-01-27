@@ -1032,7 +1032,7 @@ check_cbeff_dependencies()
 	key="CBEFF Feature Extraction Algorithm Identifier"
 	key_dependent="CBEFF Feature Extraction Algorithm Product Owner"
 	value=$(grep "${key}" "${log}" | cut -f2 -d= | tr -d '[:space:]')
-	value=$(sed -e 's/0x//' <<< "${value}")
+	value=${value//0x/}
 	if [ "${value}" != "" ]; then
 		value=$(grep "${key_dependent}" "${log}" | cut -f2 -d=)
 		value=$(tr -d '[:space:]' <<< "${value}" | sed -e 's/0x//')
@@ -1046,7 +1046,7 @@ check_cbeff_dependencies()
 	key="CBEFF Comparison Algorithm Identifier"
 	key_dependent="CBEFF Comparison Algorithm Product Owner"
 	value=$(grep "${key}" "${log}" | cut -f2 -d= | tr -d '[:space:]')
-	value=$(sed 's/0x//' <<< "${value}")
+	value=${value//0x/}
 	if [ "${value}" != "" ]; then
 		value=$(grep "${key_dependent}" "${log}" | cut -f2 -d=)
 		value=$(tr -d '[:space:]' <<< "${value}" | sed -e 's/0x//')
