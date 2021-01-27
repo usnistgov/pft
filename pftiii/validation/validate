@@ -171,7 +171,8 @@ check_for_images()
 	echo -n "Checking for validation images... "
 	if ! [ -d "${wd}"/${validation_image_dir} ]; then
 		# If directory doesn't exist, maybe user didn't expand archive
-		local image_archive=$(ls -r \
+		local image_archive
+		image_archive=$(ls -r \
 		    "${wd}"/${validation_image_download_prefix}* 2> /dev/null)
 		if [ "${image_archive}" != "" ]; then
 			echo -e "${font_yellow}[DEFER]${font_reset}"
@@ -364,7 +365,8 @@ core_library_present()
 		return 1
 	fi
 
-	local count=$(find "${lib_dir}" -type f -regextype posix-extended \
+	local count
+	count=$(find "${lib_dir}" -type f -regextype posix-extended \
 	    -regex "${lib_dir}/${lib_regex}" -printf "%P\n" | wc -l)
 	if [ "${count}" != "1" ]; then
 		return 1
@@ -391,14 +393,16 @@ get_core_library_name()
 	fi
 
 	local core_lib=""
-	local count=$(find "${lib_dir}" -type f -regextype posix-extended \
+	local count
+	count=$(find "${lib_dir}" -type f -regextype posix-extended \
 	    -regex "${lib_dir}/${lib_regex}" -printf "%P\n" | wc -l)
 	if [ "${count}" != "1" ]; then
 		fail "More than one core library found in ${lib_dir}"
 		return 1
 	fi
 
-	local core_lib=$(find "${lib_dir}" -type f -regextype posix-extended \
+	local core_lib
+	core_lib=$(find "${lib_dir}" -type f -regextype posix-extended \
 	    -regex "${lib_dir}/${lib_regex}" -printf "%P\n")
 	if [ "${core_lib}" == "" ]; then
 		local msg="No core library found in the library directory. "
@@ -462,9 +466,11 @@ check_library()
 	fi
 
 	# Some file systems are case-sensitive
-	local vers="$(get_lib_version)"
+	local vers
+	vers="$(get_lib_version)"
 	if [ "${vers}" != "$(tr '[:lower:]' '[:upper:]' <<< "${vers}")" ]; then
-		local correct="$(cut -f1 -d_ <<< "${core_lib}")_"
+		local correct
+		correct="$(cut -f1 -d_ <<< "${core_lib}")_"
 		correct+="$(cut -f2 -d_ <<< "${core_lib}")_"
 		correct+="$(tr '[:lower:]' '[:upper:]' <<< "${vers}")."
 		correct+="$(cut -f2 -d. <<< "${core_lib}")"
@@ -477,7 +483,8 @@ check_library()
 	fi
 
 	# If SONAME is present, check that it is the same as the lib name
-	local SONAME=$(objdump -p "${lib_dir}/${core_lib}" | grep SONAME | \
+	local SONAME
+	SONAME=$(objdump -p "${lib_dir}/${core_lib}" | grep SONAME | \
 	    awk '{print $2}')
 	if [ "${SONAME}" != "" ]; then
 		if [ "${SONAME}" != "${core_lib}" ]; then
@@ -510,7 +517,8 @@ random_number()
 check_for_previous_attempts()
 {
 	echo -n "Checking for previous validation attempts... "
-	local output_found=$(find "${wd}" -maxdepth 1 -type d -name \
+	local output_found
+	output_found=$(find "${wd}" -maxdepth 1 -type d -name \
 	    "$(basename "${output_dir}")*" -print -quit)
 	if [ "$output_found" != "" ]; then
 		fail "Previous attempt at validation found:" \
@@ -539,7 +547,8 @@ compile()
 
 	# Expected MD5 checksum of libpftiii.cpp.
 	local expected_lib_md5="54b314d85b3c8889365736500301fde5"
-	local actual_lib_md5=$(md5sum \
+	local actual_lib_md5
+	actual_lib_md5=$(md5sum \
 	    "${wd}"/../libpftiii/libpftiii.cpp | cut -f 1 -d ' ')
 	if [ "${expected_lib_md5}" != "${actual_lib_md5}" ]; then
 		local msg="Your copy of libpftiii.cpp appears to be modified. "
@@ -550,7 +559,8 @@ compile()
 
 	# Expected MD5 checksum of pftiii.h.
 	local expected_h_md5="a5a96e9f928ec01ebd22adef9f164953"
-	local actual_h_md5=$(md5sum \
+	local actual_h_md5
+	actual_h_md5=$(md5sum \
 	    "${wd}"/../include/pftiii.h | cut -f 1 -d ' ')
 	if [ "${expected_h_md5}" != "${actual_h_md5}" ]; then
 		local msg="Your copy of pftiii.h appears to be modified. "
@@ -577,7 +587,8 @@ compile()
 	fi
 
 	# Check that binary shows a dependency on the core library
-	local core_lib="$(get_core_library_name)"
+	local core_lib
+	core_lib="$(get_core_library_name)"
 	ldd "${binary}" | \
 	    grep "${lib_dir}/$(get_core_library_name)" > /dev/null 2>&1
 	if [ $? -ne 0 ]; then
@@ -608,8 +619,10 @@ check_api_level()
 	echo -n "Checking API version... "
 
 	# If API level is incorrect, text is printed to stderr on execution
-	local tempfile="$(mktemp)"
-	local output=$(${binary} 2> "${tempfile}")
+	local tempfile
+	tempfile="$(mktemp)"
+	local output
+	output=$(${binary} 2> "${tempfile}")
 	if [ "$(grep -c "Incompatible " "${tempfile}")" -ne 0 ]; then
 		output=$(<"${tempfile}")
 		rm "${tempfile}"
@@ -692,7 +705,8 @@ run_operation()
 	# forking, but we don't need to spawn a ton of processes either.
 	forks=$(( $(nproc --all) > 4 ? 4 : 2 ))
 
-	local log="${output_dir}"/run-$(tr -c -d '[:alnum:]' <<< \
+	local log
+	log="${output_dir}"/run-$(tr -c -d '[:alnum:]' <<< \
 	    "${function}").log
 	local command="${binary} ${op_flag} -r ${seed} -f ${forks} "
 	command+="-z ${config_dir}"
@@ -796,7 +810,8 @@ merge_logs()
 # Generate the name of the validation tarball.
 get_tarball_name()
 {
-	local name="pftiii_validation_$(get_organization_name)_"
+	local name
+	name="pftiii_validation_$(get_organization_name)_"
 	name+="$(get_lib_version).tar.gz"
 	echo "${name}"
 }
@@ -806,8 +821,10 @@ make_tarball()
 {
 	echo -n "Creating validation submission... "
 
-	local tar_file=$(get_tarball_name)
-	local new_name="${wd}/$(basename "$(get_tarball_name)" .tar.gz)"
+	local tar_file
+	tar_file=$(get_tarball_name)
+	local new_name
+	new_name="${wd}/$(basename "$(get_tarball_name)" .tar.gz)"
 
 	mv "${output_dir}" "${new_name}"
 	cp -pr "${lib_dir}" "${new_name}"
@@ -834,7 +851,8 @@ make_tarball()
 # Print success message.
 print_final_success()
 {
-	local tar_file="$(get_tarball_name)"
+	local tar_file
+	tar_file="$(get_tarball_name)"
 
 	echo
 	printline '=' 80
@@ -942,7 +960,8 @@ check_unknown()
 {
 	local unknown_img="00002579_S_265x431_500_29_00_00.gray"
 
-	local line=$(grep "${unknown_img}" "${output_dir}/${1}.log")
+	local line
+	line=$(grep "${unknown_img}" "${output_dir}/${1}.log")
 	if [ "${1}" == "${create_func}" ]; then
 		if [ "$(cut -f3 -d, <<< "${line}")" != "0" ]; then
 			local err="Extracting features from images with "
