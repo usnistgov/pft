@@ -179,9 +179,7 @@ check_for_images()
 			for i in $(find "${wd}" -maxdepth 1 -name \
 			    "${validation_image_download_prefix}*" | sort); do
 				echo -n "Expanding $(basename "${i}")... "
-				tar xf "${i}" > /dev/null 2>&1
-
-				if [ $? -ne 0 ]; then
+				if ! tar xf "${i}" > /dev/null 2>&1; then
 					fail "Failed to expand ${i}"
 				else
 					okay
@@ -212,9 +210,7 @@ check_for_images()
 	    			fi
 
 				echo -n "Expanding $(basename "${i}")... "
-				tar xf "${i}" > /dev/null 2>&1
-
-				if [ $? -ne 0 ]; then
+				if ! tar xf "${i}" > /dev/null 2>&1; then
 					fail "Failed to expand ${i}"
 					return
 				else
@@ -278,14 +274,12 @@ check_required_packages()
 	local pkgs="binutils centos-release coreutils curl file gawk gcc-c++ "
 	local pkgs+="grep iputils make sed which yum"
 
-	which yum > /dev/null
-	if [ $? -ne 0 ]; then
+	if ! which yum > /dev/null; then
 		fail "which and yum are required to be installed for validation"
 	fi
 
 	for pkg in ${pkgs}; do
-		yum -q list installed "${pkg}" > /dev/null 2>&1
-		if [ $? -ne 0 ]; then
+		if ! yum -q list installed "${pkg}" > /dev/null 2>&1; then
 			msg="The required package \"${pkg}\" was not "
 			msg+="installed. Try \`yum install $pkg\` to install "
 			msg+="\"$pkg.\""
@@ -308,11 +302,11 @@ check_validation_version()
 
 	echo -n "Checking validation version... "
 	# d.root-servers.net -> 199.7.91.13
-	ping -W 1 -c 1 199.7.91.13 > /dev/null 2>&1
-	if [ $? -eq 0 ]; then
+	if ping -W 1 -c 1 199.7.91.13 > /dev/null 2>&1; then
 		local internet_version=0
-		internet_version=$(curl -m 10 -f $version_url 2>/dev/null)
-		if [ $? -ne 0 ]; then
+		if ! internet_version=$(curl -m 10 -f "${version_url}" \
+		    2>/dev/null)
+		then
 			echo -e -n "${font_dim}(connection failure)"
 			echo -e -n "${font_reset} ${font_yellow}[SKIP]"
 			echo -e "${font_reset}"
@@ -378,8 +372,7 @@ core_library_present()
 # Get the name of the core library
 get_core_library_name()
 {
-	core_library_present
-	if [ $? -ne 0 ]; then
+	if ! core_library_present; then
 		return 1
 	fi
 
@@ -418,8 +411,8 @@ get_core_library_name()
 # Get the name of the organization from the core library.
 get_organization_name()
 {
-	name="$(get_core_library_name)"
-	if [ $? -ne 0 ]; then
+	local name
+	if ! name="$(get_core_library_name)"; then
 		return 1
 	fi
 
@@ -429,8 +422,8 @@ get_organization_name()
 # Get the version of the library from the core library.
 get_lib_version()
 {
-	name="$(get_core_library_name)"
-	if [ $? -ne 0 ]; then
+	local name
+	if ! name="$(get_core_library_name)"; then
 		return 1
 	fi
 
@@ -444,16 +437,13 @@ check_library()
 	echo -n "Looking for core library... "
 
 	local core_lib=""
-	core_library_present
-	if [ $? -eq 0 ]; then
-		core_lib=$(get_core_library_name)
-		if [ $? -ne 0 ]; then
+	if core_library_present; then
+		if ! core_lib=$(get_core_library_name); then
 			echo "${core_lib}"
 			return 1
 		fi
 	else
-		get_core_library_name
-		if [ $? -ne 0 ]; then
+		if ! get_core_library_name; then
                 	local msg="No core library found in the library "
 			msg+="directory. Please review the PFT III library "
 			msg+="naming conventions."
@@ -580,8 +570,7 @@ compile()
 
 	# Compile
 	local log="${output_dir}/compile.log"
-	make -C "${src_dir}" 2>&1 | tee "${log}" > /dev/null
-	if [ $? -ne 0 ]; then
+	if ! make -C "${src_dir}" 2>&1 | tee "${log}" > /dev/null; then
 		fail "An error occurred during compilation. Please review:" \
 		    "${log}"
 	fi
@@ -589,9 +578,8 @@ compile()
 	# Check that binary shows a dependency on the core library
 	local core_lib
 	core_lib="$(get_core_library_name)"
-	ldd "${binary}" | \
-	    grep "${lib_dir}/$(get_core_library_name)" > /dev/null 2>&1
-	if [ $? -ne 0 ]; then
+	if ! ldd "${binary}" | \
+	    grep "${lib_dir}/$(get_core_library_name)" > /dev/null 2>&1; then
 		msg="${core_lib} is not a dependency of the compiled binary. "
 		msg+="${core_lib} was either renamed after being built, or the "
 		msg+="binary is linking against a version of ${core_lib} from "
@@ -660,14 +648,12 @@ clean_previous_attempts()
 
 	okay
 
-	core_library_present
-	if [ $? -ne 0 ]; then
+	if ! core_library_present; then
 		return 0
 	fi
 
 	echo -n "Cleaning compilation... "
-	make -j -C "${src_dir}" clean > /dev/null
-	if [ $? -ne 0 ]; then
+	if ! make -j -C "${src_dir}" clean > /dev/null; then
 		fail "Unable to 'make clean' in" "$(rp "${src_dir}")"
 		return 1
 	fi
@@ -712,8 +698,7 @@ run_operation()
 	command+="-z ${config_dir}"
 	echo "${command}" >> "${log}"
 	chmod -w "${config_dir}"
-	${command} >> "${log}" 2>&1
-	if [ $? -ne 0 ]; then
+	if ! ${command} >> "${log}" 2>&1; then
 		local msg="An error occurred during tests of ${function}. "
 		msg+="Please investigate:"
 		fail "${msg}" "${log}"
@@ -742,8 +727,7 @@ check_logs()
 	merge_logs "$(tr -c -d '[:alnum:]' <<< "${operation}")"
 	check_log_counts "${operation}"
 	check_unknown "${operation}"
-	check_variable_resolution "${operation}"
-	if [ $? -eq 0 ]; then
+	if check_variable_resolution "${operation}"; then
 		okay
 	fi
 }
@@ -831,17 +815,13 @@ make_tarball()
 	cp -pr "${config_dir}" "${new_name}"
 
 	# NIST will build a fresh libpftiii.so
-	rm "${new_name}/$(basename "${lib_dir}")/libpftiii.so"
-
-	if [ ${?} -ne 0 ]; then
+	if ! rm "${new_name}/$(basename "${lib_dir}")/libpftiii.so"; then
 		local msg="An error occurred while copying libraries. Check "
 		msg+="file permissions."
 		fail "${msg}"
 	fi
-	cd "${wd}" || exit && \
-	    tar czf "${tar_file}" "$(basename "${new_name}")" > /dev/null && \
-	    cd - || exit > /dev/null
-	if [ $? -ne 0 ]; then
+	if ! tar -C "${wd}" -c -z -f "${tar_file}" "$(basename "${new_name}")" \
+	    > /dev/null; then
 		fail "There was an issue creating the validation submission."
 	fi
 
