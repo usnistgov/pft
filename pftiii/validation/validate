@@ -157,7 +157,7 @@ okay()
 printline()
 {
 	if [ $# -ne 2 ]; then
-		echo "Usage: ${FUNCNAME} <char> <times>"
+		echo "Usage: ${FUNCNAME[0]} <char> <times>"
 		return 1
 	fi
 
@@ -534,7 +534,7 @@ compile()
 	echo -n "Building... "
 
 	if [ $# -ne 1 ]; then
-		fail "Usage: ${FUNCNAME} <random_seed>"
+		fail "Usage: ${FUNCNAME[0]} <random_seed>"
 	fi
 
 	# Expected MD5 checksum of libpftiii.cpp.
@@ -679,7 +679,7 @@ record_identification_information()
 run_operation()
 {
 	if [ $# -ne 3 ]; then
-		fail "Usage: ${FUNCNAME} <random_seed> <function> <op_flag>"
+		fail "Usage: ${FUNCNAME[0]} <random_seed> <function> <op_flag>"
 	fi
 
 	local seed=$1
