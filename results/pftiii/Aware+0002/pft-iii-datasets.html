@@ -1,0 +1,4346 @@
+<!DOCTYPE html>
+<html >
+
+<head>
+
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>3 PFT III Datasets | Aware+0002</title>
+  <meta name="description" content="3 PFT III Datasets | Aware+0002">
+  <meta name="generator" content="bookdown  and GitBook 2.6.7">
+
+  <meta property="og:title" content="3 PFT III Datasets | Aware+0002" />
+  <meta property="og:type" content="book" />
+  
+  
+  
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="3 PFT III Datasets | Aware+0002" />
+  
+  
+  
+
+<meta name="author" content="Proprietary Fingerprint Template (PFT) Evaluation III">
+
+
+
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  
+  
+<link rel="prev" href="timing-sample-dataset.html">
+<link rel="next" href="comparison-to-pft-ii.html">
+<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="https://pages.nist.gov/nist-header-footer/css/nist-combined.css">
+<script src="https://pages.nist.gov/nist-header-footer/js/nist-header-footer.js" type="text/javascript" defer="defer"></script>
+<script async id="_fed_an_ua_tag" src="https://dap.digitalgov.gov/Universal-Federated-Analytics-Min.js?agency=NIST&subagency=github&pua=UA-66610693-1&yt=true&exts=ppsx,pps,f90,sch,rtf,wrl,txz,m1v,xlsm,msi,xsd,f,tif,eps,mpg,xml,pl,xlt,c"></script>
+
+
+
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li class="chapter" data-level="1" data-path="participation-information.html"><a href="participation-information.html"><i class="fa fa-check"></i><b>1</b> Participation Information</a><ul>
+<li class="chapter" data-level="1.1" data-path="participation-information.html"><a href="participation-information.html#names"><i class="fa fa-check"></i><b>1.1</b> Names</a></li>
+<li class="chapter" data-level="1.2" data-path="participation-information.html"><a href="participation-information.html#dates"><i class="fa fa-check"></i><b>1.2</b> Dates</a></li>
+<li class="chapter" data-level="1.3" data-path="participation-information.html"><a href="participation-information.html#libraries"><i class="fa fa-check"></i><b>1.3</b> Libraries</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="timing-sample-dataset.html"><a href="timing-sample-dataset.html"><i class="fa fa-check"></i><b>2</b> Timing Sample Dataset</a><ul>
+<li class="chapter" data-level="2.1" data-path="timing-sample-dataset.html"><a href="timing-sample-dataset.html#template-size"><i class="fa fa-check"></i><b>2.1</b> Template Size</a></li>
+<li class="chapter" data-level="2.2" data-path="timing-sample-dataset.html"><a href="timing-sample-dataset.html#template-creation-time"><i class="fa fa-check"></i><b>2.2</b> Template Creation Time</a></li>
+<li class="chapter" data-level="2.3" data-path="timing-sample-dataset.html"><a href="timing-sample-dataset.html#template-comparison-time"><i class="fa fa-check"></i><b>2.3</b> Template Comparison Time</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="pft-iii-datasets.html"><a href="pft-iii-datasets.html"><i class="fa fa-check"></i><b>3</b> PFT III Datasets</a><ul>
+<li class="chapter" data-level="3.1" data-path="pft-iii-datasets.html"><a href="pft-iii-datasets.html#arizona-department-of-public-safety"><i class="fa fa-check"></i><b>3.1</b> Arizona Department of Public Safety</a></li>
+<li class="chapter" data-level="3.2" data-path="pft-iii-datasets.html"><a href="pft-iii-datasets.html#los-angeles-county-sheriffs-department"><i class="fa fa-check"></i><b>3.2</b> Los Angeles County Sheriff’s Department</a></li>
+<li class="chapter" data-level="3.3" data-path="pft-iii-datasets.html"><a href="pft-iii-datasets.html#port-of-entry-biovisa-application"><i class="fa fa-check"></i><b>3.3</b> Port of Entry, BioVisa Application</a></li>
+<li class="chapter" data-level="3.4" data-path="pft-iii-datasets.html"><a href="pft-iii-datasets.html#us-visit-2"><i class="fa fa-check"></i><b>3.4</b> US VISIT #2</a></li>
+<li class="chapter" data-level="3.5" data-path="pft-iii-datasets.html"><a href="pft-iii-datasets.html#iarpa-nail-to-nail"><i class="fa fa-check"></i><b>3.5</b> IARPA Nail-to-Nail</a><ul>
+<li class="chapter" data-level="3.5.1" data-path="pft-iii-datasets.html"><a href="pft-iii-datasets.html#by-device"><i class="fa fa-check"></i><b>3.5.1</b> By Device</a></li>
+<li class="chapter" data-level="3.5.2" data-path="pft-iii-datasets.html"><a href="pft-iii-datasets.html#resample-test"><i class="fa fa-check"></i><b>3.5.2</b> Resample Test</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="comparison-to-pft-ii.html"><a href="comparison-to-pft-ii.html"><i class="fa fa-check"></i><b>4</b> Comparison to PFT II</a><ul>
+<li class="chapter" data-level="4.1" data-path="comparison-to-pft-ii.html"><a href="comparison-to-pft-ii.html#all-fingers"><i class="fa fa-check"></i><b>4.1</b> All Fingers</a></li>
+<li class="chapter" data-level="4.2" data-path="comparison-to-pft-ii.html"><a href="comparison-to-pft-ii.html#index-fingers"><i class="fa fa-check"></i><b>4.2</b> Index Fingers</a></li>
+<li class="chapter" data-level="4.3" data-path="comparison-to-pft-ii.html"><a href="comparison-to-pft-ii.html#arizonalos-angeles-county"><i class="fa fa-check"></i><b>4.3</b> Arizona/Los Angeles County</a></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="comparison-to-original-pft.html"><a href="comparison-to-original-pft.html"><i class="fa fa-check"></i><b>5</b> Comparison to Original PFT</a><ul>
+<li class="chapter" data-level="5.1" data-path="comparison-to-original-pft.html"><a href="comparison-to-original-pft.html#index-fingers-1"><i class="fa fa-check"></i><b>5.1</b> Index Fingers</a></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="comparison-to-minex-iii.html"><a href="comparison-to-minex-iii.html"><i class="fa fa-check"></i><b>6</b> Comparison to MINEX III</a><ul>
+<li class="chapter" data-level="6.1" data-path="comparison-to-minex-iii.html"><a href="comparison-to-minex-iii.html#single-finger"><i class="fa fa-check"></i><b>6.1</b> Single Finger</a></li>
+<li class="chapter" data-level="6.2" data-path="comparison-to-minex-iii.html"><a href="comparison-to-minex-iii.html#two-finger"><i class="fa fa-check"></i><b>6.2</b> Two Finger</a></li>
+</ul></li>
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./"><code>Aware+0002</code></a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="pft-iii-datasets" class="section level1">
+<h1><span class="header-section-number">3</span> PFT III Datasets</h1>
+<p>Although large tests, both PFT and PFT II only used <em>subsets</em> of data available from the Arizona Department of Public Safety, the Los Angeles County Sheriff’s Department, and the Department of Homeland Security. For PFT III, NIST is using new subject comparisons from each of these datasets. Additionally, PFT III adds comparisons of public and sequestered data collected as part of the Intelligence Advanced Research Project Activity (IARPA)’s Nail-to-Nail (N2N) Challenge.</p>
+<div id="arizona-department-of-public-safety" class="section level2">
+<h2><span class="header-section-number">3.1</span> Arizona Department of Public Safety</h2>
+<p>The Arizona Department of Public Safety (AZDPS) dataset consists of plain and rolled impressions of all ten fingers. <a href="pft-iii-datasets.html#fig:fig-pft3-azdps">Figure <a href="pft-iii-datasets.html#fig:fig-pft3-azdps">3.1</a></a> and <a href="pft-iii-datasets.html#tab:tab-pft3-azdps">Table <a href="pft-iii-datasets.html#tab:tab-pft3-azdps">3.1</a></a> show the detection error tradeoff (DET) curves of all fingers not compared in other PFT tests. This data is separated by finger position in <a href="pft-iii-datasets.html#fig:fig-pft3-azdps-frgp">Figure <a href="pft-iii-datasets.html#fig:fig-pft3-azdps-frgp">3.2</a></a> and <a href="pft-iii-datasets.html#tab:tab-pft3-azdps-frgp">Table <a href="pft-iii-datasets.html#tab:tab-pft3-azdps-frgp">3.2</a></a> and again by impression type in <a href="pft-iii-datasets.html#fig:fig-pft3-azdps-frgp-imp">Figure <a href="pft-iii-datasets.html#fig:fig-pft3-azdps-frgp-imp">3.3</a></a> and <a href="pft-iii-datasets.html#tab:tab-pft3-azdps-frgp-imp">Table <a href="pft-iii-datasets.html#tab:tab-pft3-azdps-frgp-imp">3.3</a></a>. Values made by combinations of fingers were generated by summing the individual similarity scores for comparisons of the individual finger and dividing by the number of values added. This technique is known as <em>sum fusion</em>.</p>
+<div class="figure" style="text-align: center"><span id="fig:fig-pft3-azdps"></span>
+<img src="plots/Aware+0002_PFT3_AZDPS_overall.png" alt="Detection error tradeoff of all comparisons from all fingers in the PFT III AZDPS dataset. Numbers in gray indicate the similarity threshold." width="1800" />
+<p class="caption">
+Figure 3.1: Detection error tradeoff of all comparisons from all fingers in the PFT III AZDPS dataset. Numbers in gray indicate the similarity threshold.
+</p>
+</div>
+<table>
+<caption>
+<span id="tab:tab-pft3-azdps">Table 3.1: </span>False non-match rate values at specific false match rates for all comparisons from all fingers in the PFT III AZDPS dataset
+</caption>
+<thead>
+<tr>
+<th style="text-align:right;">
+FNMR @ FMR = 0.0001
+</th>
+<th style="text-align:right;">
+FNMR @ FMR = 0.001
+</th>
+<th style="text-align:right;">
+FNMR @ FMR = 0.01
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:right;">
+0.0237
+</td>
+<td style="text-align:right;">
+0.0183
+</td>
+<td style="text-align:right;">
+0.0174
+</td>
+</tr>
+</tbody>
+</table>
+<div class="figure" style="text-align: center"><span id="fig:fig-pft3-azdps-frgp"></span>
+<img src="plots/Aware+0002_PFT3_AZDPS_by_frgp.png" alt="Detection error tradeoff of all comparisons from all fingers in the PFT III AZDPS dataset, separated by finger position. Combined finger positions were generated by sum fusion." width="1800" />
+<p class="caption">
+Figure 3.2: Detection error tradeoff of all comparisons from all fingers in the PFT III AZDPS dataset, separated by finger position. Combined finger positions were generated by sum fusion.
+</p>
+</div>
+<table class="table table-striped table-hover" style="margin-left: auto; margin-right: auto;">
+<caption>
+<span id="tab:tab-pft3-azdps-frgp">Table 3.2: </span>False non-match rate values at specific false match rates for all comparisons from all fingers in the PFT III AZDPS dataset, separated by finger position. Combined finger positions were generated by sum fusion.
+</caption>
+<thead>
+<tr>
+<th style="text-align:left;">
+FRGP
+</th>
+<th style="text-align:right;">
+FNMR @ FMR = 0.0001
+</th>
+<th style="text-align:right;">
+FNMR @ FMR = 0.001
+</th>
+<th style="text-align:right;">
+FNMR @ FMR = 0.01
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+R Thumb
+</td>
+<td style="text-align:right;">
+0.0104
+</td>
+<td style="text-align:right;">
+0.0095
+</td>
+<td style="text-align:right;">
+0.0095
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+R Index
+</td>
+<td style="text-align:right;">
+0.0215
+</td>
+<td style="text-align:right;">
+0.0160
+</td>
+<td style="text-align:right;">
+0.0151
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+R Middle
+</td>
+<td style="text-align:right;">
+0.0177
+</td>
+<td style="text-align:right;">
+0.0141
+</td>
+<td style="text-align:right;">
+0.0128
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+R Ring
+</td>
+<td style="text-align:right;">
+0.0204
+</td>
+<td style="text-align:right;">
+0.0167
+</td>
+<td style="text-align:right;">
+0.0167
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+R Little
+</td>
+<td style="text-align:right;">
+0.0423
+</td>
+<td style="text-align:right;">
+0.0317
+</td>
+<td style="text-align:right;">
+0.0287
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+L Thumb
+</td>
+<td style="text-align:right;">
+0.0107
+</td>
+<td style="text-align:right;">
+0.0094
+</td>
+<td style="text-align:right;">
+0.0094
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+L Index
+</td>
+<td style="text-align:right;">
+0.0227
+</td>
+<td style="text-align:right;">
+0.0177
+</td>
+<td style="text-align:right;">
+0.0165
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+L Middle
+</td>
+<td style="text-align:right;">
+0.0161
+</td>
+<td style="text-align:right;">
+0.0130
+</td>
+<td style="text-align:right;">
+0.0121
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+L Ring
+</td>
+<td style="text-align:right;">
+0.0238
+</td>
+<td style="text-align:right;">
+0.0184
+</td>
+<td style="text-align:right;">
+0.0181
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+L Little
+</td>
+<td style="text-align:right;">
+0.0546
+</td>
+<td style="text-align:right;">
+0.0410
+</td>
+<td style="text-align:right;">
+0.0358
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+R &amp; L Thumb
+</td>
+<td style="text-align:right;">
+0.0037
+</td>
+<td style="text-align:right;">
+0.0032
+</td>
+<td style="text-align:right;">
+0.0031
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+R &amp; L Index
+</td>
+<td style="text-align:right;">
+0.0056
+</td>
+<td style="text-align:right;">
+0.0041
+</td>
+<td style="text-align:right;">
+0.0035
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+R &amp; L Middle
+</td>
+<td style="text-align:right;">
+0.0053
+</td>
+<td style="text-align:right;">
+0.0043
+</td>
+<td style="text-align:right;">
+0.0037
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+R &amp; L Ring
+</td>
+<td style="text-align:right;">
+0.0069
+</td>
+<td style="text-align:right;">
+0.0053
+</td>
+<td style="text-align:right;">
+0.0050
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+R &amp; L Little
+</td>
+<td style="text-align:right;">
+0.0161
+</td>
+<td style="text-align:right;">
+0.0117
+</td>
+<td style="text-align:right;">
+0.0088
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+R Index &amp; Ring
+</td>
+<td style="text-align:right;">
+0.0068
+</td>
+<td style="text-align:right;">
+0.0054
+</td>
+<td style="text-align:right;">
+0.0045
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+L Index &amp; Ring
+</td>
+<td style="text-align:right;">
+0.0073
+</td>
+<td style="text-align:right;">
+0.0059
+</td>
+<td style="text-align:right;">
+0.0050
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+R Slap
+</td>
+<td style="text-align:right;">
+0.0038
+</td>
+<td style="text-align:right;">
+0.0032
+</td>
+<td style="text-align:right;">
+0.0026
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+L Slap
+</td>
+<td style="text-align:right;">
+0.0050
+</td>
+<td style="text-align:right;">
+0.0038
+</td>
+<td style="text-align:right;">
+0.0030
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+R Hand
+</td>
+<td style="text-align:right;">
+0.0022
+</td>
+<td style="text-align:right;">
+0.0019
+</td>
+<td style="text-align:right;">
+0.0016
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+L Hand
+</td>
+<td style="text-align:right;">
+0.0026
+</td>
+<td style="text-align:right;">
+0.0020
+</td>
+<td style="text-align:right;">
+0.0017
+</td>
+</tr>
+</tbody>
+</table>
+<div class="figure" style="text-align: center"><span id="fig:fig-pft3-azdps-frgp-imp"></span>
+<img src="plots/Aware+0002_PFT3_AZDPS_by_frgp_imp.png" alt="Detection error tradeoff of all comparisons from all fingers in the PFT III AZDPS dataset, separated by finger position and impression type. Combined finger positions were generated by sum fusion." width="1800" />
+<p class="caption">
+Figure 3.3: Detection error tradeoff of all comparisons from all fingers in the PFT III AZDPS dataset, separated by finger position and impression type. Combined finger positions were generated by sum fusion.
+</p>
+</div>
+<table class="table table-striped table-hover" style="margin-left: auto; margin-right: auto;">
+<caption>
+<span id="tab:tab-pft3-azdps-frgp-imp">Table 3.3: </span>False non-match rate values at specific false match rates for all comparisons from all fingers in the PFT III AZDPS dataset, separated by finger position and impression type. Combined finger positions were generated by sum fusion.
+</caption>
+<thead>
+<tr>
+<th style="text-align:left;">
+FRGP
+</th>
+<th style="text-align:right;">
+FNMR @ FMR = 0.0001
+</th>
+<th style="text-align:right;">
+FNMR @ FMR = 0.001
+</th>
+<th style="text-align:right;">
+FNMR @ FMR = 0.01
+</th>
+</tr>
+</thead>
+<tbody>
+<tr grouplength="21">
+<td colspan="4" style="border-bottom: 1px solid;">
+<strong>Plain to Plain</strong>
+</td>
+</tr>
+<tr>
+<td style="text-align:left; padding-left: 2em;" indentlevel="1">
+R Thumb
+</td>
+<td style="text-align:right;">
+0.0118
+</td>
+<td style="text-align:right;">
+0.0105
+</td>
+<td style="text-align:right;">
+0.0105
+</td>
+</tr>
+<tr>
+<td style="text-align:left; padding-left: 2em;" indentlevel="1">
+R Index
+</td>
+<td style="text-align:right;">
+0.0348
+</td>
+<td style="text-align:right;">
+0.0258
+</td>
+<td style="text-align:right;">
+0.0220
+</td>
+</tr>
+<tr>
+<td style="text-align:left; padding-left: 2em;" indentlevel="1">
+R Middle
+</td>
+<td style="text-align:right;">
+0.0234
+</td>
+<td style="text-align:right;">
+0.0190
+</td>
+<td style="text-align:right;">
+0.0165
+</td>
+</tr>
+<tr>
+<td style="text-align:left; padding-left: 2em;" indentlevel="1">
+R Ring
+</td>
+<td style="text-align:right;">
+0.0257
+</td>
+<td style="text-align:right;">
+0.0195
+</td>
+<td style="text-align:right;">
+0.0193
+</td>
+</tr>
+<tr>
+<td style="text-align:left; padding-left: 2em;" indentlevel="1">
+R Little
+</td>
+<td style="text-align:right;">
+0.0576
+</td>
+<td style="text-align:right;">
+0.0413
+</td>
+<td style="text-align:right;">
+0.0350
+</td>
+</tr>
+<tr>
+<td style="text-align:left; padding-left: 2em;" indentlevel="1">
+L Thumb
+</td>
+<td style="text-align:right;">
+0.0116
+</td>
+<td style="text-align:right;">
+0.0100
+</td>
+<td style="text-align:right;">
+0.0098
+</td>
+</tr>
+<tr>
+<td style="text-align:left; padding-left: 2em;" indentlevel="1">
+L Index
+</td>
+<td style="text-align:right;">
+0.0347
+</td>
+<td style="text-align:right;">
+0.0262
+</td>
+<td style="text-align:right;">
+0.0230
+</td>
+</tr>
+<tr>
+<td style="text-align:left; padding-left: 2em;" indentlevel="1">
+L Middle
+</td>
+<td style="text-align:right;">
+0.0192
+</td>
+<td style="text-align:right;">
+0.0155
+</td>
+<td style="text-align:right;">
+0.0142
+</td>
+</tr>
+<tr>
+<td style="text-align:left; padding-left: 2em;" indentlevel="1">
+L Ring
+</td>
+<td style="text-align:right;">
+0.0271
+</td>
+<td style="text-align:right;">
+0.0200
+</td>
+<td style="text-align:right;">
+0.0191
+</td>
+</tr>
+<tr>
+<td style="text-align:left; padding-left: 2em;" indentlevel="1">
+L Little
+</td>
+<td style="text-align:right;">
+0.0754
+</td>
+<td style="text-align:right;">
+0.0580
+</td>
+<td style="text-align:right;">
+0.0473
+</td>
+</tr>
+<tr>
+<td style="text-align:left; padding-left: 2em;" indentlevel="1">
+R &amp; L Thumb
+</td>
+<td style="text-align:right;">
+0.0041
+</td>
+<td style="text-align:right;">
+0.0035
+</td>
+<td style="text-align:right;">
+0.0032
+</td>
+</tr>
+<tr>
+<td style="text-align:left; padding-left: 2em;" indentlevel="1">
+R &amp; L Index
+</td>
+<td style="text-align:right;">
+0.0086
+</td>
+<td style="text-align:right;">
+0.0064
+</td>
+<td style="text-align:right;">
+0.0047
+</td>
+</tr>
+<tr>
+<td style="text-align:left; padding-left: 2em;" indentlevel="1">
+R &amp; L Middle
+</td>
+<td style="text-align:right;">
+0.0071
+</td>
+<td style="text-align:right;">
+0.0059
+</td>
+<td style="text-align:right;">
+0.0049
+</td>
+</tr>
+<tr>
+<td style="text-align:left; padding-left: 2em;" indentlevel="1">
+R &amp; L Ring
+</td>
+<td style="text-align:right;">
+0.0077
+</td>
+<td style="text-align:right;">
+0.0057
+</td>
+<td style="text-align:right;">
+0.0051
+</td>
+</tr>
+<tr>
+<td style="text-align:left; padding-left: 2em;" indentlevel="1">
+R &amp; L Little
+</td>
+<td style="text-align:right;">
+0.0197
+</td>
+<td style="text-align:right;">
+0.0147
+</td>
+<td style="text-align:right;">
+0.0098
+</td>
+</tr>
+<tr>
+<td style="text-align:left; padding-left: 2em;" indentlevel="1">
+R Index &amp; Ring
+</td>
+<td style="text-align:right;">
+0.0096
+</td>
+<td style="text-align:right;">
+0.0078
+</td>
+<td style="text-align:right;">
+0.0058
+</td>
+</tr>
+<tr>
+<td style="text-align:left; padding-left: 2em;" indentlevel="1">
+L Index &amp; Ring
+</td>
+<td style="text-align:right;">
+0.0092
+</td>
+<td style="text-align:right;">
+0.0076
+</td>
+<td style="text-align:right;">
+0.0062
+</td>
+</tr>
+<tr>
+<td style="text-align:left; padding-left: 2em;" indentlevel="1">
+R Slap
+</td>
+<td style="text-align:right;">
+0.0050
+</td>
+<td style="text-align:right;">
+0.0043
+</td>
+<td style="text-align:right;">
+0.0033
+</td>
+</tr>
+<tr>
+<td style="text-align:left; padding-left: 2em;" indentlevel="1">
+L Slap
+</td>
+<td style="text-align:right;">
+0.0060
+</td>
+<td style="text-align:right;">
+0.0050
+</td>
+<td style="text-align:right;">
+0.0035
+</td>
+</tr>
+<tr>
+<td style="text-align:left; padding-left: 2em;" indentlevel="1">
+R Hand
+</td>
+<td style="text-align:right;">
+0.0025
+</td>
+<td style="text-align:right;">
+0.0020
+</td>
+<td style="text-align:right;">
+0.0016
+</td>
+</tr>
+<tr>
+<td style="text-align:left; padding-left: 2em;" indentlevel="1">
+L Hand
+</td>
+<td style="text-align:right;">
+0.0026
+</td>
+<td style="text-align:right;">
+0.0021
+</td>
+<td style="text-align:right;">
+0.0016
+</td>
+</tr>
+<tr grouplength="21">
+<td colspan="4" style="border-bottom: 1px solid;">
+<strong>Plain to Rolled</strong>
+</td>
+</tr>
+<tr>
+<td style="text-align:left; padding-left: 2em;" indentlevel="1">
+R Thumb
+</td>
+<td style="text-align:right;">
+0.0104
+</td>
+<td style="text-align:right;">
+0.0096
+</td>
+<td style="text-align:right;">
+0.0096
+</td>
+</tr>
+<tr>
+<td style="text-align:left; padding-left: 2em;" indentlevel="1">
+R Index
+</td>
+<td style="text-align:right;">
+0.0210
+</td>
+<td style="text-align:right;">
+0.0161
+</td>
+<td style="text-align:right;">
+0.0152
+</td>
+</tr>
+<tr>
+<td style="text-align:left; padding-left: 2em;" indentlevel="1">
+R Middle
+</td>
+<td style="text-align:right;">
+0.0185
+</td>
+<td style="text-align:right;">
+0.0144
+</td>
+<td style="text-align:right;">
+0.0129
+</td>
+</tr>
+<tr>
+<td style="text-align:left; padding-left: 2em;" indentlevel="1">
+R Ring
+</td>
+<td style="text-align:right;">
+0.0213
+</td>
+<td style="text-align:right;">
+0.0171
+</td>
+<td style="text-align:right;">
+0.0171
+</td>
+</tr>
+<tr>
+<td style="text-align:left; padding-left: 2em;" indentlevel="1">
+R Little
+</td>
+<td style="text-align:right;">
+0.0420
+</td>
+<td style="text-align:right;">
+0.0333
+</td>
+<td style="text-align:right;">
+0.0295
+</td>
+</tr>
+<tr>
+<td style="text-align:left; padding-left: 2em;" indentlevel="1">
+L Thumb
+</td>
+<td style="text-align:right;">
+0.0108
+</td>
+<td style="text-align:right;">
+0.0095
+</td>
+<td style="text-align:right;">
+0.0094
+</td>
+</tr>
+<tr>
+<td style="text-align:left; padding-left: 2em;" indentlevel="1">
+L Index
+</td>
+<td style="text-align:right;">
+0.0226
+</td>
+<td style="text-align:right;">
+0.0179
+</td>
+<td style="text-align:right;">
+0.0167
+</td>
+</tr>
+<tr>
+<td style="text-align:left; padding-left: 2em;" indentlevel="1">
+L Middle
+</td>
+<td style="text-align:right;">
+0.0167
+</td>
+<td style="text-align:right;">
+0.0135
+</td>
+<td style="text-align:right;">
+0.0122
+</td>
+</tr>
+<tr>
+<td style="text-align:left; padding-left: 2em;" indentlevel="1">
+L Ring
+</td>
+<td style="text-align:right;">
+0.0242
+</td>
+<td style="text-align:right;">
+0.0189
+</td>
+<td style="text-align:right;">
+0.0185
+</td>
+</tr>
+<tr>
+<td style="text-align:left; padding-left: 2em;" indentlevel="1">
+L Little
+</td>
+<td style="text-align:right;">
+0.0545
+</td>
+<td style="text-align:right;">
+0.0421
+</td>
+<td style="text-align:right;">
+0.0362
+</td>
+</tr>
+<tr>
+<td style="text-align:left; padding-left: 2em;" indentlevel="1">
+R &amp; L Thumb
+</td>
+<td style="text-align:right;">
+0.0039
+</td>
+<td style="text-align:right;">
+0.0032
+</td>
+<td style="text-align:right;">
+0.0031
+</td>
+</tr>
+<tr>
+<td style="text-align:left; padding-left: 2em;" indentlevel="1">
+R &amp; L Index
+</td>
+<td style="text-align:right;">
+0.0054
+</td>
+<td style="text-align:right;">
+0.0041
+</td>
+<td style="text-align:right;">
+0.0034
+</td>
+</tr>
+<tr>
+<td style="text-align:left; padding-left: 2em;" indentlevel="1">
+R &amp; L Middle
+</td>
+<td style="text-align:right;">
+0.0052
+</td>
+<td style="text-align:right;">
+0.0042
+</td>
+<td style="text-align:right;">
+0.0037
+</td>
+</tr>
+<tr>
+<td style="text-align:left; padding-left: 2em;" indentlevel="1">
+R &amp; L Ring
+</td>
+<td style="text-align:right;">
+0.0067
+</td>
+<td style="text-align:right;">
+0.0052
+</td>
+<td style="text-align:right;">
+0.0049
+</td>
+</tr>
+<tr>
+<td style="text-align:left; padding-left: 2em;" indentlevel="1">
+R &amp; L Little
+</td>
+<td style="text-align:right;">
+0.0166
+</td>
+<td style="text-align:right;">
+0.0118
+</td>
+<td style="text-align:right;">
+0.0088
+</td>
+</tr>
+<tr>
+<td style="text-align:left; padding-left: 2em;" indentlevel="1">
+R Index &amp; Ring
+</td>
+<td style="text-align:right;">
+0.0067
+</td>
+<td style="text-align:right;">
+0.0053
+</td>
+<td style="text-align:right;">
+0.0043
+</td>
+</tr>
+<tr>
+<td style="text-align:left; padding-left: 2em;" indentlevel="1">
+L Index &amp; Ring
+</td>
+<td style="text-align:right;">
+0.0076
+</td>
+<td style="text-align:right;">
+0.0060
+</td>
+<td style="text-align:right;">
+0.0050
+</td>
+</tr>
+<tr>
+<td style="text-align:left; padding-left: 2em;" indentlevel="1">
+R Slap
+</td>
+<td style="text-align:right;">
+0.0035
+</td>
+<td style="text-align:right;">
+0.0030
+</td>
+<td style="text-align:right;">
+0.0025
+</td>
+</tr>
+<tr>
+<td style="text-align:left; padding-left: 2em;" indentlevel="1">
+L Slap
+</td>
+<td style="text-align:right;">
+0.0051
+</td>
+<td style="text-align:right;">
+0.0038
+</td>
+<td style="text-align:right;">
+0.0030
+</td>
+</tr>
+<tr>
+<td style="text-align:left; padding-left: 2em;" indentlevel="1">
+R Hand
+</td>
+<td style="text-align:right;">
+0.0019
+</td>
+<td style="text-align:right;">
+0.0017
+</td>
+<td style="text-align:right;">
+0.0015
+</td>
+</tr>
+<tr>
+<td style="text-align:left; padding-left: 2em;" indentlevel="1">
+L Hand
+</td>
+<td style="text-align:right;">
+0.0026
+</td>
+<td style="text-align:right;">
+0.0019
+</td>
+<td style="text-align:right;">
+0.0016
+</td>
+</tr>
+<tr grouplength="21">
+<td colspan="4" style="border-bottom: 1px solid;">
+<strong>Rolled to Rolled</strong>
+</td>
+</tr>
+<tr>
+<td style="text-align:left; padding-left: 2em;" indentlevel="1">
+R Thumb
+</td>
+<td style="text-align:right;">
+0.0091
+</td>
+<td style="text-align:right;">
+0.0086
+</td>
+<td style="text-align:right;">
+0.0086
+</td>
+</tr>
+<tr>
+<td style="text-align:left; padding-left: 2em;" indentlevel="1">
+R Index
+</td>
+<td style="text-align:right;">
+0.0099
+</td>
+<td style="text-align:right;">
+0.0087
+</td>
+<td style="text-align:right;">
+0.0087
+</td>
+</tr>
+<tr>
+<td style="text-align:left; padding-left: 2em;" indentlevel="1">
+R Middle
+</td>
+<td style="text-align:right;">
+0.0115
+</td>
+<td style="text-align:right;">
+0.0094
+</td>
+<td style="text-align:right;">
+0.0093
+</td>
+</tr>
+<tr>
+<td style="text-align:left; padding-left: 2em;" indentlevel="1">
+R Ring
+</td>
+<td style="text-align:right;">
+0.0137
+</td>
+<td style="text-align:right;">
+0.0128
+</td>
+<td style="text-align:right;">
+0.0128
+</td>
+</tr>
+<tr>
+<td style="text-align:left; padding-left: 2em;" indentlevel="1">
+R Little
+</td>
+<td style="text-align:right;">
+0.0244
+</td>
+<td style="text-align:right;">
+0.0205
+</td>
+<td style="text-align:right;">
+0.0203
+</td>
+</tr>
+<tr>
+<td style="text-align:left; padding-left: 2em;" indentlevel="1">
+L Thumb
+</td>
+<td style="text-align:right;">
+0.0094
+</td>
+<td style="text-align:right;">
+0.0089
+</td>
+<td style="text-align:right;">
+0.0089
+</td>
+</tr>
+<tr>
+<td style="text-align:left; padding-left: 2em;" indentlevel="1">
+L Index
+</td>
+<td style="text-align:right;">
+0.0120
+</td>
+<td style="text-align:right;">
+0.0099
+</td>
+<td style="text-align:right;">
+0.0099
+</td>
+</tr>
+<tr>
+<td style="text-align:left; padding-left: 2em;" indentlevel="1">
+L Middle
+</td>
+<td style="text-align:right;">
+0.0117
+</td>
+<td style="text-align:right;">
+0.0096
+</td>
+<td style="text-align:right;">
+0.0095
+</td>
+</tr>
+<tr>
+<td style="text-align:left; padding-left: 2em;" indentlevel="1">
+L Ring
+</td>
+<td style="text-align:right;">
+0.0187
+</td>
+<td style="text-align:right;">
+0.0160
+</td>
+<td style="text-align:right;">
+0.0160
+</td>
+</tr>
+<tr>
+<td style="text-align:left; padding-left: 2em;" indentlevel="1">
+L Little
+</td>
+<td style="text-align:right;">
+0.0300
+</td>
+<td style="text-align:right;">
+0.0244
+</td>
+<td style="text-align:right;">
+0.0238
+</td>
+</tr>
+<tr>
+<td style="text-align:left; padding-left: 2em;" indentlevel="1">
+R &amp; L Thumb
+</td>
+<td style="text-align:right;">
+0.0030
+</td>
+<td style="text-align:right;">
+0.0026
+</td>
+<td style="text-align:right;">
+0.0026
+</td>
+</tr>
+<tr>
+<td style="text-align:left; padding-left: 2em;" indentlevel="1">
+R &amp; L Index
+</td>
+<td style="text-align:right;">
+0.0032
+</td>
+<td style="text-align:right;">
+0.0026
+</td>
+<td style="text-align:right;">
+0.0026
+</td>
+</tr>
+<tr>
+<td style="text-align:left; padding-left: 2em;" indentlevel="1">
+R &amp; L Middle
+</td>
+<td style="text-align:right;">
+0.0042
+</td>
+<td style="text-align:right;">
+0.0031
+</td>
+<td style="text-align:right;">
+0.0030
+</td>
+</tr>
+<tr>
+<td style="text-align:left; padding-left: 2em;" indentlevel="1">
+R &amp; L Ring
+</td>
+<td style="text-align:right;">
+0.0066
+</td>
+<td style="text-align:right;">
+0.0052
+</td>
+<td style="text-align:right;">
+0.0052
+</td>
+</tr>
+<tr>
+<td style="text-align:left; padding-left: 2em;" indentlevel="1">
+R &amp; L Little
+</td>
+<td style="text-align:right;">
+0.0120
+</td>
+<td style="text-align:right;">
+0.0089
+</td>
+<td style="text-align:right;">
+0.0079
+</td>
+</tr>
+<tr>
+<td style="text-align:left; padding-left: 2em;" indentlevel="1">
+R Index &amp; Ring
+</td>
+<td style="text-align:right;">
+0.0050
+</td>
+<td style="text-align:right;">
+0.0041
+</td>
+<td style="text-align:right;">
+0.0039
+</td>
+</tr>
+<tr>
+<td style="text-align:left; padding-left: 2em;" indentlevel="1">
+L Index &amp; Ring
+</td>
+<td style="text-align:right;">
+0.0052
+</td>
+<td style="text-align:right;">
+0.0043
+</td>
+<td style="text-align:right;">
+0.0040
+</td>
+</tr>
+<tr>
+<td style="text-align:left; padding-left: 2em;" indentlevel="1">
+R Slap
+</td>
+<td style="text-align:right;">
+0.0033
+</td>
+<td style="text-align:right;">
+0.0027
+</td>
+<td style="text-align:right;">
+0.0025
+</td>
+</tr>
+<tr>
+<td style="text-align:left; padding-left: 2em;" indentlevel="1">
+L Slap
+</td>
+<td style="text-align:right;">
+0.0035
+</td>
+<td style="text-align:right;">
+0.0030
+</td>
+<td style="text-align:right;">
+0.0025
+</td>
+</tr>
+<tr>
+<td style="text-align:left; padding-left: 2em;" indentlevel="1">
+R Hand
+</td>
+<td style="text-align:right;">
+0.0026
+</td>
+<td style="text-align:right;">
+0.0023
+</td>
+<td style="text-align:right;">
+0.0021
+</td>
+</tr>
+<tr>
+<td style="text-align:left; padding-left: 2em;" indentlevel="1">
+L Hand
+</td>
+<td style="text-align:right;">
+0.0025
+</td>
+<td style="text-align:right;">
+0.0023
+</td>
+<td style="text-align:right;">
+0.0021
+</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+<div id="los-angeles-county-sheriffs-department" class="section level2">
+<h2><span class="header-section-number">3.2</span> Los Angeles County Sheriff’s Department</h2>
+<p>The Los Angeles County Sheriff’s Department (LASD) dataset consists of plain and rolled impressions of all ten fingers, captured with a mixture of ink and optical devices. <a href="pft-iii-datasets.html#fig:fig-pft3-lacnty">Figure <a href="pft-iii-datasets.html#fig:fig-pft3-lacnty">3.4</a></a> and <a href="pft-iii-datasets.html#tab:tab-pft3-lacnty">Table <a href="pft-iii-datasets.html#tab:tab-pft3-lacnty">3.4</a></a> show the DET of all fingers not compared in other PFT subsets. This data is separated by finger position in <a href="pft-iii-datasets.html#fig:fig-pft3-lacnty-frgp">Figure <a href="pft-iii-datasets.html#fig:fig-pft3-lacnty-frgp">3.5</a></a> and <a href="pft-iii-datasets.html#tab:tab-pft3-lacnty-frgp">Table <a href="pft-iii-datasets.html#tab:tab-pft3-lacnty-frgp">3.5</a></a> and again by impression type in <a href="pft-iii-datasets.html#fig:fig-pft3-lacnty-frgp-imp">Figure <a href="pft-iii-datasets.html#fig:fig-pft3-lacnty-frgp-imp">3.6</a></a> and <a href="pft-iii-datasets.html#tab:tab-pft3-lacnty-frgp-imp">Table <a href="pft-iii-datasets.html#tab:tab-pft3-lacnty-frgp-imp">3.6</a></a>. Curves made by combinations of fingers were generated by sum fusion.</p>
+<div class="figure" style="text-align: center"><span id="fig:fig-pft3-lacnty"></span>
+<img src="plots/Aware+0002_PFT3_LACNTY_overall.png" alt="Detection error tradeoff of all comparisons from all fingers in the PFT III LASD dataset. Numbers in gray indicate the similarity threshold." width="1800" />
+<p class="caption">
+Figure 3.4: Detection error tradeoff of all comparisons from all fingers in the PFT III LASD dataset. Numbers in gray indicate the similarity threshold.
+</p>
+</div>
+<table>
+<caption>
+<span id="tab:tab-pft3-lacnty">Table 3.4: </span>False non-match rate values at specific false match rates for the PFT III Los Angeles County Sheriff’s Department dataset overall.
+</caption>
+<thead>
+<tr>
+<th style="text-align:right;">
+FNMR @ FMR = 0.0001
+</th>
+<th style="text-align:right;">
+FNMR @ FMR = 0.001
+</th>
+<th style="text-align:right;">
+FNMR @ FMR = 0.01
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:right;">
+0.0329
+</td>
+<td style="text-align:right;">
+0.0243
+</td>
+<td style="text-align:right;">
+0.0216
+</td>
+</tr>
+</tbody>
+</table>
+<div class="figure" style="text-align: center"><span id="fig:fig-pft3-lacnty-frgp"></span>
+<img src="plots/Aware+0002_PFT3_LACNTY_by_frgp.png" alt="Detection error tradeoff of all comparisons from all fingers in the PFT III LASD dataset, separated by finger position. Combined finger positions were generated by sum fusion." width="1800" />
+<p class="caption">
+Figure 3.5: Detection error tradeoff of all comparisons from all fingers in the PFT III LASD dataset, separated by finger position. Combined finger positions were generated by sum fusion.
+</p>
+</div>
+<table class="table table-striped table-hover" style="margin-left: auto; margin-right: auto;">
+<caption>
+<span id="tab:tab-pft3-lacnty-frgp">Table 3.5: </span>False non-match rate values at specific false match rates for the PFT III LASD dataset, separated by finger position. Combined finger positions were generated by sum fusion.
+</caption>
+<thead>
+<tr>
+<th style="text-align:left;">
+FRGP
+</th>
+<th style="text-align:right;">
+FNMR @ FMR = 0.0001
+</th>
+<th style="text-align:right;">
+FNMR @ FMR = 0.001
+</th>
+<th style="text-align:right;">
+FNMR @ FMR = 0.01
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+R Thumb
+</td>
+<td style="text-align:right;">
+0.0106
+</td>
+<td style="text-align:right;">
+0.0092
+</td>
+<td style="text-align:right;">
+0.0092
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+R Index
+</td>
+<td style="text-align:right;">
+0.0301
+</td>
+<td style="text-align:right;">
+0.0219
+</td>
+<td style="text-align:right;">
+0.0183
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+R Middle
+</td>
+<td style="text-align:right;">
+0.0249
+</td>
+<td style="text-align:right;">
+0.0189
+</td>
+<td style="text-align:right;">
+0.0164
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+R Ring
+</td>
+<td style="text-align:right;">
+0.0252
+</td>
+<td style="text-align:right;">
+0.0196
+</td>
+<td style="text-align:right;">
+0.0194
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+R Little
+</td>
+<td style="text-align:right;">
+0.0484
+</td>
+<td style="text-align:right;">
+0.0363
+</td>
+<td style="text-align:right;">
+0.0314
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+L Thumb
+</td>
+<td style="text-align:right;">
+0.0089
+</td>
+<td style="text-align:right;">
+0.0073
+</td>
+<td style="text-align:right;">
+0.0072
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+L Index
+</td>
+<td style="text-align:right;">
+0.0349
+</td>
+<td style="text-align:right;">
+0.0260
+</td>
+<td style="text-align:right;">
+0.0225
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+L Middle
+</td>
+<td style="text-align:right;">
+0.0324
+</td>
+<td style="text-align:right;">
+0.0251
+</td>
+<td style="text-align:right;">
+0.0218
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+L Ring
+</td>
+<td style="text-align:right;">
+0.0354
+</td>
+<td style="text-align:right;">
+0.0266
+</td>
+<td style="text-align:right;">
+0.0254
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+L Little
+</td>
+<td style="text-align:right;">
+0.0738
+</td>
+<td style="text-align:right;">
+0.0555
+</td>
+<td style="text-align:right;">
+0.0470
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+R &amp; L Thumb
+</td>
+<td style="text-align:right;">
+0.0024
+</td>
+<td style="text-align:right;">
+0.0020
+</td>
+<td style="text-align:right;">
+0.0019
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+R &amp; L Index
+</td>
+<td style="text-align:right;">
+0.0082
+</td>
+<td style="text-align:right;">
+0.0052
+</td>
+<td style="text-align:right;">
+0.0037
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+R &amp; L Middle
+</td>
+<td style="text-align:right;">
+0.0068
+</td>
+<td style="text-align:right;">
+0.0046
+</td>
+<td style="text-align:right;">
+0.0034
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+R &amp; L Ring
+</td>
+<td style="text-align:right;">
+0.0074
+</td>
+<td style="text-align:right;">
+0.0053
+</td>
+<td style="text-align:right;">
+0.0047
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+R &amp; L Little
+</td>
+<td style="text-align:right;">
+0.0185
+</td>
+<td style="text-align:right;">
+0.0134
+</td>
+<td style="text-align:right;">
+0.0095
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+R Index &amp; Ring
+</td>
+<td style="text-align:right;">
+0.0084
+</td>
+<td style="text-align:right;">
+0.0058
+</td>
+<td style="text-align:right;">
+0.0045
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+L Index &amp; Ring
+</td>
+<td style="text-align:right;">
+0.0114
+</td>
+<td style="text-align:right;">
+0.0085
+</td>
+<td style="text-align:right;">
+0.0068
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+R Slap
+</td>
+<td style="text-align:right;">
+0.0037
+</td>
+<td style="text-align:right;">
+0.0027
+</td>
+<td style="text-align:right;">
+0.0021
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+L Slap
+</td>
+<td style="text-align:right;">
+0.0054
+</td>
+<td style="text-align:right;">
+0.0043
+</td>
+<td style="text-align:right;">
+0.0035
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+R Hand
+</td>
+<td style="text-align:right;">
+0.0017
+</td>
+<td style="text-align:right;">
+0.0014
+</td>
+<td style="text-align:right;">
+0.0013
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+L Hand
+</td>
+<td style="text-align:right;">
+0.0018
+</td>
+<td style="text-align:right;">
+0.0016
+</td>
+<td style="text-align:right;">
+0.0014
+</td>
+</tr>
+</tbody>
+</table>
+<div class="figure" style="text-align: center"><span id="fig:fig-pft3-lacnty-frgp-imp"></span>
+<img src="plots/Aware+0002_PFT3_LACNTY_by_frgp_imp.png" alt="Detection error tradeoff of all comparisons from all fingers in the PFT III LASD dataset, separated by finger position and impression type. Combined finger positions were generated by sum fusion." width="1800" />
+<p class="caption">
+Figure 3.6: Detection error tradeoff of all comparisons from all fingers in the PFT III LASD dataset, separated by finger position and impression type. Combined finger positions were generated by sum fusion.
+</p>
+</div>
+<table class="table table-striped table-hover" style="margin-left: auto; margin-right: auto;">
+<caption>
+<span id="tab:tab-pft3-lacnty-frgp-imp">Table 3.6: </span>False non-match rate values at specific false match rates for the PFT III LASD dataset, separated by finger position and impression type. Combined finger positions were generated by sum fusion.
+</caption>
+<thead>
+<tr>
+<th style="text-align:left;">
+FRGP
+</th>
+<th style="text-align:right;">
+FNMR @ FMR = 0.0001
+</th>
+<th style="text-align:right;">
+FNMR @ FMR = 0.001
+</th>
+<th style="text-align:right;">
+FNMR @ FMR = 0.01
+</th>
+</tr>
+</thead>
+<tbody>
+<tr grouplength="21">
+<td colspan="4" style="border-bottom: 1px solid;">
+<strong>Plain to Plain</strong>
+</td>
+</tr>
+<tr>
+<td style="text-align:left; padding-left: 2em;" indentlevel="1">
+R Thumb
+</td>
+<td style="text-align:right;">
+0.0145
+</td>
+<td style="text-align:right;">
+0.0123
+</td>
+<td style="text-align:right;">
+0.0122
+</td>
+</tr>
+<tr>
+<td style="text-align:left; padding-left: 2em;" indentlevel="1">
+R Index
+</td>
+<td style="text-align:right;">
+0.0469
+</td>
+<td style="text-align:right;">
+0.0329
+</td>
+<td style="text-align:right;">
+0.0259
+</td>
+</tr>
+<tr>
+<td style="text-align:left; padding-left: 2em;" indentlevel="1">
+R Middle
+</td>
+<td style="text-align:right;">
+0.0391
+</td>
+<td style="text-align:right;">
+0.0313
+</td>
+<td style="text-align:right;">
+0.0255
+</td>
+</tr>
+<tr>
+<td style="text-align:left; padding-left: 2em;" indentlevel="1">
+R Ring
+</td>
+<td style="text-align:right;">
+0.0388
+</td>
+<td style="text-align:right;">
+0.0296
+</td>
+<td style="text-align:right;">
+0.0280
+</td>
+</tr>
+<tr>
+<td style="text-align:left; padding-left: 2em;" indentlevel="1">
+R Little
+</td>
+<td style="text-align:right;">
+0.0738
+</td>
+<td style="text-align:right;">
+0.0564
+</td>
+<td style="text-align:right;">
+0.0462
+</td>
+</tr>
+<tr>
+<td style="text-align:left; padding-left: 2em;" indentlevel="1">
+L Thumb
+</td>
+<td style="text-align:right;">
+0.0107
+</td>
+<td style="text-align:right;">
+0.0086
+</td>
+<td style="text-align:right;">
+0.0082
+</td>
+</tr>
+<tr>
+<td style="text-align:left; padding-left: 2em;" indentlevel="1">
+L Index
+</td>
+<td style="text-align:right;">
+0.0561
+</td>
+<td style="text-align:right;">
+0.0437
+</td>
+<td style="text-align:right;">
+0.0349
+</td>
+</tr>
+<tr>
+<td style="text-align:left; padding-left: 2em;" indentlevel="1">
+L Middle
+</td>
+<td style="text-align:right;">
+0.0556
+</td>
+<td style="text-align:right;">
+0.0443
+</td>
+<td style="text-align:right;">
+0.0369
+</td>
+</tr>
+<tr>
+<td style="text-align:left; padding-left: 2em;" indentlevel="1">
+L Ring
+</td>
+<td style="text-align:right;">
+0.0582
+</td>
+<td style="text-align:right;">
+0.0448
+</td>
+<td style="text-align:right;">
+0.0403
+</td>
+</tr>
+<tr>
+<td style="text-align:left; padding-left: 2em;" indentlevel="1">
+L Little
+</td>
+<td style="text-align:right;">
+0.1265
+</td>
+<td style="text-align:right;">
+0.0985
+</td>
+<td style="text-align:right;">
+0.0814
+</td>
+</tr>
+<tr>
+<td style="text-align:left; padding-left: 2em;" indentlevel="1">
+R &amp; L Thumb
+</td>
+<td style="text-align:right;">
+0.0029
+</td>
+<td style="text-align:right;">
+0.0025
+</td>
+<td style="text-align:right;">
+0.0023
+</td>
+</tr>
+<tr>
+<td style="text-align:left; padding-left: 2em;" indentlevel="1">
+R &amp; L Index
+</td>
+<td style="text-align:right;">
+0.0119
+</td>
+<td style="text-align:right;">
+0.0078
+</td>
+<td style="text-align:right;">
+0.0049
+</td>
+</tr>
+<tr>
+<td style="text-align:left; padding-left: 2em;" indentlevel="1">
+R &amp; L Middle
+</td>
+<td style="text-align:right;">
+0.0114
+</td>
+<td style="text-align:right;">
+0.0076
+</td>
+<td style="text-align:right;">
+0.0056
+</td>
+</tr>
+<tr>
+<td style="text-align:left; padding-left: 2em;" indentlevel="1">
+R &amp; L Ring
+</td>
+<td style="text-align:right;">
+0.0103
+</td>
+<td style="text-align:right;">
+0.0074
+</td>
+<td style="text-align:right;">
+0.0062
+</td>
+</tr>
+<tr>
+<td style="text-align:left; padding-left: 2em;" indentlevel="1">
+R &amp; L Little
+</td>
+<td style="text-align:right;">
+0.0304
+</td>
+<td style="text-align:right;">
+0.0215
+</td>
+<td style="text-align:right;">
+0.0143
+</td>
+</tr>
+<tr>
+<td style="text-align:left; padding-left: 2em;" indentlevel="1">
+R Index &amp; Ring
+</td>
+<td style="text-align:right;">
+0.0134
+</td>
+<td style="text-align:right;">
+0.0087
+</td>
+<td style="text-align:right;">
+0.0067
+</td>
+</tr>
+<tr>
+<td style="text-align:left; padding-left: 2em;" indentlevel="1">
+L Index &amp; Ring
+</td>
+<td style="text-align:right;">
+0.0204
+</td>
+<td style="text-align:right;">
+0.0151
+</td>
+<td style="text-align:right;">
+0.0118
+</td>
+</tr>
+<tr>
+<td style="text-align:left; padding-left: 2em;" indentlevel="1">
+R Slap
+</td>
+<td style="text-align:right;">
+0.0052
+</td>
+<td style="text-align:right;">
+0.0039
+</td>
+<td style="text-align:right;">
+0.0029
+</td>
+</tr>
+<tr>
+<td style="text-align:left; padding-left: 2em;" indentlevel="1">
+L Slap
+</td>
+<td style="text-align:right;">
+0.0095
+</td>
+<td style="text-align:right;">
+0.0080
+</td>
+<td style="text-align:right;">
+0.0068
+</td>
+</tr>
+<tr>
+<td style="text-align:left; padding-left: 2em;" indentlevel="1">
+R Hand
+</td>
+<td style="text-align:right;">
+0.0018
+</td>
+<td style="text-align:right;">
+0.0015
+</td>
+<td style="text-align:right;">
+0.0013
+</td>
+</tr>
+<tr>
+<td style="text-align:left; padding-left: 2em;" indentlevel="1">
+L Hand
+</td>
+<td style="text-align:right;">
+0.0020
+</td>
+<td style="text-align:right;">
+0.0016
+</td>
+<td style="text-align:right;">
+0.0014
+</td>
+</tr>
+<tr grouplength="21">
+<td colspan="4" style="border-bottom: 1px solid;">
+<strong>Plain to Rolled</strong>
+</td>
+</tr>
+<tr>
+<td style="text-align:left; padding-left: 2em;" indentlevel="1">
+R Thumb
+</td>
+<td style="text-align:right;">
+0.0116
+</td>
+<td style="text-align:right;">
+0.0100
+</td>
+<td style="text-align:right;">
+0.0100
+</td>
+</tr>
+<tr>
+<td style="text-align:left; padding-left: 2em;" indentlevel="1">
+R Index
+</td>
+<td style="text-align:right;">
+0.0362
+</td>
+<td style="text-align:right;">
+0.0265
+</td>
+<td style="text-align:right;">
+0.0221
+</td>
+</tr>
+<tr>
+<td style="text-align:left; padding-left: 2em;" indentlevel="1">
+R Middle
+</td>
+<td style="text-align:right;">
+0.0288
+</td>
+<td style="text-align:right;">
+0.0220
+</td>
+<td style="text-align:right;">
+0.0189
+</td>
+</tr>
+<tr>
+<td style="text-align:left; padding-left: 2em;" indentlevel="1">
+R Ring
+</td>
+<td style="text-align:right;">
+0.0300
+</td>
+<td style="text-align:right;">
+0.0234
+</td>
+<td style="text-align:right;">
+0.0230
+</td>
+</tr>
+<tr>
+<td style="text-align:left; padding-left: 2em;" indentlevel="1">
+R Little
+</td>
+<td style="text-align:right;">
+0.0562
+</td>
+<td style="text-align:right;">
+0.0429
+</td>
+<td style="text-align:right;">
+0.0372
+</td>
+</tr>
+<tr>
+<td style="text-align:left; padding-left: 2em;" indentlevel="1">
+L Thumb
+</td>
+<td style="text-align:right;">
+0.0100
+</td>
+<td style="text-align:right;">
+0.0081
+</td>
+<td style="text-align:right;">
+0.0079
+</td>
+</tr>
+<tr>
+<td style="text-align:left; padding-left: 2em;" indentlevel="1">
+L Index
+</td>
+<td style="text-align:right;">
+0.0396
+</td>
+<td style="text-align:right;">
+0.0293
+</td>
+<td style="text-align:right;">
+0.0255
+</td>
+</tr>
+<tr>
+<td style="text-align:left; padding-left: 2em;" indentlevel="1">
+L Middle
+</td>
+<td style="text-align:right;">
+0.0349
+</td>
+<td style="text-align:right;">
+0.0274
+</td>
+<td style="text-align:right;">
+0.0237
+</td>
+</tr>
+<tr>
+<td style="text-align:left; padding-left: 2em;" indentlevel="1">
+L Ring
+</td>
+<td style="text-align:right;">
+0.0430
+</td>
+<td style="text-align:right;">
+0.0301
+</td>
+<td style="text-align:right;">
+0.0282
+</td>
+</tr>
+<tr>
+<td style="text-align:left; padding-left: 2em;" indentlevel="1">
+L Little
+</td>
+<td style="text-align:right;">
+0.0747
+</td>
+<td style="text-align:right;">
+0.0576
+</td>
+<td style="text-align:right;">
+0.0480
+</td>
+</tr>
+<tr>
+<td style="text-align:left; padding-left: 2em;" indentlevel="1">
+R &amp; L Thumb
+</td>
+<td style="text-align:right;">
+0.0025
+</td>
+<td style="text-align:right;">
+0.0020
+</td>
+<td style="text-align:right;">
+0.0020
+</td>
+</tr>
+<tr>
+<td style="text-align:left; padding-left: 2em;" indentlevel="1">
+R &amp; L Index
+</td>
+<td style="text-align:right;">
+0.0109
+</td>
+<td style="text-align:right;">
+0.0066
+</td>
+<td style="text-align:right;">
+0.0048
+</td>
+</tr>
+<tr>
+<td style="text-align:left; padding-left: 2em;" indentlevel="1">
+R &amp; L Middle
+</td>
+<td style="text-align:right;">
+0.0083
+</td>
+<td style="text-align:right;">
+0.0055
+</td>
+<td style="text-align:right;">
+0.0039
+</td>
+</tr>
+<tr>
+<td style="text-align:left; padding-left: 2em;" indentlevel="1">
+R &amp; L Ring
+</td>
+<td style="text-align:right;">
+0.0090
+</td>
+<td style="text-align:right;">
+0.0064
+</td>
+<td style="text-align:right;">
+0.0055
+</td>
+</tr>
+<tr>
+<td style="text-align:left; padding-left: 2em;" indentlevel="1">
+R &amp; L Little
+</td>
+<td style="text-align:right;">
+0.0221
+</td>
+<td style="text-align:right;">
+0.0159
+</td>
+<td style="text-align:right;">
+0.0110
+</td>
+</tr>
+<tr>
+<td style="text-align:left; padding-left: 2em;" indentlevel="1">
+R Index &amp; Ring
+</td>
+<td style="text-align:right;">
+0.0101
+</td>
+<td style="text-align:right;">
+0.0070
+</td>
+<td style="text-align:right;">
+0.0050
+</td>
+</tr>
+<tr>
+<td style="text-align:left; padding-left: 2em;" indentlevel="1">
+L Index &amp; Ring
+</td>
+<td style="text-align:right;">
+0.0126
+</td>
+<td style="text-align:right;">
+0.0089
+</td>
+<td style="text-align:right;">
+0.0067
+</td>
+</tr>
+<tr>
+<td style="text-align:left; padding-left: 2em;" indentlevel="1">
+R Slap
+</td>
+<td style="text-align:right;">
+0.0044
+</td>
+<td style="text-align:right;">
+0.0032
+</td>
+<td style="text-align:right;">
+0.0023
+</td>
+</tr>
+<tr>
+<td style="text-align:left; padding-left: 2em;" indentlevel="1">
+L Slap
+</td>
+<td style="text-align:right;">
+0.0051
+</td>
+<td style="text-align:right;">
+0.0038
+</td>
+<td style="text-align:right;">
+0.0028
+</td>
+</tr>
+<tr>
+<td style="text-align:left; padding-left: 2em;" indentlevel="1">
+R Hand
+</td>
+<td style="text-align:right;">
+0.0020
+</td>
+<td style="text-align:right;">
+0.0016
+</td>
+<td style="text-align:right;">
+0.0014
+</td>
+</tr>
+<tr>
+<td style="text-align:left; padding-left: 2em;" indentlevel="1">
+L Hand
+</td>
+<td style="text-align:right;">
+0.0019
+</td>
+<td style="text-align:right;">
+0.0016
+</td>
+<td style="text-align:right;">
+0.0016
+</td>
+</tr>
+<tr grouplength="21">
+<td colspan="4" style="border-bottom: 1px solid;">
+<strong>Rolled to Rolled</strong>
+</td>
+</tr>
+<tr>
+<td style="text-align:left; padding-left: 2em;" indentlevel="1">
+R Thumb
+</td>
+<td style="text-align:right;">
+0.0060
+</td>
+<td style="text-align:right;">
+0.0055
+</td>
+<td style="text-align:right;">
+0.0055
+</td>
+</tr>
+<tr>
+<td style="text-align:left; padding-left: 2em;" indentlevel="1">
+R Index
+</td>
+<td style="text-align:right;">
+0.0107
+</td>
+<td style="text-align:right;">
+0.0084
+</td>
+<td style="text-align:right;">
+0.0083
+</td>
+</tr>
+<tr>
+<td style="text-align:left; padding-left: 2em;" indentlevel="1">
+R Middle
+</td>
+<td style="text-align:right;">
+0.0076
+</td>
+<td style="text-align:right;">
+0.0063
+</td>
+<td style="text-align:right;">
+0.0062
+</td>
+</tr>
+<tr>
+<td style="text-align:left; padding-left: 2em;" indentlevel="1">
+R Ring
+</td>
+<td style="text-align:right;">
+0.0094
+</td>
+<td style="text-align:right;">
+0.0086
+</td>
+<td style="text-align:right;">
+0.0086
+</td>
+</tr>
+<tr>
+<td style="text-align:left; padding-left: 2em;" indentlevel="1">
+R Little
+</td>
+<td style="text-align:right;">
+0.0183
+</td>
+<td style="text-align:right;">
+0.0139
+</td>
+<td style="text-align:right;">
+0.0137
+</td>
+</tr>
+<tr>
+<td style="text-align:left; padding-left: 2em;" indentlevel="1">
+L Thumb
+</td>
+<td style="text-align:right;">
+0.0061
+</td>
+<td style="text-align:right;">
+0.0054
+</td>
+<td style="text-align:right;">
+0.0054
+</td>
+</tr>
+<tr>
+<td style="text-align:left; padding-left: 2em;" indentlevel="1">
+L Index
+</td>
+<td style="text-align:right;">
+0.0115
+</td>
+<td style="text-align:right;">
+0.0091
+</td>
+<td style="text-align:right;">
+0.0091
+</td>
+</tr>
+<tr>
+<td style="text-align:left; padding-left: 2em;" indentlevel="1">
+L Middle
+</td>
+<td style="text-align:right;">
+0.0088
+</td>
+<td style="text-align:right;">
+0.0072
+</td>
+<td style="text-align:right;">
+0.0072
+</td>
+</tr>
+<tr>
+<td style="text-align:left; padding-left: 2em;" indentlevel="1">
+L Ring
+</td>
+<td style="text-align:right;">
+0.0118
+</td>
+<td style="text-align:right;">
+0.0101
+</td>
+<td style="text-align:right;">
+0.0101
+</td>
+</tr>
+<tr>
+<td style="text-align:left; padding-left: 2em;" indentlevel="1">
+L Little
+</td>
+<td style="text-align:right;">
+0.0233
+</td>
+<td style="text-align:right;">
+0.0173
+</td>
+<td style="text-align:right;">
+0.0167
+</td>
+</tr>
+<tr>
+<td style="text-align:left; padding-left: 2em;" indentlevel="1">
+R &amp; L Thumb
+</td>
+<td style="text-align:right;">
+0.0016
+</td>
+<td style="text-align:right;">
+0.0014
+</td>
+<td style="text-align:right;">
+0.0014
+</td>
+</tr>
+<tr>
+<td style="text-align:left; padding-left: 2em;" indentlevel="1">
+R &amp; L Index
+</td>
+<td style="text-align:right;">
+0.0028
+</td>
+<td style="text-align:right;">
+0.0021
+</td>
+<td style="text-align:right;">
+0.0019
+</td>
+</tr>
+<tr>
+<td style="text-align:left; padding-left: 2em;" indentlevel="1">
+R &amp; L Middle
+</td>
+<td style="text-align:right;">
+0.0020
+</td>
+<td style="text-align:right;">
+0.0017
+</td>
+<td style="text-align:right;">
+0.0017
+</td>
+</tr>
+<tr>
+<td style="text-align:left; padding-left: 2em;" indentlevel="1">
+R &amp; L Ring
+</td>
+<td style="text-align:right;">
+0.0032
+</td>
+<td style="text-align:right;">
+0.0028
+</td>
+<td style="text-align:right;">
+0.0028
+</td>
+</tr>
+<tr>
+<td style="text-align:left; padding-left: 2em;" indentlevel="1">
+R &amp; L Little
+</td>
+<td style="text-align:right;">
+0.0072
+</td>
+<td style="text-align:right;">
+0.0054
+</td>
+<td style="text-align:right;">
+0.0049
+</td>
+</tr>
+<tr>
+<td style="text-align:left; padding-left: 2em;" indentlevel="1">
+R Index &amp; Ring
+</td>
+<td style="text-align:right;">
+0.0030
+</td>
+<td style="text-align:right;">
+0.0026
+</td>
+<td style="text-align:right;">
+0.0025
+</td>
+</tr>
+<tr>
+<td style="text-align:left; padding-left: 2em;" indentlevel="1">
+L Index &amp; Ring
+</td>
+<td style="text-align:right;">
+0.0035
+</td>
+<td style="text-align:right;">
+0.0029
+</td>
+<td style="text-align:right;">
+0.0029
+</td>
+</tr>
+<tr>
+<td style="text-align:left; padding-left: 2em;" indentlevel="1">
+R Slap
+</td>
+<td style="text-align:right;">
+0.0016
+</td>
+<td style="text-align:right;">
+0.0015
+</td>
+<td style="text-align:right;">
+0.0014
+</td>
+</tr>
+<tr>
+<td style="text-align:left; padding-left: 2em;" indentlevel="1">
+L Slap
+</td>
+<td style="text-align:right;">
+0.0021
+</td>
+<td style="text-align:right;">
+0.0018
+</td>
+<td style="text-align:right;">
+0.0017
+</td>
+</tr>
+<tr>
+<td style="text-align:left; padding-left: 2em;" indentlevel="1">
+R Hand
+</td>
+<td style="text-align:right;">
+0.0013
+</td>
+<td style="text-align:right;">
+0.0012
+</td>
+<td style="text-align:right;">
+0.0012
+</td>
+</tr>
+<tr>
+<td style="text-align:left; padding-left: 2em;" indentlevel="1">
+L Hand
+</td>
+<td style="text-align:right;">
+0.0015
+</td>
+<td style="text-align:right;">
+0.0013
+</td>
+<td style="text-align:right;">
+0.0013
+</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+<div id="port-of-entry-biovisa-application" class="section level2">
+<h2><span class="header-section-number">3.3</span> Port of Entry, BioVisa Application</h2>
+<p>The Port of Entry/BioVisa Application (POE+BVA) dataset consists of plain impressions of index fingers. <a href="pft-iii-datasets.html#fig:fig-pft3-poebva">Figure <a href="pft-iii-datasets.html#fig:fig-pft3-poebva">3.7</a></a> and <a href="pft-iii-datasets.html#tab:tab-pft3-poebva">Table <a href="pft-iii-datasets.html#tab:tab-pft3-poebva">3.7</a></a> show the DET of all fingers not compared in other PFT subsets. This data is separated by finger position in <a href="pft-iii-datasets.html#fig:fig-pft3-poebva-frgp">Figure <a href="pft-iii-datasets.html#fig:fig-pft3-poebva-frgp">3.8</a></a>. Curves made by combinations of fingers were generated by sum fusion.</p>
+<div class="figure" style="text-align: center"><span id="fig:fig-pft3-poebva"></span>
+<img src="plots/Aware+0002_PFT3_POEBVA_overall.png" alt="Detection error tradeoff of all comparisons from all fingers in the PFT III POE+BVA dataset Numbers in gray indicate the similarity threshold." width="1800" />
+<p class="caption">
+Figure 3.7: Detection error tradeoff of all comparisons from all fingers in the PFT III POE+BVA dataset Numbers in gray indicate the similarity threshold.
+</p>
+</div>
+<table>
+<caption>
+<span id="tab:tab-pft3-poebva">Table 3.7: </span>False non-match rate values at specific false match rates for the PFT III POE+BVA dataset overall.
+</caption>
+<thead>
+<tr>
+<th style="text-align:right;">
+FNMR @ FMR = 0.0001
+</th>
+<th style="text-align:right;">
+FNMR @ FMR = 0.001
+</th>
+<th style="text-align:right;">
+FNMR @ FMR = 0.01
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:right;">
+0.0239
+</td>
+<td style="text-align:right;">
+0.0171
+</td>
+<td style="text-align:right;">
+0.0153
+</td>
+</tr>
+</tbody>
+</table>
+<div class="figure" style="text-align: center"><span id="fig:fig-pft3-poebva-frgp"></span>
+<img src="plots/Aware+0002_PFT3_POEBVA_by_frgp.png" alt="Detection error tradeoff of comparisons from the PFT III POE+BVA dataset, separated by finger position. Combined finger positions were generated by sum fusion." width="1800" />
+<p class="caption">
+Figure 3.8: Detection error tradeoff of comparisons from the PFT III POE+BVA dataset, separated by finger position. Combined finger positions were generated by sum fusion.
+</p>
+</div>
+<table class="table table-striped table-hover" style="margin-left: auto; margin-right: auto;">
+<caption>
+<span id="tab:tab-pft3-poebva-frgp">Table 3.8: </span>False non-match rate values at specific false match rates for the PFT III POE+BVA dataset, separated by finger position. Combined finger positions were generated by sum fusion.
+</caption>
+<thead>
+<tr>
+<th style="text-align:left;">
+FRGP
+</th>
+<th style="text-align:right;">
+FNMR @ FMR = 0.0001
+</th>
+<th style="text-align:right;">
+FNMR @ FMR = 0.001
+</th>
+<th style="text-align:right;">
+FNMR @ FMR = 0.01
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+R Index
+</td>
+<td style="text-align:right;">
+0.0186
+</td>
+<td style="text-align:right;">
+0.0133
+</td>
+<td style="text-align:right;">
+0.0122
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+L Index
+</td>
+<td style="text-align:right;">
+0.0298
+</td>
+<td style="text-align:right;">
+0.0211
+</td>
+<td style="text-align:right;">
+0.0185
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+R &amp; L Index
+</td>
+<td style="text-align:right;">
+0.0031
+</td>
+<td style="text-align:right;">
+0.0022
+</td>
+<td style="text-align:right;">
+0.0017
+</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+<div id="us-visit-2" class="section level2">
+<h2><span class="header-section-number">3.4</span> US VISIT #2</h2>
+<p>The US VISIT #2 (VISIT2) dataset consists of plain impressions of index fingers and are similar to POE+BVA. <a href="pft-iii-datasets.html#fig:fig-pft3-visit2">Figure <a href="pft-iii-datasets.html#fig:fig-pft3-visit2">3.9</a></a> and <a href="pft-iii-datasets.html#tab:tab-pft3-visit2">Table <a href="pft-iii-datasets.html#tab:tab-pft3-visit2">3.9</a></a> show the DET of all fingers not compared in other PFT subsets. This data is separated by finger position in <a href="pft-iii-datasets.html#fig:fig-pft3-visit2-frgp">Figure <a href="pft-iii-datasets.html#fig:fig-pft3-visit2-frgp">3.10</a></a>. Curves made by combinations of fingers were generated by sum fusion.</p>
+<div class="figure" style="text-align: center"><span id="fig:fig-pft3-visit2"></span>
+<img src="plots/Aware+0002_PFT3_VISIT2_overall.png" alt="Detection error tradeoff of all comparisons from all fingers in the PFT III VISIT2 dataset. Numbers in gray indicate the similarity threshold." width="1800" />
+<p class="caption">
+Figure 3.9: Detection error tradeoff of all comparisons from all fingers in the PFT III VISIT2 dataset. Numbers in gray indicate the similarity threshold.
+</p>
+</div>
+<table>
+<caption>
+<span id="tab:tab-pft3-visit2">Table 3.9: </span>False non-match rate values at specific false match rates for the PFT III VISIT2 dataset overall.
+</caption>
+<thead>
+<tr>
+<th style="text-align:right;">
+FNMR @ FMR = 0.0001
+</th>
+<th style="text-align:right;">
+FNMR @ FMR = 0.001
+</th>
+<th style="text-align:right;">
+FNMR @ FMR = 0.01
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:right;">
+0.0314
+</td>
+<td style="text-align:right;">
+0.0224
+</td>
+<td style="text-align:right;">
+0.0194
+</td>
+</tr>
+</tbody>
+</table>
+<div class="figure" style="text-align: center"><span id="fig:fig-pft3-visit2-frgp"></span>
+<img src="plots/Aware+0002_PFT3_VISIT2_by_frgp.png" alt="Detection error tradeoff of comparisons from the PFT III VISIT2 dataset, separated by finger position. Combined finger positions were generated by sum fusion." width="1800" />
+<p class="caption">
+Figure 3.10: Detection error tradeoff of comparisons from the PFT III VISIT2 dataset, separated by finger position. Combined finger positions were generated by sum fusion.
+</p>
+</div>
+<table class="table table-striped table-hover" style="margin-left: auto; margin-right: auto;">
+<caption>
+<span id="tab:tab-pft3-visit2-frgp">Table 3.10: </span>False non-match rate values at specific false match rates for the PFT III VISIT2 dataset, separated by finger position.
+</caption>
+<thead>
+<tr>
+<th style="text-align:left;">
+FRGP
+</th>
+<th style="text-align:right;">
+FNMR @ FMR = 0.0001
+</th>
+<th style="text-align:right;">
+FNMR @ FMR = 0.001
+</th>
+<th style="text-align:right;">
+FNMR @ FMR = 0.01
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+R Index
+</td>
+<td style="text-align:right;">
+0.0266
+</td>
+<td style="text-align:right;">
+0.0195
+</td>
+<td style="text-align:right;">
+0.0173
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+L Index
+</td>
+<td style="text-align:right;">
+0.0358
+</td>
+<td style="text-align:right;">
+0.0251
+</td>
+<td style="text-align:right;">
+0.0215
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+R &amp; L Index
+</td>
+<td style="text-align:right;">
+0.0069
+</td>
+<td style="text-align:right;">
+0.0051
+</td>
+<td style="text-align:right;">
+0.0040
+</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+<div id="iarpa-nail-to-nail" class="section level2">
+<h2><span class="header-section-number">3.5</span> IARPA Nail-to-Nail</h2>
+<p>In September 2017, IARPA held a fingerprint data collection as part of the <em>Nail to Nail Fingerprint Challenge</em>. Participating Challengers deployed devices to capture a rolled-equivalent print. Approximately two-thirds of the ten-print data collected was released to the public as NIST Special Database 302, with the rest being sequestered at NIST for evaluations like PFT III.</p>
+<p>Information about the Challenge can be found in <a href="https://doi.org/10.6028/NIST.IR.8210">NIST IR 8210</a>. Descriptions of the devices described by the device codes in the following figures and tables can be found in <a href="https://doi.org/10.6028/NIST.TN.2007">NIST TN 2007</a>.</p>
+<div id="by-device" class="section level3">
+<h3><span class="header-section-number">3.5.1</span> By Device</h3>
+<p>The following figures and tables show the DET of all comparisons from select devices in the IARPA N2N Challenge. All probe devices imaged natively at <span class="math inline">500</span> PPI, except for <strong>J</strong>, <strong>R</strong>, and <strong>U</strong>, which imaged at <span class="math inline">1 000</span> PPI. The reference device, <strong>V</strong>, also imaged natively at <span class="math inline">1 000</span> PPI. When these higher resolution devices are shown at <span class="math inline">500</span> PPI, they were downsampled using <em><a href="https://github.com/usnistgov/NFIR">NIST Fingerprint Image Resampler (NFIR)</a></em>.</p>
+<p><a href="pft-iii-datasets.html#fig:fig-pft3-n2n-interdevice-500-vs-1000">Figure <a href="pft-iii-datasets.html#fig:fig-pft3-n2n-interdevice-500-vs-1000">3.11</a></a> and <a href="pft-iii-datasets.html#tab:tab-pft3-n2n-interdevice-500-vs-1000">Table <a href="pft-iii-datasets.html#tab:tab-pft3-n2n-interdevice-500-vs-1000">3.11</a></a> show results with <span class="math inline">500</span> PPI probes against <span class="math inline">1 000</span> PPI references. <a href="pft-iii-datasets.html#fig:fig-pft3-n2n-interdevice-500-vs-500">Figure <a href="pft-iii-datasets.html#fig:fig-pft3-n2n-interdevice-500-vs-500">3.12</a></a> and <a href="pft-iii-datasets.html#tab:tab-pft3-n2n-interdevice-500-vs-500">Table <a href="pft-iii-datasets.html#tab:tab-pft3-n2n-interdevice-500-vs-500">3.12</a></a> show the same probe images against reference images downsampled to the same resolution. <a href="pft-iii-datasets.html#fig:fig-pft3-n2n-interdevice-1000-vs-1000">Figure <a href="pft-iii-datasets.html#fig:fig-pft3-n2n-interdevice-1000-vs-1000">3.13</a></a> and <a href="pft-iii-datasets.html#tab:tab-pft3-n2n-interdevice-1000-vs-1000">Table <a href="pft-iii-datasets.html#tab:tab-pft3-n2n-interdevice-1000-vs-1000">3.13</a></a> show native <span class="math inline">1 000</span> PPI to <span class="math inline">1 000</span> PPI comparisons for supported devices.</p>
+<div class="figure" style="text-align: center"><span id="fig:fig-pft3-n2n-interdevice-500-vs-1000"></span>
+<img src="plots/Aware+0002_PFT3_N2N_interdevice-500-vs-1000.png" alt="Overall detection error tradeoff of comparisons from the PFT III IARPA N2N dataset, using probe images at $500$ PPI and reference images at their native $1\,000$ PPI resolution." width="1800" />
+<p class="caption">
+Figure 3.11: Overall detection error tradeoff of comparisons from the PFT III IARPA N2N dataset, using probe images at <span class="math inline">500</span> PPI and reference images at their native <span class="math inline">1 000</span> PPI resolution.
+</p>
+</div>
+<table class="table table-striped table-hover" style="margin-left: auto; margin-right: auto;">
+<caption>
+<span id="tab:tab-pft3-n2n-interdevice-500-vs-1000">Table 3.11: </span>False non-match rate values at specific false match rates for devices deployed in the IARPA N2N Challenge at 500 PPI compared to a <span class="math inline">1 000</span> PPI reference roll.
+</caption>
+<thead>
+<tr>
+<th style="text-align:left;">
+Device
+</th>
+<th style="text-align:right;">
+FNMR @ FMR = 0.0001
+</th>
+<th style="text-align:right;">
+FNMR @ FMR = 0.001
+</th>
+<th style="text-align:right;">
+FNMR @ FMR = 0.01
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+A
+</td>
+<td style="text-align:right;">
+0.1261
+</td>
+<td style="text-align:right;">
+0.0996
+</td>
+<td style="text-align:right;">
+0.0996
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+B
+</td>
+<td style="text-align:right;">
+0.1721
+</td>
+<td style="text-align:right;">
+0.1327
+</td>
+<td style="text-align:right;">
+0.1327
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+C
+</td>
+<td style="text-align:right;">
+0.0488
+</td>
+<td style="text-align:right;">
+0.0397
+</td>
+<td style="text-align:right;">
+0.0397
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+E
+</td>
+<td style="text-align:right;">
+0.0965
+</td>
+<td style="text-align:right;">
+0.0707
+</td>
+<td style="text-align:right;">
+0.0666
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+F
+</td>
+<td style="text-align:right;">
+0.1733
+</td>
+<td style="text-align:right;">
+0.1357
+</td>
+<td style="text-align:right;">
+0.1357
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+J
+</td>
+<td style="text-align:right;">
+0.0888
+</td>
+<td style="text-align:right;">
+0.0710
+</td>
+<td style="text-align:right;">
+0.0564
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+K
+</td>
+<td style="text-align:right;">
+0.1076
+</td>
+<td style="text-align:right;">
+0.0850
+</td>
+<td style="text-align:right;">
+0.0665
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+M
+</td>
+<td style="text-align:right;">
+0.0817
+</td>
+<td style="text-align:right;">
+0.0658
+</td>
+<td style="text-align:right;">
+0.0593
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+P
+</td>
+<td style="text-align:right;">
+0.0489
+</td>
+<td style="text-align:right;">
+0.0342
+</td>
+<td style="text-align:right;">
+0.0342
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+R
+</td>
+<td style="text-align:right;">
+0.0676
+</td>
+<td style="text-align:right;">
+0.0520
+</td>
+<td style="text-align:right;">
+0.0426
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+S
+</td>
+<td style="text-align:right;">
+0.0426
+</td>
+<td style="text-align:right;">
+0.0354
+</td>
+<td style="text-align:right;">
+0.0354
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+U
+</td>
+<td style="text-align:right;">
+0.0439
+</td>
+<td style="text-align:right;">
+0.0348
+</td>
+<td style="text-align:right;">
+0.0348
+</td>
+</tr>
+</tbody>
+</table>
+<div class="figure" style="text-align: center"><span id="fig:fig-pft3-n2n-interdevice-500-vs-500"></span>
+<img src="plots/Aware+0002_PFT3_N2N_interdevice-500-vs-500.png" alt="Overall detection error tradeoff of comparisons from the PFT III IARPA N2N dataset, using probe images at $500$ PPI and reference images downsampled to $500$ PPI." width="1800" />
+<p class="caption">
+Figure 3.12: Overall detection error tradeoff of comparisons from the PFT III IARPA N2N dataset, using probe images at <span class="math inline">500</span> PPI and reference images downsampled to <span class="math inline">500</span> PPI.
+</p>
+</div>
+<table class="table table-striped table-hover" style="margin-left: auto; margin-right: auto;">
+<caption>
+<span id="tab:tab-pft3-n2n-interdevice-500-vs-500">Table 3.12: </span>False non-match rate values at specific false match rates for devices deployed in the IARPA N2N Challenge at 500 PPI compared to a downsampled <span class="math inline">500</span> PPI reference roll.
+</caption>
+<thead>
+<tr>
+<th style="text-align:left;">
+Device
+</th>
+<th style="text-align:right;">
+FNMR @ FMR = 0.0001
+</th>
+<th style="text-align:right;">
+FNMR @ FMR = 0.001
+</th>
+<th style="text-align:right;">
+FNMR @ FMR = 0.01
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+A
+</td>
+<td style="text-align:right;">
+0.1314
+</td>
+<td style="text-align:right;">
+0.0966
+</td>
+<td style="text-align:right;">
+0.0966
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+B
+</td>
+<td style="text-align:right;">
+0.1844
+</td>
+<td style="text-align:right;">
+0.1348
+</td>
+<td style="text-align:right;">
+0.1348
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+C
+</td>
+<td style="text-align:right;">
+0.0526
+</td>
+<td style="text-align:right;">
+0.0400
+</td>
+<td style="text-align:right;">
+0.0400
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+E
+</td>
+<td style="text-align:right;">
+0.0955
+</td>
+<td style="text-align:right;">
+0.0722
+</td>
+<td style="text-align:right;">
+0.0663
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+F
+</td>
+<td style="text-align:right;">
+0.1765
+</td>
+<td style="text-align:right;">
+0.1307
+</td>
+<td style="text-align:right;">
+0.1307
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+J
+</td>
+<td style="text-align:right;">
+0.0910
+</td>
+<td style="text-align:right;">
+0.0706
+</td>
+<td style="text-align:right;">
+0.0586
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+K
+</td>
+<td style="text-align:right;">
+0.1122
+</td>
+<td style="text-align:right;">
+0.0914
+</td>
+<td style="text-align:right;">
+0.0700
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+M
+</td>
+<td style="text-align:right;">
+0.0811
+</td>
+<td style="text-align:right;">
+0.0649
+</td>
+<td style="text-align:right;">
+0.0590
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+P
+</td>
+<td style="text-align:right;">
+0.0538
+</td>
+<td style="text-align:right;">
+0.0440
+</td>
+<td style="text-align:right;">
+0.0416
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+R
+</td>
+<td style="text-align:right;">
+0.0601
+</td>
+<td style="text-align:right;">
+0.0473
+</td>
+<td style="text-align:right;">
+0.0412
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+S
+</td>
+<td style="text-align:right;">
+0.0467
+</td>
+<td style="text-align:right;">
+0.0349
+</td>
+<td style="text-align:right;">
+0.0328
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+U
+</td>
+<td style="text-align:right;">
+0.0444
+</td>
+<td style="text-align:right;">
+0.0348
+</td>
+<td style="text-align:right;">
+0.0348
+</td>
+</tr>
+</tbody>
+</table>
+<div class="figure" style="text-align: center"><span id="fig:fig-pft3-n2n-interdevice-1000-vs-1000"></span>
+<img src="plots/Aware+0002_PFT3_N2N_interdevice-1000-vs-1000.png" alt="Overall detection error tradeoff of comparisons from the PFT III IARPA N2N dataset for devices that supported native $1\,000$ PPI to $1\,000$ PPI comparisons." width="1800" />
+<p class="caption">
+Figure 3.13: Overall detection error tradeoff of comparisons from the PFT III IARPA N2N dataset for devices that supported native <span class="math inline">1 000</span> PPI to <span class="math inline">1 000</span> PPI comparisons.
+</p>
+</div>
+<table class="table table-striped table-hover" style="margin-left: auto; margin-right: auto;">
+<caption>
+<span id="tab:tab-pft3-n2n-interdevice-1000-vs-1000">Table 3.13: </span>False non-match rate values at specific false match rates for <span class="math inline">1 000</span> PPI devices deployed in the IARPA N2N Challenge compared to a <span class="math inline">1 000</span> PPI reference roll.
+</caption>
+<thead>
+<tr>
+<th style="text-align:left;">
+Device
+</th>
+<th style="text-align:right;">
+FNMR @ FMR = 0.0001
+</th>
+<th style="text-align:right;">
+FNMR @ FMR = 0.001
+</th>
+<th style="text-align:right;">
+FNMR @ FMR = 0.01
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+J
+</td>
+<td style="text-align:right;">
+0.0861
+</td>
+<td style="text-align:right;">
+0.0675
+</td>
+<td style="text-align:right;">
+0.0546
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+R
+</td>
+<td style="text-align:right;">
+0.0649
+</td>
+<td style="text-align:right;">
+0.0493
+</td>
+<td style="text-align:right;">
+0.0439
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+U
+</td>
+<td style="text-align:right;">
+0.0404
+</td>
+<td style="text-align:right;">
+0.0316
+</td>
+<td style="text-align:right;">
+0.0316
+</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+<div id="resample-test" class="section level3">
+<h3><span class="header-section-number">3.5.2</span> Resample Test</h3>
+<p>PFT III supports encoding of variable resolution images. It is thought that several fingerprint feature extractors downsample imagery to a lower resolution before extracting features. To test this theory, we downsample and compare source and reference imagery both captured natively at <span class="math inline">1 000</span> PPI. All downsampling was performed using <em><a href="https://github.com/usnistgov/NFIR">NFIR</a></em>.</p>
+<p>Images were compared at all combinations of <span class="math inline">100</span>, <span class="math inline">250</span>, <span class="math inline">300</span>, <span class="math inline">333</span>, <span class="math inline">500</span>, <span class="math inline">600</span>, and <span class="math inline">1 000</span> (native) PPI.</p>
+<p><a href="pft-iii-datasets.html#fig:fig-pft3-n2n-resample-1000">Figure <a href="pft-iii-datasets.html#fig:fig-pft3-n2n-resample-1000">3.14</a></a> and <a href="pft-iii-datasets.html#tab:tab-pft3-n2n-resample-1000">Table <a href="pft-iii-datasets.html#tab:tab-pft3-n2n-resample-1000">3.14</a></a> show match rates against <span class="math inline">1 000</span> PPI references. <a href="pft-iii-datasets.html#fig:fig-pft3-n2n-resample-600">Figure <a href="pft-iii-datasets.html#fig:fig-pft3-n2n-resample-600">3.15</a></a> and <a href="pft-iii-datasets.html#tab:tab-pft3-n2n-resample-600">Table <a href="pft-iii-datasets.html#tab:tab-pft3-n2n-resample-600">3.15</a></a> show match rates against <span class="math inline">600</span> PPI downsampled references. <a href="pft-iii-datasets.html#fig:fig-pft3-n2n-resample-500">Figure <a href="pft-iii-datasets.html#fig:fig-pft3-n2n-resample-500">3.16</a></a> and <a href="pft-iii-datasets.html#tab:tab-pft3-n2n-resample-500">Table <a href="pft-iii-datasets.html#tab:tab-pft3-n2n-resample-500">3.16</a></a> show match rates against <span class="math inline">500</span> PPI downsampled references. <a href="pft-iii-datasets.html#fig:fig-pft3-n2n-resample-333">Figure <a href="pft-iii-datasets.html#fig:fig-pft3-n2n-resample-333">3.17</a></a> and <a href="pft-iii-datasets.html#tab:tab-pft3-n2n-resample-333">Table <a href="pft-iii-datasets.html#tab:tab-pft3-n2n-resample-333">3.17</a></a> show match rates against <span class="math inline">333</span> PPI downsampled references. <a href="pft-iii-datasets.html#fig:fig-pft3-n2n-resample-300">Figure <a href="pft-iii-datasets.html#fig:fig-pft3-n2n-resample-300">3.18</a></a> and <a href="pft-iii-datasets.html#tab:tab-pft3-n2n-resample-300">Table <a href="pft-iii-datasets.html#tab:tab-pft3-n2n-resample-300">3.18</a></a> show match rates against <span class="math inline">300</span> PPI downsampled references. <a href="pft-iii-datasets.html#fig:fig-pft3-n2n-resample-250">Figure <a href="pft-iii-datasets.html#fig:fig-pft3-n2n-resample-250">3.19</a></a> and <a href="pft-iii-datasets.html#tab:tab-pft3-n2n-resample-250">Table <a href="pft-iii-datasets.html#tab:tab-pft3-n2n-resample-250">3.19</a></a> show match rates against <span class="math inline">250</span> PPI downsampled references. <a href="pft-iii-datasets.html#fig:fig-pft3-n2n-resample-100">Figure <a href="pft-iii-datasets.html#fig:fig-pft3-n2n-resample-100">3.20</a></a> and <a href="pft-iii-datasets.html#tab:tab-pft3-n2n-resample-100">Table <a href="pft-iii-datasets.html#tab:tab-pft3-n2n-resample-100">3.20</a></a> show match rates against <span class="math inline">100</span> PPI downsampled references.</p>
+<div class="figure" style="text-align: center"><span id="fig:fig-pft3-n2n-resample-1000"></span>
+<img src="plots/Aware+0002_PFT3_N2N_resample-reference-1000.png" alt="Detection error tradeoff of comparisons from the PFT III IARPA N2N dataset using downsampled probe images of various resolutions as compared to $1\,000$ (native) images." width="1800" />
+<p class="caption">
+Figure 3.14: Detection error tradeoff of comparisons from the PFT III IARPA N2N dataset using downsampled probe images of various resolutions as compared to <span class="math inline">1 000</span> (native) images.
+</p>
+</div>
+<table class="table table-striped table-hover" style="margin-left: auto; margin-right: auto;">
+<caption>
+<span id="tab:tab-pft3-n2n-resample-1000">Table 3.14: </span>False non-match rate values at specific false match rates for device U from the IARPA N2N Challenge at various resolutions compared to <span class="math inline">1 000</span> (native) reference rolls from device V.
+</caption>
+<thead>
+<tr>
+<th style="text-align:right;">
+Probe Resolution (PPI)
+</th>
+<th style="text-align:right;">
+FNMR @ FMR = 0.0001
+</th>
+<th style="text-align:right;">
+FNMR @ FMR = 0.001
+</th>
+<th style="text-align:right;">
+FNMR @ FMR = 0.01
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:right;">
+100
+</td>
+<td style="text-align:right;">
+0.9006
+</td>
+<td style="text-align:right;">
+0.8412
+</td>
+<td style="text-align:right;">
+0.8301
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+250
+</td>
+<td style="text-align:right;">
+0.0418
+</td>
+<td style="text-align:right;">
+0.0354
+</td>
+<td style="text-align:right;">
+0.0354
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+300
+</td>
+<td style="text-align:right;">
+0.0433
+</td>
+<td style="text-align:right;">
+0.0351
+</td>
+<td style="text-align:right;">
+0.0351
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+333
+</td>
+<td style="text-align:right;">
+0.0433
+</td>
+<td style="text-align:right;">
+0.0354
+</td>
+<td style="text-align:right;">
+0.0354
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+500
+</td>
+<td style="text-align:right;">
+0.0439
+</td>
+<td style="text-align:right;">
+0.0348
+</td>
+<td style="text-align:right;">
+0.0348
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+600
+</td>
+<td style="text-align:right;">
+0.0439
+</td>
+<td style="text-align:right;">
+0.0357
+</td>
+<td style="text-align:right;">
+0.0357
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+1 000
+</td>
+<td style="text-align:right;">
+0.0404
+</td>
+<td style="text-align:right;">
+0.0316
+</td>
+<td style="text-align:right;">
+0.0316
+</td>
+</tr>
+</tbody>
+</table>
+<div class="figure" style="text-align: center"><span id="fig:fig-pft3-n2n-resample-600"></span>
+<img src="plots/Aware+0002_PFT3_N2N_resample-reference-600.png" alt="Detection error tradeoff of comparisons from the PFT III IARPA N2N dataset using downsampled probe images of various resolutions as compared to downsampled $600$ PPI images." width="1800" />
+<p class="caption">
+Figure 3.15: Detection error tradeoff of comparisons from the PFT III IARPA N2N dataset using downsampled probe images of various resolutions as compared to downsampled <span class="math inline">600</span> PPI images.
+</p>
+</div>
+<table class="table table-striped table-hover" style="margin-left: auto; margin-right: auto;">
+<caption>
+<span id="tab:tab-pft3-n2n-resample-600">Table 3.15: </span>False non-match rate values at specific false match rates for device U from the IARPA N2N Challenge at various resolutions compared to downsampled <span class="math inline">600</span> PPI reference rolls from device V.
+</caption>
+<thead>
+<tr>
+<th style="text-align:right;">
+Probe Resolution (PPI)
+</th>
+<th style="text-align:right;">
+FNMR @ FMR = 0.0001
+</th>
+<th style="text-align:right;">
+FNMR @ FMR = 0.001
+</th>
+<th style="text-align:right;">
+FNMR @ FMR = 0.01
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:right;">
+100
+</td>
+<td style="text-align:right;">
+0.8980
+</td>
+<td style="text-align:right;">
+0.8406
+</td>
+<td style="text-align:right;">
+0.8243
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+250
+</td>
+<td style="text-align:right;">
+0.0424
+</td>
+<td style="text-align:right;">
+0.0348
+</td>
+<td style="text-align:right;">
+0.0348
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+300
+</td>
+<td style="text-align:right;">
+0.0444
+</td>
+<td style="text-align:right;">
+0.0351
+</td>
+<td style="text-align:right;">
+0.0351
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+333
+</td>
+<td style="text-align:right;">
+0.0433
+</td>
+<td style="text-align:right;">
+0.0357
+</td>
+<td style="text-align:right;">
+0.0357
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+500
+</td>
+<td style="text-align:right;">
+0.0412
+</td>
+<td style="text-align:right;">
+0.0345
+</td>
+<td style="text-align:right;">
+0.0345
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+600
+</td>
+<td style="text-align:right;">
+0.0430
+</td>
+<td style="text-align:right;">
+0.0339
+</td>
+<td style="text-align:right;">
+0.0339
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+1 000
+</td>
+<td style="text-align:right;">
+0.0412
+</td>
+<td style="text-align:right;">
+0.0330
+</td>
+<td style="text-align:right;">
+0.0330
+</td>
+</tr>
+</tbody>
+</table>
+<div class="figure" style="text-align: center"><span id="fig:fig-pft3-n2n-resample-500"></span>
+<img src="plots/Aware+0002_PFT3_N2N_resample-reference-500.png" alt="Detection error tradeoff of comparisons from the PFT III IARPA N2N dataset using downsampled probe images of various resolutions as compared to downsampled $500$ PPI images." width="1800" />
+<p class="caption">
+Figure 3.16: Detection error tradeoff of comparisons from the PFT III IARPA N2N dataset using downsampled probe images of various resolutions as compared to downsampled <span class="math inline">500</span> PPI images.
+</p>
+</div>
+<table class="table table-striped table-hover" style="margin-left: auto; margin-right: auto;">
+<caption>
+<span id="tab:tab-pft3-n2n-resample-500">Table 3.16: </span>False non-match rate values at specific false match rates for device U from the IARPA N2N Challenge at various resolutions compared to downsampled <span class="math inline">500</span> PPI reference rolls from device V.
+</caption>
+<thead>
+<tr>
+<th style="text-align:right;">
+Probe Resolution (PPI)
+</th>
+<th style="text-align:right;">
+FNMR @ FMR = 0.0001
+</th>
+<th style="text-align:right;">
+FNMR @ FMR = 0.001
+</th>
+<th style="text-align:right;">
+FNMR @ FMR = 0.01
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:right;">
+100
+</td>
+<td style="text-align:right;">
+0.9070
+</td>
+<td style="text-align:right;">
+0.8424
+</td>
+<td style="text-align:right;">
+0.8287
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+250
+</td>
+<td style="text-align:right;">
+0.0456
+</td>
+<td style="text-align:right;">
+0.0363
+</td>
+<td style="text-align:right;">
+0.0363
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+300
+</td>
+<td style="text-align:right;">
+0.0462
+</td>
+<td style="text-align:right;">
+0.0354
+</td>
+<td style="text-align:right;">
+0.0354
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+333
+</td>
+<td style="text-align:right;">
+0.0456
+</td>
+<td style="text-align:right;">
+0.0354
+</td>
+<td style="text-align:right;">
+0.0354
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+500
+</td>
+<td style="text-align:right;">
+0.0444
+</td>
+<td style="text-align:right;">
+0.0348
+</td>
+<td style="text-align:right;">
+0.0348
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+600
+</td>
+<td style="text-align:right;">
+0.0468
+</td>
+<td style="text-align:right;">
+0.0336
+</td>
+<td style="text-align:right;">
+0.0336
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+1 000
+</td>
+<td style="text-align:right;">
+0.0439
+</td>
+<td style="text-align:right;">
+0.0319
+</td>
+<td style="text-align:right;">
+0.0319
+</td>
+</tr>
+</tbody>
+</table>
+<div class="figure" style="text-align: center"><span id="fig:fig-pft3-n2n-resample-333"></span>
+<img src="plots/Aware+0002_PFT3_N2N_resample-reference-333.png" alt="Detection error tradeoff of comparisons from the PFT III IARPA N2N dataset using downsampled probe images of various resolutions as compared to downsampled $333$ PPI images." width="1800" />
+<p class="caption">
+Figure 3.17: Detection error tradeoff of comparisons from the PFT III IARPA N2N dataset using downsampled probe images of various resolutions as compared to downsampled <span class="math inline">333</span> PPI images.
+</p>
+</div>
+<table class="table table-striped table-hover" style="margin-left: auto; margin-right: auto;">
+<caption>
+<span id="tab:tab-pft3-n2n-resample-333">Table 3.17: </span>False non-match rate values at specific false match rates for device U from the IARPA N2N Challenge at various resolutions compared to downsampled <span class="math inline">333</span> PPI reference rolls from device V.
+</caption>
+<thead>
+<tr>
+<th style="text-align:right;">
+Probe Resolution (PPI)
+</th>
+<th style="text-align:right;">
+FNMR @ FMR = 0.0001
+</th>
+<th style="text-align:right;">
+FNMR @ FMR = 0.001
+</th>
+<th style="text-align:right;">
+FNMR @ FMR = 0.01
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:right;">
+100
+</td>
+<td style="text-align:right;">
+0.8944
+</td>
+<td style="text-align:right;">
+0.8330
+</td>
+<td style="text-align:right;">
+0.8129
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+250
+</td>
+<td style="text-align:right;">
+0.0424
+</td>
+<td style="text-align:right;">
+0.0348
+</td>
+<td style="text-align:right;">
+0.0348
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+300
+</td>
+<td style="text-align:right;">
+0.0418
+</td>
+<td style="text-align:right;">
+0.0348
+</td>
+<td style="text-align:right;">
+0.0348
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+333
+</td>
+<td style="text-align:right;">
+0.0439
+</td>
+<td style="text-align:right;">
+0.0360
+</td>
+<td style="text-align:right;">
+0.0360
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+500
+</td>
+<td style="text-align:right;">
+0.0433
+</td>
+<td style="text-align:right;">
+0.0357
+</td>
+<td style="text-align:right;">
+0.0357
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+600
+</td>
+<td style="text-align:right;">
+0.0456
+</td>
+<td style="text-align:right;">
+0.0339
+</td>
+<td style="text-align:right;">
+0.0339
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+1 000
+</td>
+<td style="text-align:right;">
+0.0421
+</td>
+<td style="text-align:right;">
+0.0336
+</td>
+<td style="text-align:right;">
+0.0336
+</td>
+</tr>
+</tbody>
+</table>
+<div class="figure" style="text-align: center"><span id="fig:fig-pft3-n2n-resample-300"></span>
+<img src="plots/Aware+0002_PFT3_N2N_resample-reference-300.png" alt="Detection error tradeoff of comparisons from the PFT III IARPA N2N dataset using downsampled probe images of various resolutions as compared to downsampled $300$ PPI images." width="1800" />
+<p class="caption">
+Figure 3.18: Detection error tradeoff of comparisons from the PFT III IARPA N2N dataset using downsampled probe images of various resolutions as compared to downsampled <span class="math inline">300</span> PPI images.
+</p>
+</div>
+<table class="table table-striped table-hover" style="margin-left: auto; margin-right: auto;">
+<caption>
+<span id="tab:tab-pft3-n2n-resample-300">Table 3.18: </span>False non-match rate values at specific false match rates for device U from the IARPA N2N Challenge at various resolutions compared to downsampled <span class="math inline">300</span> PPI reference rolls from device V.
+</caption>
+<thead>
+<tr>
+<th style="text-align:right;">
+Probe Resolution (PPI)
+</th>
+<th style="text-align:right;">
+FNMR @ FMR = 0.0001
+</th>
+<th style="text-align:right;">
+FNMR @ FMR = 0.001
+</th>
+<th style="text-align:right;">
+FNMR @ FMR = 0.01
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:right;">
+100
+</td>
+<td style="text-align:right;">
+0.8939
+</td>
+<td style="text-align:right;">
+0.8287
+</td>
+<td style="text-align:right;">
+0.8094
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+250
+</td>
+<td style="text-align:right;">
+0.0436
+</td>
+<td style="text-align:right;">
+0.0351
+</td>
+<td style="text-align:right;">
+0.0351
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+300
+</td>
+<td style="text-align:right;">
+0.0439
+</td>
+<td style="text-align:right;">
+0.0374
+</td>
+<td style="text-align:right;">
+0.0374
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+333
+</td>
+<td style="text-align:right;">
+0.0453
+</td>
+<td style="text-align:right;">
+0.0360
+</td>
+<td style="text-align:right;">
+0.0360
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+500
+</td>
+<td style="text-align:right;">
+0.0447
+</td>
+<td style="text-align:right;">
+0.0363
+</td>
+<td style="text-align:right;">
+0.0363
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+600
+</td>
+<td style="text-align:right;">
+0.0453
+</td>
+<td style="text-align:right;">
+0.0374
+</td>
+<td style="text-align:right;">
+0.0374
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+1 000
+</td>
+<td style="text-align:right;">
+0.0439
+</td>
+<td style="text-align:right;">
+0.0339
+</td>
+<td style="text-align:right;">
+0.0339
+</td>
+</tr>
+</tbody>
+</table>
+<div class="figure" style="text-align: center"><span id="fig:fig-pft3-n2n-resample-250"></span>
+<img src="plots/Aware+0002_PFT3_N2N_resample-reference-250.png" alt="Detection error tradeoff of comparisons from the PFT III IARPA N2N dataset using downsampled probe images of various resolutions as compared to downsampled $250$ PPI images." width="1800" />
+<p class="caption">
+Figure 3.19: Detection error tradeoff of comparisons from the PFT III IARPA N2N dataset using downsampled probe images of various resolutions as compared to downsampled <span class="math inline">250</span> PPI images.
+</p>
+</div>
+<table class="table table-striped table-hover" style="margin-left: auto; margin-right: auto;">
+<caption>
+<span id="tab:tab-pft3-n2n-resample-250">Table 3.19: </span>False non-match rate values at specific false match rates for device U from the IARPA N2N Challenge at various resolutions compared to downsampled <span class="math inline">250</span> PPI reference rolls from device V.
+</caption>
+<thead>
+<tr>
+<th style="text-align:right;">
+Probe Resolution (PPI)
+</th>
+<th style="text-align:right;">
+FNMR @ FMR = 0.0001
+</th>
+<th style="text-align:right;">
+FNMR @ FMR = 0.001
+</th>
+<th style="text-align:right;">
+FNMR @ FMR = 0.01
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:right;">
+100
+</td>
+<td style="text-align:right;">
+0.8906
+</td>
+<td style="text-align:right;">
+0.8222
+</td>
+<td style="text-align:right;">
+0.8003
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+250
+</td>
+<td style="text-align:right;">
+0.0453
+</td>
+<td style="text-align:right;">
+0.0363
+</td>
+<td style="text-align:right;">
+0.0363
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+300
+</td>
+<td style="text-align:right;">
+0.0477
+</td>
+<td style="text-align:right;">
+0.0357
+</td>
+<td style="text-align:right;">
+0.0357
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+333
+</td>
+<td style="text-align:right;">
+0.0444
+</td>
+<td style="text-align:right;">
+0.0360
+</td>
+<td style="text-align:right;">
+0.0360
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+500
+</td>
+<td style="text-align:right;">
+0.0456
+</td>
+<td style="text-align:right;">
+0.0363
+</td>
+<td style="text-align:right;">
+0.0363
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+600
+</td>
+<td style="text-align:right;">
+0.0462
+</td>
+<td style="text-align:right;">
+0.0380
+</td>
+<td style="text-align:right;">
+0.0380
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+1 000
+</td>
+<td style="text-align:right;">
+0.0468
+</td>
+<td style="text-align:right;">
+0.0368
+</td>
+<td style="text-align:right;">
+0.0368
+</td>
+</tr>
+</tbody>
+</table>
+<div class="figure" style="text-align: center"><span id="fig:fig-pft3-n2n-resample-100"></span>
+<img src="plots/Aware+0002_PFT3_N2N_resample-reference-100.png" alt="Detection error tradeoff of comparisons from the PFT III IARPA N2N dataset using downsampled probe images of various resolutions as compared to downsampled $100$ PPI images." width="1800" />
+<p class="caption">
+Figure 3.20: Detection error tradeoff of comparisons from the PFT III IARPA N2N dataset using downsampled probe images of various resolutions as compared to downsampled <span class="math inline">100</span> PPI images.
+</p>
+</div>
+<table class="table table-striped table-hover" style="margin-left: auto; margin-right: auto;">
+<caption>
+<span id="tab:tab-pft3-n2n-resample-100">Table 3.20: </span>False non-match rate values at specific false match rates for device U from the IARPA N2N Challenge at various resolutions compared to downsampled <span class="math inline">100</span> PPI reference rolls from device V.
+</caption>
+<thead>
+<tr>
+<th style="text-align:right;">
+Probe Resolution (PPI)
+</th>
+<th style="text-align:right;">
+FNMR @ FMR = 0.0001
+</th>
+<th style="text-align:right;">
+FNMR @ FMR = 0.001
+</th>
+<th style="text-align:right;">
+FNMR @ FMR = 0.01
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:right;">
+100
+</td>
+<td style="text-align:right;">
+0.7804
+</td>
+<td style="text-align:right;">
+0.6877
+</td>
+<td style="text-align:right;">
+0.5789
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+250
+</td>
+<td style="text-align:right;">
+0.8906
+</td>
+<td style="text-align:right;">
+0.8275
+</td>
+<td style="text-align:right;">
+0.8094
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+300
+</td>
+<td style="text-align:right;">
+0.8953
+</td>
+<td style="text-align:right;">
+0.8327
+</td>
+<td style="text-align:right;">
+0.8117
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+333
+</td>
+<td style="text-align:right;">
+0.9067
+</td>
+<td style="text-align:right;">
+0.8395
+</td>
+<td style="text-align:right;">
+0.8190
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+500
+</td>
+<td style="text-align:right;">
+0.8994
+</td>
+<td style="text-align:right;">
+0.8395
+</td>
+<td style="text-align:right;">
+0.8263
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+600
+</td>
+<td style="text-align:right;">
+0.9091
+</td>
+<td style="text-align:right;">
+0.8474
+</td>
+<td style="text-align:right;">
+0.8257
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+1 000
+</td>
+<td style="text-align:right;">
+0.9044
+</td>
+<td style="text-align:right;">
+0.8471
+</td>
+<td style="text-align:right;">
+0.8330
+</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="timing-sample-dataset.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="comparison-to-pft-ii.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": false,
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": null,
+"text": null
+},
+"history": {
+"link": null,
+"text": null
+},
+"download": ["Aware+0002.pdf"],
+"toc": {
+"collapse": "subsection"
+},
+"search": false
+});
+});
+</script>
+
+</body>
+
+</html>
