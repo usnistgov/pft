@@ -516,7 +516,7 @@ check_for_previous_attempts()
 		    "You can remove it by running: '$0 clean'"
 	fi
 	output_found=$(find "${wd}" -maxdepth 1 -name "pftiii_validation_*" \
-	    -print -quit)
+	    -a \! -name "pftiii_validation_images_*.tar.gz" -print -quit)
 	if [ "${output_found}" != "" ]; then
 		fail "Previous attempt at validation found:" \
 		    "$(rp "${output_found}")" "" \
