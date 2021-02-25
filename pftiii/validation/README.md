@@ -39,7 +39,7 @@ Requirements
    - Because organizations must agree to NIST Special Database terms and
      conditions, the required fingerprint imagery is not included in this GitHub
      repository. Request and download the data from our [requests website].
- * CentOS 8.0.1905
+ * CentOS 8.2.2004
    - Even if this is not the latest version of CentOS, it will be the version
      used to run the evaluation. Direct downloads are available from the [CentOS
      Vault] ([🇺🇸 USA], [🇪🇺 Europe]). We will be using the base CentOS
@@ -77,14 +77,12 @@ $ cp /path/to/libpftiii_nullimpl_0001.so lib/
 $ cp /path/to/config.txt config/
 $ cp /path/to/pftiii_validation_images_*.tar.gz .
 $ ./validate
-PFT III Validation (201912181452) -- Wed Dec 18 14:53:20 EST 2019
+PFT III Validation (202102251554) -- Thu Feb 25 16:05:49 EST 2021
 ================================================================================
 Checking for required packages... [OKAY]
 Checking for previous validation attempts... [OKAY]
 Checking validation version... (no Internet connection) [SKIP]
-Checking OS and version... (CentOS 8.0.1905) [OKAY]
-Checking for validation images... [DEFER]
-Expanding pftiii_validation_images_201912181310.tar.gz"... [OKAY]
+Checking OS and version... (CentOS 8.2.2004) [OKAY]
 Checking for validation images... [OKAY]
 Checking validation image versions... [OKAY]
 Looking for core library... (libpftiii_nullimpl_0001.so) [OKAY]
@@ -144,7 +142,7 @@ make sure it is correct:
 IMPORTANT: This script was unable to check, so please ensure that you are using
 the latest version of the PFT III validation package before submitting. Using
 the latest version of the validation package is a requirement. You are
-currently running with version 201912181452.
+currently running with version 202102251554.
 
 Information:
 https://github.com/usnistgov/pft/tree/master/pftiii/validation
@@ -153,7 +151,7 @@ https://github.com/usnistgov/pft/tree/master/pftiii/validation/VERSION
 Download:
 https://github.com/usnistgov/pft/releases
 ================================================================================
-Wed Dec 18 14:53:46 EST 2019
+Thu Feb 25 16:06:07 EST 2021
 ```
 </details>
 
@@ -219,9 +217,9 @@ The items in this repository are released in the public domain. See the
 [LICENSE] for details.
 
 [API]: https://pages.nist.gov/pft/doc/pftiii/api/
-[CentOS Vault]: http://vault.centos.org/
-[🇺🇸 USA]: http://mirror.umd.edu/8.0.1905/isos/x86_64/CentOS-8-x86_64-1905-dvd1.iso
-[🇪🇺 Europe]: http://centos.mirrors.proxad.net/8.0.1905/isos/x86_64/CentOS-8-x86_64-1905-dvd1.iso
+[CentOS Vault]: https://vault.centos.org/
+[🇺🇸 USA]: https://mirrors.oit.uci.edu/centos/8.2.2004/isos/x86_64/CentOS-8.2.2004-x86_64-dvd1.iso
+[🇪🇺 Europe]: http://mirror.nsc.liu.se/centos-store/8.2.2004/isos/x86_64/CentOS-8.2.2004-x86_64-dvd1.iso
 [lib/]: https://github.com/usnistgov/pft/blob/master/pftiii/validation/lib
 [../libpftiii/]: https://github.com/usnistgov/pft/blob/master/pftiii/libpftiii
 [../include/pftiii.h]: https://github.com/usnistgov/pft/blob/master/pftiii/include/pftiii.h
