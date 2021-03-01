@@ -676,6 +676,24 @@ record_identification_information()
 	fi
 	chmod +w "${config_dir}"
 
+	# Check that version in filename matches value compiled within
+	local filename_vers
+	filename_vers="$(get_lib_version)"
+	filename_vers="$(tr '[:lower:]' '[:upper:]' <<< "${filename_vers}")"
+
+	local compiled_version
+	compiled_version=$(grep "^Version = 0x" "${log}")
+	compiled_version="${compiled_version//Version = 0x/}"
+	compiled_version="$(tr '[:lower:]' '[:upper:]' <<< \
+	    "${compiled_version}")"
+
+	if [ "${filename_vers}" != "${compiled_version}" ]; then
+		local msg="The version specified in your library's filename ("
+		msg+="${filename_vers}) and the version in compiled within "
+		msg+="you library (${compiled_version}) are not the same.";
+		fail "${msg}"
+	fi
+
 	check_cbeff_dependencies
 }
 
