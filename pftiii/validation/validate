@@ -54,21 +54,6 @@ binary="${bin_dir}/pftiii_validation"
 # Suffix given to files set aside by this script
 move_suffix=".moved"
 
-# Dimmed text color
-font_dim='\e[2m'
-# Green text color
-font_green='\e[32m'
-# Red text color
-font_red='\e[31m'
-# Light red text color
-font_lightred='\e[91m'
-# Yellow text color
-font_yellow='\e[33m'
-# Underline the text
-font_underline='\e[4m'
-# Reset to default text color
-font_reset='\e[0m'
-
 # Symbol name for function that creates proprietary templates
 create_func="createProprietaryTemplate"
 # Symbol name for function that compares two proprietary templates
@@ -83,27 +68,20 @@ set -o pipefail
 # Functions                                                                    #
 ################################################################################
 
-# Disable color output if not in tty
-check_color_output()
-{
-	if [ -t 1 ]; then
-		font_dim='\e[2m'
-		font_green='\e[32m'
-		font_red='\e[31m'
-		font_lightred='\e[91m'
-		font_yellow='\e[33m'
-		font_underline='\e[4m'
-		font_reset='\e[0m'
-	else
-		font_dim=""
-		font_green=""
-		font_red=""
-		font_lightred=""
-		font_yellow=""
-		font_underline=""
-		font_reset=""
-	fi
-}
+# Dimmed text color
+font_dim() { if [ -t 1 ]; then tput dim; fi }
+# Green text color
+font_green() { if [ -t 1 ]; then tput setaf 2; fi }
+# Red text color
+font_red() { if [ -t 1 ]; then tput setaf 1; fi }
+# Light red text color
+font_lightred() { if [ -t 1 ]; then tput setaf 5; fi }
+# Yellow text color
+font_yellow() { if [ -t 1 ]; then tput setaf 3; fi }
+# Underline the text
+font_underline() { if [ -t 1 ]; then tput smul; fi }
+# Reset to default text color
+font_reset() { if [ -t 1 ]; then tput sgr0; fi }
 
 # Print the path of the argument relative to the current working directory
 rp()
@@ -242,7 +220,8 @@ print_footer()
 		start_sec="${1}"
 	fi
 
-	echo -e -n "${font_reset}${font_dim}"
+	font_reset
+	font_dim
 	echo -n "Completed: $(get_date)"
 	if [ "${start_sec}" != "" ]; then
 		local duration=$(( ("$(date +%s)" - start_sec) ))
@@ -250,7 +229,7 @@ print_footer()
 	else
 		echo
 	fi
-	echo -e "${font_reset}"
+	font_reset
 }
 
 # Convenience for a middle line with 80 char left align standard box
@@ -269,7 +248,8 @@ boxline()
 # All params are echoed in a box with newlines in between.
 fail()
 {
-	echo -e "${font_red}[FAIL]"
+	font_red
+	echo "[FAIL]"
 	echo
 
 	if [ "${#}" -eq 1 ]; then
@@ -295,7 +275,7 @@ fail()
 		box "${msg}" 80 '!' '!' 'l'
 	fi
 
-	echo -e "${font_reset}"
+	font_reset
 
 	print_footer "${start_sec}"
 
@@ -307,7 +287,8 @@ fail()
 # All params are echoed in a box with newlines in between.
 warn()
 {
-	echo -e "${font_lightred}[WARN]"
+	font_lightred
+	echo "[WARN]"
 
 
 	if [ "${#}" -eq 1 ]; then
@@ -326,7 +307,7 @@ warn()
 		done
 	fi
 
-	echo -e "${font_reset}"
+	font_reset
 }
 
 # Print [OKAY] with any arguments in parenthesis before.
@@ -334,10 +315,14 @@ okay()
 {
 	if [ $# -ne 0 ]; then
 		for i in "${@}"; do
-			echo -n -e "${font_dim}(${i})${font_reset} "
+			font_dim
+			echo -n "(${i}) "
+			font_reset
 		done
 	fi
-	echo -e "${font_green}[OKAY]${font_reset}"
+	font_green
+	echo "[OKAY]"
+	font_reset
 }
 
 # Print a repeated line
@@ -362,7 +347,9 @@ check_for_images()
 		image_archive=$(ls -r \
 		    "${wd}"/${validation_image_download_prefix}* 2> /dev/null)
 		if [ "${image_archive}" != "" ]; then
-			echo -e "${font_yellow}[DEFER]${font_reset}"
+			font_yellow
+			echo "[DEFER]"
+			font_reset
 			for i in $(find "${wd}" -maxdepth 1 -name \
 			    "${validation_image_download_prefix}*" | sort); do
 				echo -n "Expanding $(basename "${i}")... "
@@ -391,8 +378,9 @@ check_for_images()
 			if ! [ -e "${wd}"/${validation_image_dir}/VERSION ];
 			    then
 			    	if [ $has_deferred -eq 0 ]; then
-	    				echo -n -e "${font_yellow}[DEFER]"
-	    				echo -e "${font_reset}"
+			    		font_yellow
+	    				echo -n "[DEFER]"
+	    				font_reset
 	    				has_deferred=1
 	    			fi
 
@@ -528,9 +516,12 @@ check_validation_version()
 		if ! internet_version=$(curl -m 10 -f "${version_url}" \
 		    2>/dev/null)
 		then
-			echo -e -n "${font_dim}(connection failure)"
-			echo -e -n "${font_reset} ${font_yellow}[SKIP]"
-			echo -e "${font_reset}"
+			font_dim
+			echo -n "(connection failure) "
+			font_reset
+			font_yellow
+			echo -n "[SKIP]"
+			font_reset
 		else
 			if [ "${internet_version}" != "${validation_version}" ];
 			then
@@ -545,8 +536,12 @@ check_validation_version()
 			fi
 		fi
 	else
-		echo -e -n "${font_dim}(no Internet connection)${font_reset} "
-		echo -e "${font_yellow}[SKIP]${font_reset}"
+		font_dim
+		echo -n "(no Internet connection) "
+		font_reset
+		font_yellow
+		echo "[SKIP]"
+		font_reset
 	fi
 
 	return ${checked}
@@ -1214,7 +1209,7 @@ print_final_success()
 
 	local msg="You have successfully completed the first step in PFT III "
 	msg+="validation. Please sign and encrypt the file listed below, send "
-	msg+="it to ${font_underline}pft@nist.gov${font_reset}, and await a "
+	msg+="it to pft@nist.gov, and await a "
 	msg+="notification.\n\n -> "
 	msg+=$(rp "${wd}"/"${tar_file}")
 	msg+="\n\nExample of signing and encrypting with GnuPG:\n"
@@ -1232,7 +1227,7 @@ print_final_success()
 	msg+="public_key.asc --armor \\\\\n"
 	msg+="    --export jdoe@$(get_organization_name).com"
 
-	echo -e "${msg}" | fold -s
+	echo "${msg}" | fold -s
 	printline '=' 80
 
 	echo
@@ -1245,14 +1240,13 @@ print_final_success()
 		k=$(cut -f1 -d= <<< "${i}" | sed 's/ \{1,\}$//')
 		v=$(cut -f2 -d= <<< "${i}" | sed -e 's/^ //' -e 's/ \{1,\}$//')
 		if [ "${v}" == "" ]; then
-			v="${font_reset}${font_red}${font_underline}"
-			v+="Unspecified"
+			v="Unspecified"
 		fi
-		msg+=" -> ${k}:\n    ${font_green}${v}${font_reset}";
+		msg+=" -> ${k}:\n    ${v}";
 		if [ ${line_num} -ne 5 ]; then msg+="\n"; fi
 		line_num=$(( line_num + 1 ))
 	done < <(head -n 9 "${tar_file//.tar.gz/}/id.log" | tail -n 6)
-	echo -e "${msg}" | fold -s
+	echo "${msg}" | fold -s
 	printline '=' 80
 
 	echo
@@ -1273,8 +1267,7 @@ print_couldnt_check_version()
 	msg+="ensure that you are using the latest version of the PFT III "
 	msg+="validation package before submitting. Using the latest version "
 	msg+="of the validation package is a requirement. You are currently "
-	msg+="running with version ${font_underline}${validation_version}"
-	msg+="${font_reset}."
+	msg+="running with version ${validation_version}."
 	msg+="\n\nInformation:\n${info_url}\n"
 	msg+="Version:\n${vers_url}\n"
 	msg+="Download:\n${validation_dl_url}\n"
@@ -1282,7 +1275,7 @@ print_couldnt_check_version()
 	echo
 	printline '=' 80
 	echo
-	echo -e -n ${msg} | fold -s
+	echo -n ${msg} | fold -s
 	printline '=' 80
 	echo
 }
@@ -1431,7 +1424,6 @@ check_cbeff_dependencies()
 # Move directories back on SIGINT
 trap move_back_dirs INT
 
-check_color_output
 check_wd
 cd "${wd}" || exit 1
 read -r validation_version < "${wd}"/VERSION
