@@ -208,8 +208,7 @@ to the [NIST PFT team].
 
 The PFT team sends updates about the PFT tests to their mailing list. Enter your
 e-mail address on the [mailing list site], or send a blank e-mail to
-PFT+subscribe@list.nist.gov to be automatically subscribed. Posts to the list
-are mirrored on an [RSS feed].
+PFT+subscribe@list.nist.gov to be automatically subscribed.
 
 License
 -------
@@ -232,7 +231,6 @@ The items in this repository are released in the public domain. See the
 [NIST PFT team]: mailto:pft@nist.gov
 [open an issue]: https://github.com/usnistgov/pft/issues
 [mailing list site]: https://groups.google.com/a/list.nist.gov/forum/#!forum/pft/join
-[RSS feed]: https://groups.google.com/a/list.nist.gov/forum/feed/pft/msgs/rss.xml
 [LICENSE]: https://github.com/usnistgov/pft/blob/master/LICENSE.md
 [test plan]: https://pages.nist.gov/pft/doc/pftiii/testplan.pdf
 [requests website]: https://nigos.nist.gov/datasets/pftiii_validation/request
