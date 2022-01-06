@@ -1201,40 +1201,40 @@ make_tarball()
 print_final_success()
 {
 	local tar_file
-	tar_file="$(get_tarball_name)"
+	if ! tar_file="$(get_tarball_name)" ;then
+		fail "Could not get final output name."
+	fi
+	echo
+	font_green
+
+	local msg="You have successfully completed your part of PFT III "
+	msg+="validation. Please sign and encrypt the file listed below (run "
+	msg+="'${0} encrypt' for an example)."
+	box "${msg}" 80 '=' '|' 'l' 1 0
+	boxline
+	box "${tar_file}" 80 '=' '|' 'c' 0 0
+	boxline
+
+	local file_size
+	file_size="$(du -m "${tar_file}" | cut -f 1)"
+	# Likely will be too big for email
+	if [ "${file_size}" -ge 20 ]; then
+		msg="${tar_file}.asc may be too big for NIST's email "
+		msg+="server, so please contact pft@nist.gov for an upload "
+		msg+="link for both ${tar_file}.asc and your public key."
+	else
+		msg="Please attach both ${tar_file}.asc and your public key to "
+		msg+="an email addressed to pft@nist.gov."
+	fi
+	box "${msg}" 80 '=' '|' 'l' 0 1
+	font_reset
 
 	echo
-	printline '=' 80
-	echo
-
-	local msg="You have successfully completed the first step in PFT III "
-	msg+="validation. Please sign and encrypt the file listed below, send "
-	msg+="it to pft@nist.gov, and await a "
-	msg+="notification.\n\n -> "
-	msg+=$(rp "${wd}"/"${tar_file}")
-	msg+="\n\nExample of signing and encrypting with GnuPG:\n"
-	msg+="gpg --output ${tar_file}.asc \\\\\n"
-	msg+="    --default-key jdoe@$(get_organization_name).com \\\\\n"
-	msg+="    --recipient pft@nist.gov \\\\\n"
-	msg+="    --recipient jdoe@$(get_organization_name).com \\\\\n"
-	msg+="    --armor --sign --encrypt \\\\\n"
-	msg+="    $(rp "${wd}/${tar_file}")\n\n"
-	msg+="Additionally, be sure to include the public key of the identity "
-	msg+="that signed the validation package. This key must be the key "
-	msg+="whose key fingerprint was printed on the PFT III application."
-	msg+="\n\nExample of extracting public key with GnuPG:\n"
-	msg+="gpg --output $(get_organization_name)_$(get_lib_version)_pftiii_"
-	msg+="public_key.asc --armor \\\\\n"
-	msg+="    --export jdoe@$(get_organization_name).com"
-
-	echo "${msg}" | fold -s
-	printline '=' 80
-
-	echo
-	echo
-	printline '=' 80
-	msg="\nPlease review the marketing and CBEFF information compiled into "
-	msg+="your library to make sure it is correct:\n\n"
+	msg="Please review the marketing and CBEFF information compiled into "
+	msg+="your library to make sure it is correct:"
+	font_yellow
+	box "${msg}" 80 '=' '|' 'l' 1 0
+	boxline
 	local line_num=0
 	while read -r i; do
 		k=$(cut -f1 -d= <<< "${i}" | sed 's/ \{1,\}$//')
@@ -1242,14 +1242,77 @@ print_final_success()
 		if [ "${v}" == "" ]; then
 			v="Unspecified"
 		fi
-		msg+=" -> ${k}:\n    ${v}";
-		if [ ${line_num} -ne 5 ]; then msg+="\n"; fi
+		box "${k}:" 80 '=' '|' 'l' 0 0
+		if [ ${line_num} -ne 5 ]; then
+			box "-> ${v}" 80 '=' '|' 'l' 0 0
+			boxline;
+		else
+			box " -> ${v}" 80 '=' '|' 'l' 0 1
+		fi
 		line_num=$(( line_num + 1 ))
 	done < <(head -n 9 "${tar_file//.tar.gz/}/id.log" | tail -n 6)
-	echo "${msg}" | fold -s
-	printline '=' 80
+	font_reset
 
 	echo
+}
+
+print_encryption()
+{
+	local tar_file
+	if ! tar_file="$(get_tarball_name)"; then
+		tar_file="epftiii_validation_nullimpl_0001.tar.xz"
+	fi
+
+	# Sign + encrypt example
+	echo "Example of signing and encrypting with GnuPG:"
+	echo "  gpg --output ${tar_file}.asc \\"
+	echo "      --default-key <!-- YOUR EMAIL ADDRESS --> \\"
+	echo "      --recipient <!-- YOUR EMAIL ADDRESS --> \\"
+	echo "      --recipient pft@nist.gov \\"
+	echo "      --armor --sign --encrypt ${tar_file}"
+	echo
+
+	# Extract public key example
+	local lib_name
+	if ! lib_name="$(get_core_library_name)"; then
+		lib_name="libpftiii_nullimpl_0001.so"
+	fi
+	lib_name="$(basename "${lib_name}" .so)"
+	echo "Example of extracting public key with GnuPG:"
+	echo "  gpg --output ${lib_name}_public_key.asc \\"
+	echo "      --armor --export <!-- YOUR EMAIL ADDRESS -->"
+	echo
+
+	# Export key fingerprint example
+	echo "Example of extracting fingerprint from public key with GnuPG:"
+	echo "  gpg --fingerprint <!-- YOUR EMAIL ADDRESS --> | grep '^ '"
+}
+
+# Print instructions to the console
+print_instructions()
+{
+	echo "$0 clean"
+	echo -n " - Restores validation directory to original state, removing "
+	echo "any previous "
+	echo "   output, but leaving copied libraries and configurations."
+	echo
+	echo "$0 encrypt"
+	echo " - Print sample signing and encryption instructions for GnuPG."
+	echo
+	echo "Instructions"
+	echo "============"
+	echo " 1. Copy required files:"
+	echo -n "    a. Place all needed libraries in 'lib/', including your "
+	echo "properly named "
+	echo "          PFT III core library."
+	echo "    b. Place any needed runtime configuration files in 'config/'."
+	echo " 2. Run './validate'."
+	echo "    a. Successful? Sign and encrypt the generated archive."
+	echo "    b. Unsuccessful? Work to resolve the listed errors, run"
+	echo "       './validate clean', and repeat these steps."
+	echo -n " 3. Email the signed and encrypted file along with your "
+	echo "public key to"
+	echo "    pft@nist.gov."
 }
 
 # Print message when validation version couldn't be checked
@@ -1268,16 +1331,16 @@ print_couldnt_check_version()
 	msg+="validation package before submitting. Using the latest version "
 	msg+="of the validation package is a requirement. You are currently "
 	msg+="running with version ${validation_version}."
-	msg+="\n\nInformation:\n${info_url}\n"
-	msg+="Version:\n${vers_url}\n"
-	msg+="Download:\n${validation_dl_url}\n"
 
-	echo
-	printline '=' 80
-	echo
-	echo -n ${msg} | fold -s
-	printline '=' 80
-	echo
+	font_lightred
+	box "${msg}" 80 '=' '|' 'l' 1 0
+	boxline
+	box "Information:" 80 '=' '|' 'l' 0 0
+	box "${info_url}" 80 '=' '|' 'l' 0 0
+	box "Version:" 80 '=' '|' 'l' 0 0
+	box "${vers_url}" 80 '=' '|' 'l' 0 0
+	box "Download:" 80 '=' '|' 'l' 0 0
+	box "${validation_dl_url}" 80 '=' '|' 'l' 0 1
 }
 
 # Prevent against possible issues when not using GNU realpath
@@ -1429,18 +1492,30 @@ cd "${wd}" || exit 1
 read -r validation_version < "${wd}"/VERSION
 print_header
 
-if [ $# -ne 0 ]; then
-	if [ "$1" == "clean" ]; then
+if [ "${#}" -ne 0 ]; then
+	if [ "${1}" == "clean" ]; then
 		clean_previous_attempts
-		printline '=' 80
-		echo
+		exit
+	elif [ "${1}" == "encrypt" ]; then
+		print_encryption
+		exit
+	elif [ "${1}" == "help" ]; then
+		print_instructions
 		exit
 	else
-		echo "Usage: $0 [clean]"
+		echo "Usage: ${0} [clean|encrypt|help]"
+		print_instructions
 		exit 1
+	fi
+else
+	# Quick check to see if it looks like we're fresh
+	if ! core_library_present; then
+		print_instructions
+		exit
 	fi
 fi
 
+# Pre-check
 check_required_packages
 check_for_previous_attempts
 check_validation_version; validation_version_checked=$?
@@ -1449,9 +1524,11 @@ check_for_images
 check_image_versions
 check_library
 check_environment
-mkdir -p "${output_dir}"
+
+# Run
+mkdir -p "${output_dir}" || exit 1
 log_canaries
-seed=$(random_number)
+seed="$(random_number)" || exit 1
 compile "${seed}"
 check_api_level
 record_identification_information
@@ -1459,11 +1536,15 @@ run_operation "${seed}" "${create_func}" "-e"
 check_logs "${create_func}"
 run_operation "${seed}" "${compare_func}" "-c"
 check_logs "${compare_func}"
+
+# Cleanup
 move_back_dirs
 make_tarball
-print_final_success
 
-if [ ${validation_version_checked} -eq 0 ]; then
+# Notifications
+if [ "${validation_version_checked}" -eq "0" ]; then
+	echo
 	print_couldnt_check_version
 fi
-date
+print_final_success
+print_footer "${start_sec}"
