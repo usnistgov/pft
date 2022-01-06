@@ -11,23 +11,22 @@ decent starting point for becoming familiar with the PFT III [API].
 
 Building
 --------
- 1. Copy a MINEX III compliant library and all dependent libraries into this
-    directory.
- 2. Change the implementation of `getIdentification()` in
+ 1. Change the implementation of `getIdentification()` in
     [`pftiii_mineximpl.cpp`] to indicate your desired name.
- 3. Ensure that you have already built [`libpftiii`], or execute `make -C
-    ../libpftiii`.
- 4. Execute `make`.
+ 2. Run a CMake build, setting the path of your dependent MINEX III library with
+    the CMake variable `MINEXIII_LIBRARY`
+    ```
+    mkdir build && cd build
+    cmake .. -DMINEXIII_LIBRARY=path/to/libminexiii_nullimpl_0001.so && make
+    ```
 
 A library, `libpftiii_[IDENTIFIER]_[VERSION].so`, will be built in the current
 directory. It will be dependent on the MINEX III library provided. These
 libraries may now be linked to PFT III testing code, including the PFT III
 [validation].
-Execute `make` in this directory to create `libpftiii_nullimpl_0001.so`. Linking
-requires that you already built [`libpftiii`].
 
-The `Makefile` extracts the name and version number for the library to be built
-from within the C++ source.
+The CMake configuration extracts the name and version number for the library to
+be built from within the C++ source.
 
 Communication
 -------------

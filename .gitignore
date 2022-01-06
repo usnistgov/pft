@@ -2,6 +2,9 @@
 *.o
 *.so
 
+# CMake build directories
+**/build/*
+
 # Temp files
 .DS_Store
 ._*
@@ -9,6 +12,8 @@
 # PFT III Validation Files
 pftiii/validation/bin
 pftiii/validation/images
+pftiii/validation/include/
+pftiii/validation/lib/
 pftiii/validation/output
 pftiii/validation/pftiii_validation_*_*
 pftiii/validation/config

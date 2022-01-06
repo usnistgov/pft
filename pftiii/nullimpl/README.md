@@ -6,11 +6,13 @@ a PFT III [API] implementation.
 
 Building
 --------
-Execute `make` in this directory to create `libpftiii_nullimpl_0001.so`. Linking
-requires that you already built [`libpftiii`].
+```
+mkdir build && cd build
+cmake .. && make
+```
 
-The `Makefile` extracts the name and version number for the library to be built
-from within the C++ source.
+The CMake configuration extracts the name and version number for the library to
+be built from within the C++ source.
 
 Communication
 -------------
