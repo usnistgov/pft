@@ -37,16 +37,22 @@ wd="$(cd "$(dirname "${0}")" && pwd)"
 validation_image_dir="images"
 # Directory where libraries go
 lib_dir="${wd}"/lib
+local_lib_dir="${lib_dir}"
 # Directory where validation driver sourcecode lives
 src_dir="${wd}"/src
-# Directory where validation driver is built
+# Directory where validation driver build files reside
+build_dir="${src_dir}/build"
+# Directory where validation driver executable is installed
 bin_dir="${wd}"/bin
 # Output directory for validation driver logs
 output_dir="${wd}"/output
 # Configuration directory provided to PFTIII::Interface implementation
 config_dir="${wd}"/config
+local_config_dir="${config_dir}"
 # Path to the compiled validation driver binary
 binary="${bin_dir}/pftiii_validation"
+# Suffix given to files set aside by this script
+move_suffix=".moved"
 
 # Dimmed text color
 font_dim='\e[2m'
@@ -102,44 +108,225 @@ check_color_output()
 # Print the path of the argument relative to the current working directory
 rp()
 {
-	realpath --relative-to="${PWD}" "$1"
+	realpath=realpath
+	if [ "$(uname)" == "Darwin" ]; then
+		realpath="/opt/local/bin/grealpath"
+	fi
+
+	${realpath} --relative-to="${PWD}" "${1}"
+}
+
+# Output string in a box
+box()
+{
+	if [ "${#}" -lt 1 ] || [ "${#}" -gt 7 ] ; then
+		echo -n "Usage: ${FUNCNAME[0]} <msg> [width=80] "
+		echo "[tb_symbol='='] [lr_symbol='|'] [align=[a|l|c|r]] "
+		echo "[header=0|1] [footer=0|1]"
+		return 1
+	fi
+	local msg="${1}"
+	local width=80
+	if [ "${#}" -ge 2 ]; then
+		width="${2}"
+	fi
+	local tb_symbol='='
+	if [ "${#}" -ge 3 ]; then
+		tb_symbol="${3}"
+		if [ "${#tb_symbol}" -ne 1 ]; then
+			echo "tb_symbol not a single character"
+			return 1
+		fi
+	fi
+	local lr_symbol='|'
+	if [ "${#}" -ge 4 ]; then
+		lr_symbol="${4}"
+		if [ "${#lr_symbol}" -ne 1 ]; then
+			echo "lr_symbol not a single character"
+			return 1
+		fi
+	fi
+	local align="a"
+	if [ "${#}" -ge 5 ]; then
+		align="${5}"
+		if [ "${align}" != "c" ] && [ "${align}" != "a" ] && \
+		    [ "${align}" != "l" ] && [ "${align}" != "r" ]; then
+			echo "Invalid alignment value"
+			return 1
+		fi
+	fi
+	local print_header=1
+	if [ "${#}" -ge 6 ]; then
+		print_header="${6}"
+		if [ "${print_header}" -ne 0 ] && [ "${print_header}" -ne 1 ]
+		then
+			echo "Invalid print_header value"
+		fi
+	fi
+	local print_footer=1
+	if [ "${#}" -eq 7 ]; then
+		print_footer="${7}"
+		if [ "${print_footer}" -ne 0 ] && [ "${print_footer}" -ne 1 ]
+		then
+			echo "Invalid print_footer value"
+		fi
+	fi
+
+	if [ "${print_header}" -eq 1 ]; then
+		printline "${tb_symbol}" "${width}" && echo
+	fi
+
+	local max_width=$(( width - 4 ))
+
+	# Center align if a single line and alignment is auto
+	if [ "${align}" == "a" ]; then
+		if [ "${#msg}" -le "${max_width}" ]; then
+			align="c"
+		else
+			align="l"
+		fi
+	fi
+
+	local num_chars
+	local indent_count
+	local indent_pre
+	local indent_post
+	while read -r line; do
+		num_chars="${#line}"
+		indent_count=$(( (max_width + 2) - num_chars ))
+
+		if [ "${align}" == "c" ]; then
+			indent_pre=$(( indent_count / 2 ))
+			indent_post=$(( (indent_count + 2 - 1) / 2 ))
+		elif [ "${align}" == "l" ]; then
+			indent_pre=1
+			indent_post=$(( indent_count - 1 ))
+		elif [ "${align}" == "r" ]; then
+			indent_pre=$(( indent_count - 1 ))
+			indent_post=1
+		fi
+
+		# Left (floor)
+		echo -n "${lr_symbol}"
+		for i in $(seq 1 "${indent_pre}"); do
+			echo -n ' '
+		done
+
+		# Message
+		echo -n "${line}"
+
+		# Right (ceiling)
+		for i in $(seq 1 "${indent_post}"); do
+			echo -n ' '
+		done
+
+		echo "${lr_symbol}"
+	done < <(echo "${msg}" | fold -s -w "${max_width}")
+
+	if [ "${print_footer}" -eq 1 ]; then
+		printline "${tb_symbol}" "${width}" && echo
+	fi
+}
+
+# Print validation script header message
+print_header()
+{
+	box "PFT III Validation | Version ${validation_version} | $(get_date)"
+}
+
+# Print validation script footer message
+print_footer()
+{
+	local start_sec
+	if [ "${#}" -eq 1 ]; then
+		start_sec="${1}"
+	fi
+
+	echo -e -n "${font_reset}${font_dim}"
+	echo -n "Completed: $(get_date)"
+	if [ "${start_sec}" != "" ]; then
+		local duration=$(( ("$(date +%s)" - start_sec) ))
+		echo " (Runtime: ${duration}s)"
+	else
+		echo
+	fi
+	echo -e "${font_reset}"
+}
+
+# Convenience for a middle line with 80 char left align standard box
+boxline()
+{
+	if [ "${#}" -eq 0 ]; then
+		box "" 80 '=' '|' 'l' 0 0
+	else
+		for i in "${@}"; do
+			box "${i}" 80 '=' '|' 'l' 0 0
+		done
+	fi
 }
 
 # Convenience function to print a failure method and exit
-# All params are echoed, one per line.
+# All params are echoed in a box with newlines in between.
 fail()
 {
-	echo -e "${font_red}[FAIL]${font_reset}"
-	if [ ${#} -ne 0 ]; then
-		echo
-		printline '=' 80
-		echo
-		for i in $(seq 1 ${#}); do
-			echo "${!i}" | fold -s
+	echo -e "${font_red}[FAIL]"
+	echo
+
+	if [ "${#}" -eq 1 ]; then
+		box "${1}" 80 '!' '!'
+	elif [ "${#}" -gt 1 ]; then
+		for i in $(seq 1 "${#}"); do
+			if [ "${i}" -eq 1 ]; then
+				box "${!i}" 80 '!' '!' 'l' 1 0
+			elif [ "${i}" -eq "${#}" ]; then
+				box "${!i}" 80 '!' '!' 'l' 0 1
+			else
+				box "${!i}" 80 '!' '!' 'l' 0 0
+			fi
 		done
 	fi
-	printline '=' 80
-	echo
-	date
+
+	if ! move_back_dirs; then
+		echo
+		local msg="Additionally, this script could not move back your "
+		msg+="renamed lib and/or config directories. They may be named "
+		msg+="$(rp "${local_lib_dir}${move_suffix}") and "
+		msg+="$(rp "${local_config_dir}${move_suffix}") respectfully."
+		box "${msg}" 80 '!' '!' 'l'
+	fi
+
+	echo -e "${font_reset}"
+
+	print_footer "${start_sec}"
+
+	# Exit from here
 	exit 1
 }
 
-# Print [WARN] with any arguments in parenthesis before.
+# Print [WARN] with any arguments in a box after.
+# All params are echoed in a box with newlines in between.
 warn()
 {
-	echo -e "${font_lightred}[WARN]${font_reset}"
-	if [ ${#} -ne 0 ]; then
-		echo -e "${font_lightred}"
-		printline '=' 80
+	echo -e "${font_lightred}[WARN]"
+
+
+	if [ "${#}" -eq 1 ]; then
 		echo
-		for i in $(seq 1 ${#}); do
-			echo -e "${font_lightred}${!i}${font_reset}" | fold -s
+		box "${1}"
+	elif [ "${#}" -gt 1 ]; then
+		echo
+		for i in $(seq 1 "${#}"); do
+			if [ "${i}" -eq 1 ]; then
+				box "${!i}" 80 '=' '|' 'l' 1 0
+			elif [ "${i}" -eq "${#}" ]; then
+				box "${!i}" 80 '=' '|' 'l' 0 1
+			else
+				box "${!i}" 80 '=' '|' 'l' 0 0
+			fi
 		done
 	fi
-	echo -n -e "${font_lightred}"
-	printline '=' 80
+
 	echo -e "${font_reset}"
-	echo
 }
 
 # Print [OKAY] with any arguments in parenthesis before.
@@ -256,6 +443,38 @@ check_image_versions()
 	okay
 }
 
+move_back_dirs()
+{
+	local rv=0
+
+	local original_path
+	original_path="$(dirname "${local_lib_dir}")/"
+	original_path+="$(basename "${local_lib_dir}" "${move_suffix}")"
+	if ! [ -d "${original_path}" ]; then
+		if mv -n "${local_lib_dir}" "${original_path}" > \
+		     /dev/null 2>&1
+		then
+			local_lib_dir="${original_path}"
+		else
+			rv=1
+		fi
+	fi
+
+	original_path="$(dirname "${local_config_dir}")/"
+	original_path+="$(basename "${local_config_dir}" "${move_suffix}")"
+	if ! [ -d "${original_path}" ]; then
+		if mv -n "${local_config_dir}" "${original_path}" > \
+		   /dev/null 2>&1
+		then
+			local_config_dir="${original_path}"
+		else
+			rv=1
+		fi
+	fi
+
+	return "${rv}"
+}
+
 # Record MD5 of randomly-generated files to ensure that you truly have the
 # latest version of the validation imagery
 log_canaries()
@@ -265,24 +484,26 @@ log_canaries()
 	    -exec md5sum {} \; >> "${output_dir}"/canary.log
 }
 
-# Check that CentOS packages used in this file have been installed.
+# Check that Ubuntu packages used in this file have been installed.
 check_required_packages()
 {
 	echo -n "Checking for required packages... "
 
 	# Packages required to run this script
-	local pkgs="binutils centos-release coreutils curl file gawk gcc-c++ "
-	local pkgs+="grep iputils make sed which yum"
+	local pkgs="base-files binutils cmake coreutils curl file findutils "
+	pkgs+="g++ gawk grep libc-bin make sed tar xz-utils"
 
-	if ! which yum > /dev/null; then
-		fail "which and yum are required to be installed for validation"
+	if ! command -v dpkg-query > /dev/null; then
+		local msg="\`dpkg-query' is required to be installed for "
+		msg+="validation. Try \`apt install dpkg' to install."
+		fail "${msg}"
 	fi
 
 	for pkg in ${pkgs}; do
-		if ! yum -q list installed "${pkg}" > /dev/null 2>&1; then
+		if ! dpkg-query -l "${pkg}" > /dev/null 2>&1; then
 			msg="The required package \"${pkg}\" was not "
-			msg+="installed. Try \`yum install $pkg\` to install "
-			msg+="\"$pkg.\""
+			msg+="installed. Try \`apt install ${pkg}\` to install "
+			msg+="\"${pkg}.\""
 			fail "${msg}"
 		fi
 	done
@@ -331,23 +552,23 @@ check_validation_version()
 	return ${checked}
 }
 
-# Check that the version of CentOS is the correct version.
+# Check that the version of Ubuntu is the correct version.
 check_os()
 {
-	local expected="8.2.2004"
+	local expected="20.04.3 LTS (Focal Fossa)"
 	echo -n "Checking OS and version... "
-	if [ ! -e /etc/redhat-release ]; then
-		msg="You do not appear to be using the appropriate operating "
-		msg+="system. Please use CentOS ${expected}."
+	if [ ! -e /etc/os-release ]; then
+		local msg="You do not appear to be using the appropriate "
+		msg+="operating system. Please use Ubuntu Server ${expected}."
 		fail "${msg}"
 	fi
-	if [ "$(tr -C -d '[:digit:].' < /etc/redhat-release)" != \
-	    "${expected}" ]; then
-		msg="You do not appear to be using the appropriate version of "
-		msg+="CentOS. Please use ${expected}."
+	if [ "$(grep "VERSION=" /etc/os-release | cut -f 2 -d '=' | \
+	    tr -d '"')" != "${expected}" ]; then
+		local msg="You do not appear to be using the appropriate "
+		msg+="version of Ubuntu Server. Please use ${expected}."
 		fail "${msg}"
 	fi
-	okay "CentOS ${expected}"
+	okay "Ubuntu Server ${expected}"
 }
 
 # Check that a core library exists
@@ -502,6 +723,12 @@ random_number()
 	od -A n -t uL -N 4 /dev/urandom | tr -d -C '[:digit:]'
 }
 
+# Return "DD MMM YYYY | HH:MM:SS ZZZ"
+get_date()
+{
+	date "+%d %b %Y | %T %Z"
+}
+
 # Check and warn if files from a previous validation attempt are still present
 # in the current working directory.
 check_for_previous_attempts()
@@ -534,6 +761,8 @@ compile()
 	if [ $# -ne 1 ]; then
 		fail "Usage: ${FUNCNAME[0]} <random_seed>"
 	fi
+
+	local log="${output_dir}/compile.log"
 
 	# Expected MD5 checksum of libpftiii.cpp.
 	local expected_lib_md5="54b314d85b3c8889365736500301fde5"
@@ -568,33 +797,152 @@ compile()
 		fail "${msg}"
 	fi
 
-	# Compile
-	local log="${output_dir}/compile.log"
-	if ! make -C "${src_dir}" 2>&1 | tee "${log}" > /dev/null; then
-		fail "An error occurred during compilation. Please review:" \
-		    "${log}"
+	# Catch the case of hardcoding "../lib", etc. into library by always
+	# linking against libs in a different directory
+	local tmp_dir
+	tmp_dir="$(mktemp -u -t pftiii_libs.XXXXXXXXXX)"
+	mkdir -p "${tmp_dir}"
+	cp -r "${lib_dir}" "${tmp_dir}/lib"
+	lib_dir="${tmp_dir}/lib"
+	if [ -d "${local_lib_dir}${move_suffix}" ]; then
+		local msg="You have a directory named ${local_lib_dir}"
+		msg+="${move_suffix}. Please remove or rename it."
+		fail "${msg}"
+	else
+		if ! mv -n "${local_lib_dir}" "${local_lib_dir}${move_suffix}"
+		then
+			fail "Could not move ${local_lib_dir}"
+		fi
+		local_lib_dir="${local_lib_dir}${move_suffix}"
 	fi
+
+	tmp_dir="$(mktemp -u -t pftiii_configs.XXXXXXXXXX)"
+	cp -r "${config_dir}" "${tmp_dir}"
+	chmod -R -w "${tmp_dir}"
+	config_dir="${tmp_dir}"
+	if [ -d "${local_config_dir}${move_suffix}" ]; then
+		move_back_dirs
+
+		local msg="You have a directory named ${local_config_dir}"
+		msg+="${move_suffix}. Please remove or rename it."
+		fail "${msg}"
+	else
+		if ! mv -n "${local_config_dir}" \
+		    "${local_config_dir}${move_suffix}"
+		then
+			fail "Could not move ${local_config_dir}"
+		fi
+		local_config_dir="${local_config_dir}${move_suffix}"
+	fi
+
+	# Compile
+	echo "Compilation:" >> "${log}"
+	local build_dir
+	build_dir="$(mktemp -d -t pftiii_validation_build.XXXXXXXXXX)"
+	if [ "${build_dir}" == "" ]; then
+		fail "Could not create build directory."
+	fi
+	cd "${build_dir}" || fail "Could not change to build directory"
+	if ! cmake \
+	    -DCMAKE_INSTALL_PREFIX="$(dirname "${lib_dir}")" \
+	    -S "${src_dir}" -B "${build_dir}" >> "${log}" 2>&1
+	then
+		local msg="Could not change back to previous directory"
+		cd "${wd}" > /dev/null || fail "${msg}"
+		fail "An error occurred during configuration. Please review:" \
+		    "$(rp "${log}")"
+	fi
+	cd "${wd}" > /dev/null || fail \
+	    "Could not change back to previous directory"
+	if ! make -C "${build_dir}" VERBOSE=1 >> "${log}" 2>&1; then
+		fail "An error occurred during compilation. Please review:" \
+		    "$(rp "${log}")"
+	fi
+	if ! make -C "${build_dir}" install VERBOSE=1 >> "${log}" 2>&1; then
+		fail "An error occurred during installation. Please review:" \
+		    "$(rp "${log}")"
+	fi
+	echo >> "${log}"
 
 	# Check that binary shows a dependency on the core library
 	local core_lib
-	core_lib="$(get_core_library_name)"
-	if ! ldd "${binary}" | \
-	    grep "${lib_dir}/$(get_core_library_name)" > /dev/null 2>&1; then
-		msg="${core_lib} is not a dependency of the compiled binary. "
-		msg+="${core_lib} was either renamed after being built, or the "
-		msg+="binary is linking against a version of ${core_lib} from "
-		msg+="a directory outside of the validation package. "
-		msg+="Please review:"
-		fail "${msg}" "${log}"
+	if ! core_lib="$(get_core_library_name)"; then
+		fail "Could not get core library name"
+	fi
+
+	if ! grep -q "${lib_dir}/${core_lib}" < <(ldd "${binary}"); then
+		local msg="${core_lib} is not a dependency of the compiled "
+		msg+="binary. The library was either renamed after being "
+		msg+="built, or the binary is linking against a version of "
+		msg+="${core_lib} from a directory outside of the validation "
+		msg+="package. Please review:"
+		fail "${msg}" "$(rp "${log}")"
+	fi
+
+	# Check for ORIGIN if using multiple libraries
+	local num_libs
+	num_libs="$(find "${lib_dir}" -name "lib*" -type f | wc -l)"
+	if [ "${num_libs}" -gt 2 ]; then
+		if ! readelf -d "${lib_dir}/${core_lib}" | \
+		    grep RUNPATH | grep -q "\$ORIGIN"
+		then
+			local msg="You have supplied multiple libraries, but "
+			msg+="${core_lib} does not have an RUNPATH of \$ORIGIN."
+			msg+=" This may cause runtime issues, because the "
+			msg+="location of libraries on NIST's systems will not "
+			msg+="be laid out the same as in this validation "
+			msg+="package and the only library explicitly linked "
+			msg+="will be ${core_lib}."
+
+			warn "${msg}"
+			echo -n "Still building... "
+		fi
+	fi
+
+	# Suspected non libraries in library directory
+	local non_libs
+	non_libs="$(find "${local_lib_dir}" \! -name "lib*" -a \! \
+	    -name README | wc -l)"
+	if [ "${non_libs}" -gt 0 ]; then
+		local msg="You have files in ${local_lib_dir} that don't "
+		msg+="appear to be libraries. That's fine, but are you sure "
+		msg+="they don't belong in \"${local_config_dir}\" instead?"
+
+		warn "${msg}"
+		echo -n "Still building... "
 	fi
 
 	# Log some extra compilation information that may be useful in helping
 	# to debug future issues
 	{
+		echo "Linked libraries:"
 		find "${lib_dir}" -type f \! -name README -exec md5sum {} \;
+		echo
+
+		echo "Configs present:"
 		find "${config_dir}" -type f \! -name README -exec md5sum {} \;
-		cat /etc/redhat-release
+		echo
+
+		echo "Ubuntu Version:"
+		grep "VERSION=" /etc/os-release | cut -f 2 -d '=' | tr -d '"'
+		echo
+
+		echo "ldd output of binary:"
 		ldd "${binary}"
+		echo
+
+		echo -n "Dynamic section of binary:"
+		readelf -d "${binary}"
+		echo
+
+		echo "Dynamic section of attached libraries:"
+		while read -r i; do
+			echo -n "readelf -d ${i}"
+			readelf -d "${i}" 2>&1
+			echo
+		done < <(find "${lib_dir}" -type f -name "lib*")
+
+		echo "Validation properties:"
 		echo "Validation Version = ${validation_version}"
 		echo "Random Seed = $1"
 	} >> "${log}"
@@ -625,7 +973,7 @@ check_api_level()
 # Remove files from previous validation attempts.
 clean_previous_attempts()
 {
-	echo -n "Removing output directories... "
+	echo -n "Cleaning previous attempts... "
 	rm -rf "${bin_dir}"
 	if [ -d "${bin_dir}" ]; then
 		fail "Failed to remove" "${bin_dir}"
@@ -638,25 +986,28 @@ clean_previous_attempts()
 		return 1
 	fi
 
- 	rm -rf "${wd}"/pftiii_validation_"$(get_organization_name)"_*
+	rm -f "${lib_dir}/libpftiii.so"
+	rm -rf "${wd}/include"
+
+	local org_name
+	if ! org_name="$(get_organization_name)"; then
+		fail "Could not get organization name."
+	fi
+
+ 	rm -rf "${wd}"/pftiii_validation_"${org_name}"_*
 	if [ "$(find "${wd}" -name \
-	    "pftiii_validation_$(get_organization_name)_*" | wc -l)" != "0" ];
+	    "pftiii_validation_${org_name}_*" | wc -l)" != "0" ];
 	    then
 	    	fail "Failed to remove some output. Please delete it manually."
 		return 1
 	fi
 
-	okay
-
-	if ! core_library_present; then
-		return 0
-	fi
-
-	echo -n "Cleaning compilation... "
-	if ! make -j -C "${src_dir}" clean > /dev/null; then
-		fail "Unable to 'make clean' in" "$(rp "${src_dir}")"
-		return 1
-	fi
+	find /tmp -maxdepth 1 -type d -name 'pftiii_libs.*' -exec rm -rf {} \;
+	find /tmp -maxdepth 1 -type d -name 'pftiii_configs.*' \
+	    -exec chmod +w {} \;
+	find /tmp -maxdepth 1 -type d -name 'pftiii_configs.*' -exec rm -rf {} \;
+	find /tmp -maxdepth 1 -type d -name 'pftiii_validation_build.*' \
+	    -exec rm -rf {} \;
 
 	okay
 }
@@ -907,15 +1258,6 @@ print_final_success()
 	echo
 }
 
-# Print validation script header message
-print_header()
-{
-	echo -n "PFT III Validation (${validation_version}) -- "
-	date
-	printline '=' 80
-	echo
-}
-
 # Print message when validation version couldn't be checked
 print_couldnt_check_version()
 {
@@ -951,7 +1293,7 @@ check_wd()
 	if [ "${wd}" == "" ]; then
 		msg="The directory containing \"validate\" could not be found, "
 		msg+="possibly because you are not using GNU realpath under "
-		msg+="CentOS. If you are, please report an issue on the "
+		msg+="Ubuntu. If you are, please report an issue on the "
 		msg+="PFT GitHub repository."
 		fail "${msg}"
 	fi
@@ -1086,6 +1428,9 @@ check_cbeff_dependencies()
 ###############################################################################
 ###############################################################################
 
+# Move directories back on SIGINT
+trap move_back_dirs INT
+
 check_color_output
 check_wd
 cd "${wd}" || exit 1
@@ -1122,6 +1467,7 @@ run_operation "${seed}" "${create_func}" "-e"
 check_logs "${create_func}"
 run_operation "${seed}" "${compare_func}" "-c"
 check_logs "${compare_func}"
+move_back_dirs
 make_tarball
 print_final_success
 
