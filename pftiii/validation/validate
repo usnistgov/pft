@@ -879,7 +879,7 @@ compile()
 	num_libs="$(find "${lib_dir}" -name "lib*" -type f | wc -l)"
 	if [ "${num_libs}" -gt 2 ]; then
 		if ! readelf -d "${lib_dir}/${core_lib}" | \
-		    grep RUNPATH | grep -q "\$ORIGIN"
+		    grep RUNPATH | grep "\$ORIGIN" > /dev/null
 		then
 			local msg="You have supplied multiple libraries, but "
 			msg+="${core_lib} does not have an RUNPATH of \$ORIGIN."
