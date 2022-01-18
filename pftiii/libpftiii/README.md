@@ -12,15 +12,17 @@ is additionally the reason why these methods were not implemented directly in
 
 Building
 --------
-Execute `make` in this directory and `libpftiii.so` will be created. It will
-additionally be copied into the [validation] `lib` directory.
+```
+mkdir build && cd build
+cmake .. && make
+```
 
 Linking
 -------
 When building a core PFT III library, use these example compiler flags (from
-`g++`) to properly link against this library.
+`g++`/`ld`) to properly link against this library.
 
-> `-L/path/to/libpftiii -lpftiii -Wl,-rpath,/path/to/libpftiii`
+> `-L/path/to/libpftiii -lpftiii -Wl,-rpath,/path/to/libpftiii -Wl,--enable-new-dtags`
 
 Communication
 -------------
