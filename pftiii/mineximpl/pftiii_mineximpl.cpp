@@ -69,10 +69,8 @@ PFTIII::MINEXImplementation::createProprietaryTemplate(
 	     *       Fingerprint Image Quality (NFIQ) 2.0 knows how to handle.
 	     */
 	    0,
-	    static_cast<std::underlying_type<
-	    FrictionRidgeGeneralizedPosition>::type>(fingerImage.frgp),
-	    static_cast<std::underlying_type<Impression>::type>(
-	    fingerImage.imp),
+	    static_cast<uint8_t>(fingerImage.frgp),
+	    static_cast<uint8_t>(fingerImage.imp),
 	    fingerImage.height,
 	    fingerImage.width,
 	    incitsTemplate);

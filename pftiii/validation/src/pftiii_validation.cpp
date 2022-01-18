@@ -21,6 +21,7 @@
 #include <fstream>
 #include <iomanip>
 #include <iterator>
+#include <limits>
 #include <sstream>
 #include <system_error>
 #include <thread>
@@ -223,7 +224,10 @@ PFTIII::Validation::parseArguments(
 			break;
 		case 'f': {	/* Number of processes */
 			try {
-				args.numProcs = std::stol(optarg);
+				auto numProcs = std::stoul(optarg);
+				if (numProcs > UINT8_MAX)
+					throw std::exception{};
+				args.numProcs = static_cast<uint8_t>(numProcs);
 			} catch (const std::exception&) {
 				throw std::invalid_argument{"Number of "
 				    "processes (-f): an error occurred when "
@@ -250,7 +254,7 @@ PFTIII::Validation::parseArguments(
 			break;
 		case 'r':	/* Random seed */
 			try {
-				args.randomSeed = std::stoll(optarg);
+				args.randomSeed = std::stoul(optarg);
 			} catch (const std::exception&) {
 				throw std::invalid_argument{"Random seed (-r): "
 				    "an error occurred when parsing \"" +
@@ -298,7 +302,7 @@ PFTIII::Validation::readFile(
 		throw std::runtime_error{"Could not open " + pathName};
 
 	std::vector<uint8_t> buf{};
-	buf.reserve(size);
+	buf.reserve(static_cast<decltype(buf)::size_type>(size));
 
 	file.seekg(std::ifstream::beg);
 	buf.insert(buf.begin(), std::istream_iterator<uint8_t>(file),
@@ -412,18 +416,28 @@ PFTIII::Validation::splitSet(
 	if (numSets == 1)
 		return {combinedSet};
 
+	using diff_t = decltype(combinedSet.begin())::difference_type;
+	if (combinedSet.size() >
+	    static_cast<uint64_t>(std::numeric_limits<diff_t>::max()))
+		return {combinedSet};
+
 	const std::vector<uint64_t>::size_type size{static_cast<
 	    std::vector<uint64_t>::size_type>(
-	    std::ceil(combinedSet.size() / static_cast<float>(numSets)))};
+	    std::ceil(static_cast<float>(combinedSet.size()) /
+	    static_cast<float>(numSets)))};
 	if (size < numSets)
 		throw std::invalid_argument("Too many sets.");
 
 	std::vector<std::vector<uint64_t>> sets{};
 	sets.reserve(numSets);
-	for (uint8_t i{0}; i < numSets; ++i)
-		sets.emplace_back(std::next(combinedSet.begin(), size * i),
-		    std::next(combinedSet.begin(), std::min(size * (i + 1),
-		    combinedSet.size())));
+	for (uint8_t i{0}; i < numSets; ++i) {
+
+		sets.emplace_back(std::next(combinedSet.begin(),
+		    static_cast<diff_t>(size * i)),
+		    std::next(combinedSet.begin(),
+		    static_cast<diff_t>(std::min(size * (i + 1u),
+		    combinedSet.size()))));
+	}
 
 	return (sets);
 }
@@ -557,7 +571,10 @@ PFTIII::Validation::writeFile(
 	if (!file)
 		throw std::runtime_error{"Could not open " + pathName};
 
-	if (!file.write((char *)data.data(), data.size()))
+	if ((data.size() > static_cast<uint64_t>(
+	    std::numeric_limits<std::streamsize>::max())) ||
+	    !file.write((char *)data.data(),
+	    static_cast<std::streamsize>(data.size())))
 		throw std::runtime_error("Could not write " + std::to_string(
 		    data.size()) + " bytes to " + pathName);
 }
