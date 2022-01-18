@@ -61,9 +61,6 @@ compare_func="compareProprietaryTemplates"
 # Prefix for downloaded validation imagery tarballs
 validation_image_download_prefix=pftiii_validation_images
 
-# Make failing return codes persist across pipes
-set -o pipefail
-
 ################################################################################
 # Functions                                                                    #
 ################################################################################
