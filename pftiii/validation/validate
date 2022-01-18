@@ -25,6 +25,9 @@
 # Constants                                                                    #
 ################################################################################
 
+# Time in seconds when this script was launched
+start_sec="$(date +%s)"
+
 # URL where the complete validation package can be downloaded
 validation_dl_url="https://github.com/usnistgov/pft/releases"
 # URL where the validation imagery is requested
