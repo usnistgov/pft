@@ -233,6 +233,7 @@ print_footer()
 }
 
 # Convenience for a middle line with 80 char left align standard box
+# shellcheck disable=SC2120
 boxline()
 {
 	if [ "${#}" -eq 0 ]; then
@@ -1245,7 +1246,7 @@ print_final_success()
 		box "${k}:" 80 '=' '|' 'l' 0 0
 		if [ ${line_num} -ne 5 ]; then
 			box "-> ${v}" 80 '=' '|' 'l' 0 0
-			boxline;
+			boxline
 		else
 			box " -> ${v}" 80 '=' '|' 'l' 0 1
 		fi
