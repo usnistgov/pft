@@ -1261,7 +1261,7 @@ print_encryption()
 {
 	local tar_file
 	if ! tar_file="$(get_tarball_name)"; then
-		tar_file="epftiii_validation_nullimpl_0001.tar.xz"
+		tar_file="pftiii_validation_nullimpl_0001.tar.xz"
 	fi
 
 	# Sign + encrypt example
