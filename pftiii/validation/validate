@@ -985,6 +985,13 @@ clean_previous_attempts()
 	rm -f "${lib_dir}/libpftiii.so"
 	rm -rf "${wd}/include"
 
+	find /tmp -maxdepth 1 -type d -name 'pftiii_libs.*' -exec rm -rf {} \;
+	find /tmp -maxdepth 1 -type d -name 'pftiii_configs.*' \
+	    -exec chmod +w {} \;
+	find /tmp -maxdepth 1 -type d -name 'pftiii_configs.*' -exec rm -rf {} \;
+	find /tmp -maxdepth 1 -type d -name 'pftiii_validation_build.*' \
+	    -exec rm -rf {} \;
+
 	local org_name
 	if ! org_name="$(get_organization_name)"; then
 		fail "Could not get organization name."
@@ -997,13 +1004,6 @@ clean_previous_attempts()
 	    	fail "Failed to remove some output. Please delete it manually."
 		return 1
 	fi
-
-	find /tmp -maxdepth 1 -type d -name 'pftiii_libs.*' -exec rm -rf {} \;
-	find /tmp -maxdepth 1 -type d -name 'pftiii_configs.*' \
-	    -exec chmod +w {} \;
-	find /tmp -maxdepth 1 -type d -name 'pftiii_configs.*' -exec rm -rf {} \;
-	find /tmp -maxdepth 1 -type d -name 'pftiii_validation_build.*' \
-	    -exec rm -rf {} \;
 
 	okay
 }
