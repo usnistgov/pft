@@ -35,11 +35,11 @@ namespace PFTIII
 		    override;
 
 		NullImplementation(
-		    const std::string &configurationDirectory = "");
+		    const std::filesystem::path &configurationDirectory = "");
 		~NullImplementation() = default;
 
 	private:
-		const std::string configurationDirectory{};
+		const std::filesystem::path configurationDirectory{};
 
 		/*
 		 * These are some local convenience methods that you may copy

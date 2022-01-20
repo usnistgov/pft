@@ -33,6 +33,7 @@
 #ifndef PFTIII_H_
 #define PFTIII_H_
 
+#include <filesystem>
 #include <memory>
 #include <string>
 #include <tuple>
@@ -590,15 +591,19 @@ namespace PFTIII
 		 *
 		 * @note
 		 * A possible implementation might be:
-		 * `return (std::make_shared<Implementation>());`
+		 * `return (std::make_shared<Implementation>(
+		 * configurationDirectory));`
 		 *
 		 * @note
 		 * This method shall return in <= 10 seconds.
+		 * @note
+		 * `configurationDirectory` may be stored on a slow disk. NIST
+		 * suggests reading data into available RAM.
 		 */
 		static
 		std::shared_ptr<Interface>
 		getImplementation(
-		    const std::string &configurationDirectory);
+		    const std::filesystem::path &configurationDirectory);
 
 		/** @cond SUPPRESS_FROM_DOXYGEN */
 		/** Suppress copying polymorphic class (C.63). */
@@ -627,7 +632,7 @@ namespace PFTIII
 	/** API major version number. */
 	uint16_t API_MAJOR_VERSION{1};
 	/** API minor version number. */
-	uint16_t API_MINOR_VERSION{0};
+	uint16_t API_MINOR_VERSION{1};
 	/** API patch version number. */
 	uint16_t API_PATCH_VERSION{0};
 	#endif /* NIST_EXTERN_API_VERSION */

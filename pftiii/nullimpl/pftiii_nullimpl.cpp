@@ -11,7 +11,7 @@
 #include <pftiii_nullimpl.h>
 
 PFTIII::NullImplementation::NullImplementation(
-    const std::string &configurationDirectory) :
+    const std::filesystem::path &configurationDirectory) :
     PFTIII::Interface(),
     configurationDirectory{configurationDirectory}
 {
@@ -104,7 +104,7 @@ PFTIII::NullImplementation::compareProprietaryTemplates(
 
 std::shared_ptr<PFTIII::Interface>
 PFTIII::Interface::getImplementation(
-    const std::string &configurationDirectory)
+    const std::filesystem::path &configurationDirectory)
 {
 	return (std::make_shared<PFTIII::NullImplementation>(
 	    configurationDirectory));

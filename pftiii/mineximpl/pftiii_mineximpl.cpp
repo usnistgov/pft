@@ -17,7 +17,7 @@
 #include <pftiii_mineximpl.h>
 
 PFTIII::MINEXImplementation::MINEXImplementation(
-    const std::string &configurationDirectory) :
+    const std::filesystem::path &configurationDirectory) :
     PFTIII::Interface(),
     configurationDirectory{configurationDirectory}
 {
@@ -112,7 +112,7 @@ PFTIII::MINEXImplementation::compareProprietaryTemplates(
 
 std::shared_ptr<PFTIII::Interface>
 PFTIII::Interface::getImplementation(
-    const std::string &configurationDirectory)
+    const std::filesystem::path &configurationDirectory)
 {
 	return (std::make_shared<PFTIII::MINEXImplementation>(
 	    configurationDirectory));

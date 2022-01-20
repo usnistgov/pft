@@ -35,11 +35,11 @@ namespace PFTIII
 		    override;
 
 		MINEXImplementation(
-		    const std::string &configurationDirectory = "");
+		    const std::filesystem::path &configurationDirectory = "");
 		~MINEXImplementation() = default;
 
 	private:
-		const std::string configurationDirectory{};
+		const std::filesystem::path configurationDirectory{};
 
 		/*
 		 * These are some local convenience methods that you may copy

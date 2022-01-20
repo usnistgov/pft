@@ -773,7 +773,7 @@ compile()
 	fi
 
 	# Expected MD5 checksum of pftiii.h.
-	local expected_h_md5="a5a96e9f928ec01ebd22adef9f164953"
+	local expected_h_md5="69652e169eb331ff62ccf0f4424ea6d5"
 	local actual_h_md5
 	actual_h_md5=$(md5sum \
 	    "${wd}"/../include/pftiii.h | cut -f 1 -d ' ')
