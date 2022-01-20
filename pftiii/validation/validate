@@ -199,7 +199,7 @@ box()
 		done
 
 		echo "${lr_symbol}"
-	done < <(echo "${msg}" | fold -s -w "${max_width}")
+	done < <(printf "%b\n" "${msg}" | fold -s -w "${max_width}")
 
 	if [ "${print_footer}" -eq 1 ]; then
 		printline "${tb_symbol}" "${width}" && echo
