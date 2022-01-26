@@ -9,6 +9,7 @@
  */
 
 #include <cstring>
+#include <type_traits>
 
 #include <arpa/inet.h>
 
@@ -60,9 +61,11 @@ PFTIII::MINEXImplementation::createProprietaryTemplate(
 	 * If the MINEX algorithm made these assumptions, it must be revised.
 	 */
 
-	uint8_t incitsTemplate[MINEX_MAX_TEMPLATE_SIZE];
+	uint8_t incitsTemplate[MINEX_MAX_TEMPLATE_SIZE] = {};
+	static_assert(std::is_same_v<uint8_t,
+	    std::underlying_type_t<std::byte>>);
 	const auto rv = create_template(
-	    fingerImage.pixels.data(),
+	    reinterpret_cast<const uint8_t*>(fingerImage.pixels.data()),
 	    /*
 	     * NOTE: The PFT III API does not provide quality values, since it
 	     *       is capable of testing more types of images than NIST
@@ -78,19 +81,15 @@ PFTIII::MINEXImplementation::createProprietaryTemplate(
 	if (rv != MINEX_RET_SUCCESS)
 		return (createFailure("Returned " + std::to_string(rv)));
 
-	/* Read size of template */
-	uint16_t size{};
-	std::memcpy(&size, incitsTemplate + 8, 2);
-	size = ntohs(size);
-
-	return (createSuccess({incitsTemplate, incitsTemplate + size}));
+	return (createSuccess(incitsTemplate));
 }
 
 std::tuple<PFTIII::CompareProprietaryTemplatesStatus, double>
 PFTIII::MINEXImplementation::compareProprietaryTemplates(
-    const std::vector<uint8_t> &probeTemplate,
-    const std::vector<uint8_t> &referenceTemplate)
+    const std::vector<std::byte> &probeTemplate,
+    const std::vector<std::byte> &referenceTemplate)
 {
+
 	/*
 	 * NOTE: The test driver writes a 0 byte template on creation failures,
 	 *       so the implementation cannot rely on a valid ANSI/INCITS
@@ -101,8 +100,12 @@ PFTIII::MINEXImplementation::compareProprietaryTemplates(
 		    "Empty template"));
 
 	float similarity{};
-	const auto rv = match_templates(probeTemplate.data(),
-	    referenceTemplate.data(), &similarity);
+	static_assert(std::is_same_v<uint8_t,
+	    std::underlying_type_t<std::byte>>);
+	const auto rv = match_templates(
+	    reinterpret_cast<const uint8_t*>(probeTemplate.data()),
+	    reinterpret_cast<const uint8_t*>(referenceTemplate.data()),
+	    &similarity);
 
 	if (rv != MINEX_RET_SUCCESS)
 		return (compareFailure("Returned " + std::to_string(rv)));
@@ -122,16 +125,23 @@ PFTIII::Interface::getImplementation(
 
 std::tuple<PFTIII::FingerImageStatus, PFTIII::CreateProprietaryTemplateResult>
 PFTIII::MINEXImplementation::createSuccess(
-    const std::vector<uint8_t> &proprietaryTemplate,
+    const uint8_t *proprietaryTemplate,
     const std::string &message)
 {
 	FingerImageStatus status{};
 	status.code = FingerImageStatus::Code::Supported;
 	status.message = "";
 
+	/* Read size of template */
+	uint16_t size{};
+	std::memcpy(&size, proprietaryTemplate + 8, 2);
+	size = ntohs(size);
+
 	CreateProprietaryTemplateResult result{};
 	result.result = Result::Success;
-	result.proprietaryTemplate = proprietaryTemplate;
+	result.proprietaryTemplate = std::vector<std::byte>(
+	    reinterpret_cast<const std::byte *>(proprietaryTemplate),
+	    reinterpret_cast<const std::byte *>(proprietaryTemplate) + size);
 	result.message = message;
 
 	return (std::make_tuple(status, result));
@@ -147,7 +157,7 @@ PFTIII::MINEXImplementation::createFailure(
 
 	CreateProprietaryTemplateResult result{};
 	result.result = Result::Failure;
-	result.proprietaryTemplate = std::vector<uint8_t>();
+	result.proprietaryTemplate = std::vector<std::byte>();
 	result.message = message;
 
 	return (std::make_tuple(status, result));

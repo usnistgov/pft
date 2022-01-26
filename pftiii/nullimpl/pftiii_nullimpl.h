@@ -30,8 +30,8 @@ namespace PFTIII
 
 		std::tuple<CompareProprietaryTemplatesStatus, double>
 		compareProprietaryTemplates(
-		    const std::vector<uint8_t> &probeTemplate,
-		    const std::vector<uint8_t> &referenceTemplate)
+		    const std::vector<std::byte> &probeTemplate,
+		    const std::vector<std::byte> &referenceTemplate)
 		    override;
 
 		NullImplementation(
@@ -61,7 +61,7 @@ namespace PFTIII
 		static
 		std::tuple<FingerImageStatus, CreateProprietaryTemplateResult>
 		createSuccess(
-		    const std::vector<uint8_t> &proprietaryTemplate,
+		    const std::vector<std::byte> &proprietaryTemplate,
 		    const std::string &message = "");
 
 		/**

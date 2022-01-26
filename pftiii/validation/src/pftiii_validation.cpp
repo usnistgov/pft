@@ -287,7 +287,7 @@ PFTIII::Validation::randomizeIndicies(
 	return (indicies);
 }
 
-std::vector<uint8_t>
+std::vector<std::byte>
 PFTIII::Validation::readFile(
     const std::string &pathName)
 {
@@ -301,12 +301,11 @@ PFTIII::Validation::readFile(
 	if (size == -1)
 		throw std::runtime_error{"Could not open " + pathName};
 
-	std::vector<uint8_t> buf{};
+	std::vector<std::byte> buf{};
 	buf.reserve(static_cast<decltype(buf)::size_type>(size));
 
 	file.seekg(std::ifstream::beg);
-	buf.insert(buf.begin(), std::istream_iterator<uint8_t>(file),
-	    std::istream_iterator<uint8_t>());
+	file.read(reinterpret_cast<char*>(buf.data()), size);
 
 	return (buf);
 }
@@ -563,7 +562,7 @@ PFTIII::Validation::waitForExit(
 
 void
 PFTIII::Validation::writeFile(
-    const std::vector<uint8_t> &data,
+    const std::vector<std::byte> &data,
     const std::string &pathName)
 {
 	std::ofstream file{pathName,
@@ -573,7 +572,7 @@ PFTIII::Validation::writeFile(
 
 	if ((data.size() > static_cast<uint64_t>(
 	    std::numeric_limits<std::streamsize>::max())) ||
-	    !file.write((char *)data.data(),
+	    !file.write(reinterpret_cast<const char*>(data.data()),
 	    static_cast<std::streamsize>(data.size())))
 		throw std::runtime_error("Could not write " + std::to_string(
 		    data.size()) + " bytes to " + pathName);

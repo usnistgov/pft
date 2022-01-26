@@ -33,6 +33,7 @@
 #ifndef PFTIII_H_
 #define PFTIII_H_
 
+#include <cstddef>
 #include <filesystem>
 #include <memory>
 #include <string>
@@ -117,7 +118,7 @@ namespace PFTIII
 		    const uint16_t width,
 		    const uint16_t height,
 		    const uint16_t ppi,
-		    const std::vector<uint8_t> &pixels,
+		    const std::vector<std::byte> &pixels,
 		    const Impression imp = Impression::Unknown,
 		    const FrictionRidgeCaptureTechnology frct =
 		        FrictionRidgeCaptureTechnology::Unknown,
@@ -145,7 +146,7 @@ namespace PFTIII
 		 * To pass pixels to a C-style array, invoke pixel's `data()`
 		 * method (`pixels.data()`).
 		 */
-		std::vector<uint8_t> pixels{};
+		std::vector<std::byte> pixels{};
 		/** Impression type of the depicted finger. */
 		Impression imp{Impression::Unknown};
 		/** Capture technology that created this image. */
@@ -219,7 +220,7 @@ namespace PFTIII
 		 */
 		static CreateProprietaryTemplateResult
 		success(
-		     const std::vector<uint8_t> &proprietaryTemplate,
+		     const std::vector<std::byte> &proprietaryTemplate,
 		     const std::string &message = "");
 
 		/**
@@ -239,7 +240,7 @@ namespace PFTIII
 		/** Result of extracting features and creating a template. */
 		Result result{Result::Success};
 		/** Contents of the proprietary template. */
-		std::vector<uint8_t> proprietaryTemplate{};
+		std::vector<std::byte> proprietaryTemplate{};
 		/** Explanatory message (optional). */
 		std::string message{};
 	};
@@ -569,8 +570,8 @@ namespace PFTIII
 		virtual
 		std::tuple<CompareProprietaryTemplatesStatus, double>
 		compareProprietaryTemplates(
-		    const std::vector<uint8_t> &probeTemplate,
-		    const std::vector<uint8_t> &referenceTemplate) = 0;
+		    const std::vector<std::byte> &probeTemplate,
+		    const std::vector<std::byte> &referenceTemplate) = 0;
 
 		/** Destructor. */
 		virtual ~Interface();
