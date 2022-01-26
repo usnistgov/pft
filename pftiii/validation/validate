@@ -1373,7 +1373,7 @@ check_unknown()
 		fi
 	else
 		if [ "$(cut -f4 -d, <<< "${line}")" != "0" ]; then
-			local err="Unable to match a template generated from "
+			local err="Unable to compare a template generated from "
 			err+="an image with no metadata. Please examine "
 			err+="comparison log entry for probe name = "
 			err+="\"${unknown_img}.\""
