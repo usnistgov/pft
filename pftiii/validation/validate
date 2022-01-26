@@ -506,7 +506,7 @@ check_validation_version()
 {
 	# URL with the most recent version number of the validation package
 	local version_url="https://raw.githubusercontent.com/usnistgov/pft/"
-	local version_url+="master/pftiii/validation/VERSION"
+	local version_url+="ubuntu/pftiii/validation/VERSION"
 	# Confirm validation package version, if possible
 	local checked=0
 
@@ -1320,11 +1320,11 @@ print_instructions()
 print_couldnt_check_version()
 {
 	# URL where information about the validation package can be found
-	local info_url="https://github.com/usnistgov/pft/tree/master/pftiii/"
+	local info_url="https://github.com/usnistgov/pft/tree/ubuntu/pftiii/"
 	info_url+="validation"
 
 	# URL where the version of the validation driver can be found
-	local vers_url="https://github.com/usnistgov/pft/tree/master/pftiii/"
+	local vers_url="https://github.com/usnistgov/pft/tree/ubuntu/pftiii/"
 	vers_url+="validation/VERSION"
 
 	local msg="IMPORTANT: This script was unable to check, so please "
