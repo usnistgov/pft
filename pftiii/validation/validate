@@ -760,29 +760,29 @@ compile()
 
 	local log="${output_dir}/compile.log"
 
-	# Expected MD5 checksum of libpftiii.cpp.
-	local expected_lib_md5="60dd06aa5b89347f20a855df08e4c198"
-	local actual_lib_md5
-	actual_lib_md5=$(md5sum \
-	    "${wd}"/../libpftiii/libpftiii.cpp | cut -f 1 -d ' ')
-	if [ "${expected_lib_md5}" != "${actual_lib_md5}" ]; then
-		local msg="Your copy of libpftiii.cpp appears to be modified. "
-		msg+="Please restore the original copy. Making changes will "
-		msg+="almost certainly cause errors."
-		fail "${msg}"
-	fi
+	declare -A md5s
+	md5s["../libpftiii/libpftiii.cpp"]="60dd06aa5b89347f20a855df08e4c198"
+	md5s["../include/pftiii.h"]="c8e0eab6bc24e7a962c1a47a529d3d24"
 
-	# Expected MD5 checksum of pftiii.h.
-	local expected_h_md5="c8e0eab6bc24e7a962c1a47a529d3d24"
-	local actual_h_md5
-	actual_h_md5=$(md5sum \
-	    "${wd}"/../include/pftiii.h | cut -f 1 -d ' ')
-	if [ "${expected_h_md5}" != "${actual_h_md5}" ]; then
-		local msg="Your copy of pftiii.h appears to be modified. "
-		msg+="Please restore the original copy. Making changes will "
-		msg+="almost certainly cause errors."
-		fail "${msg}"
-	fi
+	# Check checksums
+	local expected
+	local actual
+	echo "Source checksums:" >> "${log}"
+	for f in "${!md5s[@]}"; do
+		expected="${md5s[${f}]}"
+		actual=$(md5sum "${wd}/${f}" | cut -f 1 -d ' ')
+		if [ "${expected}" != "${actual}" ]; then
+			local bf
+			bf="$(basename "${f}")"
+			local msg="Your copy of ${bf} appears to be modified. "
+			msg+="Please restore the original copy. Making changes "
+			msg+="will almost certainly cause errors."
+			fail "${msg}"
+		fi
+
+		echo "${actual} ${f}" >> "${log}"
+	done
+	echo >> "${log}"
 
 	if [ -e "${lib_dir}"/libpftiii.so ]; then
 		local msg="The library 'libpftiii.so' is in the directory "
