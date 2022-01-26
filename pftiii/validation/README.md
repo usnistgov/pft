@@ -39,17 +39,18 @@ Requirements
    - Because organizations must agree to NIST Special Database terms and
      conditions, the required fingerprint imagery is not included in this GitHub
      repository. Request and download the data from our [requests website].
- * CentOS 8.2.2004
-   - Even if this is not the latest version of CentOS, it will be the version
-     used to run the evaluation. Direct downloads are available from the [CentOS
-     Vault] ([🇺🇸 USA], [🇪🇺 Europe]). We will be using the base CentOS
-     Linux distribution (frozen) **not CentOS Stream**.
-   - We **highly suggest** installing this version of CentOS Linux directly from
-     the ISO without a network connection so that versions of all packages
-     are consistent with our operating environment.
-   - The [validate] script  requires these base CentOS packages:
-      - `binutils`, `centos-release`, `coreutils`, `curl`, `file`, `gawk`,
-        `gcc-c++`, `grep`, `iputils`, `make`, `sed`, `which`, `yum`
+ * Ubuntu Server 20.04.03 LTS
+   - Even if this is not the latest version of Ubuntu Server, it will be the
+     version used to run the evaluation. Direct downloads are available from the
+     [Ubuntu Mirrors] ([🇺🇸 USA], [🇪🇺 Europe]) and directly from the [NIST
+     Image Group].
+   - We **highly suggest** matching the exact versions of packages installed in
+     our environment. A link to the names and versions of these pacakages is
+     available.
+   - The [validate] script  requires these base Ubuntu Server packages:
+      - `base-files`, `binutils`, `cmake`, `coreutils`, `curl`, `dpkg`, `file`,
+        `findutils`, `g++`, `gawk`, `grep`, `libc-bin`, `make`, `sed`, `tar`,
+        `xz-utils`
 
 It is **highly suggested** that you make sure your submission will build and run
 as expected on environments as close as possible to the NIST evaluation
@@ -216,9 +217,10 @@ The items in this repository are released in the public domain. See the
 [LICENSE] for details.
 
 [API]: https://pages.nist.gov/pft/doc/pftiii/api/
-[CentOS Vault]: https://vault.centos.org/
-[🇺🇸 USA]: https://mirrors.oit.uci.edu/centos/8.2.2004/isos/x86_64/CentOS-8.2.2004-x86_64-dvd1.iso
-[🇪🇺 Europe]: http://mirror.nsc.liu.se/centos-store/8.2.2004/isos/x86_64/CentOS-8.2.2004-x86_64-dvd1.iso
+[Ubuntu Mirrors]: https://launchpad.net/ubuntu/+cdmirrors
+[🇺🇸 USA]: https://mirror.math.princeton.edu/pub/ubuntu-iso/focal/ubuntu-20.04.3-live-server-amd64.iso
+[🇪🇺 Europe]: http://mirror.init7.net/ubuntu-releases/focal/ubuntu-20.04.3-live-server-amd64.iso
+[NIST Image Group]: https://nigos.nist.gov/evaluations/ubuntu-20.04.3-live-server-amd64.iso
 [lib/]: https://github.com/usnistgov/pft/blob/master/pftiii/validation/lib
 [../libpftiii/]: https://github.com/usnistgov/pft/blob/master/pftiii/libpftiii
 [../include/pftiii.h]: https://github.com/usnistgov/pft/blob/master/pftiii/include/pftiii.h
