@@ -78,12 +78,15 @@ $ cp /path/to/libpftiii_nullimpl_0001.so lib/
 $ cp /path/to/config.txt config/
 $ cp /path/to/pftiii_validation_images_*.tar.gz .
 $ ./validate
-PFT III Validation (202102251554) -- Thu Feb 25 16:05:49 EST 2021
+================================================================================
+|    PFT III Validation | Version 202201261503 | 26 Jan 2022 | 20:04:37 UTC    |
 ================================================================================
 Checking for required packages... [OKAY]
 Checking for previous validation attempts... [OKAY]
-Checking validation version... (no Internet connection) [SKIP]
-Checking OS and version... (CentOS 8.2.2004) [OKAY]
+Checking validation version... (202201261503) [OKAY]
+Checking OS and version... (Ubuntu Server 20.04.3 LTS (Focal Fossa)) [OKAY]
+Checking for validation images... [DEFER]
+Expanding pftiii_validation_images_201912181310.tar.gz... [OKAY]
 Checking for validation images... [OKAY]
 Checking validation image versions... [OKAY]
 Looking for core library... (libpftiii_nullimpl_0001.so) [OKAY]
@@ -98,61 +101,40 @@ Checking compareProprietaryTemplates() logs... [OKAY]
 Creating validation submission... (pftiii_validation_nullimpl_0001.tar.gz) [OKAY]
 
 ================================================================================
-You have successfully completed the first step in PFT III validation. Please
-sign and encrypt the file listed below, send it to pft@nist.gov, and
-await a notification.
-
- -> pftiii_validation_nullimpl_0001.tar.gz
-
-Example of signing and encrypting with GnuPG:
-gpg --output pftiii_validation_nullimpl_0001.tar.gz.asc \
-    --default-key jdoe@nullimpl.com \
-    --recipient pft@nist.gov \
-    --recipient jdoe@nullimpl.com \
-    --armor --sign --encrypt \
-    pftiii_validation_nullimpl_0001.tar.gz
-
-Additionally, be sure to include the public key of the identity that signed the
-validation package. This key must be the key whose key fingerprint was printed
-on the PFT III application.
-
-Example of extracting public key with GnuPG:
-gpg --output nullimpl_0001_pftiii_public_key.asc --armor \
-    --export jdoe@nullimpl.com
+| You have successfully completed your part of PFT III validation. Please      |
+| sign and encrypt the file listed below (run './validate encrypt' for an      |
+| example).                                                                    |
+|                                                                              |
+|                    pftiii_validation_nullimpl_0001.tar.gz                    |
+|                                                                              |
+| Please attach both pftiii_validation_nullimpl_0001.tar.gz.asc and your       |
+| public key to an email addressed to pft@nist.gov.                            |
 ================================================================================
 
 ================================================================================
-Please review the marketing and CBEFF information compiled into your library to
-make sure it is correct:
-
- -> Feature Extraction Algorithm Marketing Identifier:
-    NIST Stub Implementation Extractor 0.1
- -> Comparison Marketing Identifier:
-    NIST Stub Implementation Comparator 0.1
- -> CBEFF Feature Extraction Algorithm Product Owner:
-    0x000F
- -> CBEFF Feature Extraction Algorithm Identifier:
-    0xFFFE
- -> CBEFF Comparison Algorithm Product Owner:
-    0x000F
- -> CBEFF Comparison Algorithm Identifier:
-    0xFFFE
+| Please review the marketing and CBEFF information compiled into your         |
+| library to make sure it is correct:                                          |
+|                                                                              |
+| Feature Extraction Algorithm Marketing Identifier:                           |
+| -> NIST Stub Implementation Extractor 0.1                                    |
+|                                                                              |
+| Comparison Marketing Identifier:                                             |
+| -> NIST Stub Implementation Comparator 0.1                                   |
+|                                                                              |
+| CBEFF Feature Extraction Algorithm Product Owner:                            |
+| -> 0x000F                                                                    |
+|                                                                              |
+| CBEFF Feature Extraction Algorithm Identifier:                               |
+| -> 0xFFFE                                                                    |
+|                                                                              |
+| CBEFF Comparison Algorithm Product Owner:                                    |
+| -> 0x000F                                                                    |
+|                                                                              |
+| CBEFF Comparison Algorithm Identifier:                                       |
+| -> 0xFFFE                                                                    |
 ================================================================================
 
-================================================================================
-IMPORTANT: This script was unable to check, so please ensure that you are using
-the latest version of the PFT III validation package before submitting. Using
-the latest version of the validation package is a requirement. You are
-currently running with version 202102251554.
-
-Information:
-https://github.com/usnistgov/pft/tree/master/pftiii/validation
-Version:
-https://github.com/usnistgov/pft/tree/master/pftiii/validation/VERSION
-Download:
-https://github.com/usnistgov/pft/releases
-================================================================================
-Thu Feb 25 16:06:07 EST 2021
+Completed: 26 Jan 2022 | 20:04:57 UTC (Runtime: 20s)
 ```
 </details>
 
