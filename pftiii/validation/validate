@@ -790,7 +790,15 @@ compile()
 		msg+="of the library to ensure that modifications have not "
 		msg+="been made, since doing so may cause issues during the "
 		msg+="evaluation."
-		fail "${msg}"
+		warn "${msg}"
+
+		echo -n "Still building... "
+		rm -f "${lib_dir}/libpftiii.so"
+		if [ -e "${lib_dir}/libpftiii.so" ]; then
+			msg="This script could not overwrite your copy of "
+			msg+="libpftiii.so."
+			fail "${msg}"
+		fi
 	fi
 
 	# Catch the case of hardcoding "../lib", etc. into library by always
