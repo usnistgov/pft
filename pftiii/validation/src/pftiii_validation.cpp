@@ -302,7 +302,7 @@ PFTIII::Validation::readFile(
 		throw std::runtime_error{"Could not open " + pathName};
 
 	std::vector<std::byte> buf{};
-	buf.reserve(static_cast<decltype(buf)::size_type>(size));
+	buf.resize(static_cast<decltype(buf)::size_type>(size));
 
 	file.seekg(std::ifstream::beg);
 	file.read(reinterpret_cast<char*>(buf.data()), size);
