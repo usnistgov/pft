@@ -762,7 +762,7 @@ compile()
 
 	declare -A md5s
 	md5s["../libpftiii/libpftiii.cpp"]="60dd06aa5b89347f20a855df08e4c198"
-	md5s["../include/pftiii.h"]="c8e0eab6bc24e7a962c1a47a529d3d24"
+	md5s["../include/pftiii.h"]="080ebc5dca512bb429db8a6a0933edb0"
 	md5s["src/pftiii_validation.cpp"]="bf3939c6c0235f08385a65a938bf1e78"
 	md5s["src/pftiii_validation_data.h"]="11cf95f37d0ae0fe9f3adf2f0447f1ff"
 	md5s["src/pftiii_validation.h"]="9509e197a7507b64a9a942f47c4877d9"

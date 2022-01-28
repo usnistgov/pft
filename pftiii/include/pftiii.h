@@ -637,6 +637,13 @@ namespace PFTIII
 	/** API patch version number. */
 	uint16_t API_PATCH_VERSION{0};
 	#endif /* NIST_EXTERN_API_VERSION */
+
+	/*
+	 * Ensure that std::byte is exactly 8 bits, such that reinterpret_casts
+	 * may be safely used.
+	 */
+	static_assert(std::is_same_v<std::underlying_type_t<std::byte>,
+	    uint8_t>, "std::byte not represented as unsigned 8 bit type");
 }
 
 #endif /* PFTIII_H_ */
