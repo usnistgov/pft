@@ -11,7 +11,7 @@
 #include <pftiii_nullimpl.h>
 
 PFTIII::NullImplementation::NullImplementation(
-    const std::string &configurationDirectory) :
+    const std::filesystem::path &configurationDirectory) :
     PFTIII::Interface(),
     configurationDirectory{configurationDirectory}
 {
@@ -53,7 +53,7 @@ std::tuple<PFTIII::FingerImageStatus, PFTIII::CreateProprietaryTemplateResult>
 PFTIII::NullImplementation::createProprietaryTemplate(
     const FingerImage &fingerImage)
 {
-	std::vector<uint8_t> proprietaryTemplate(100, 0);
+	std::vector<std::byte> proprietaryTemplate(100, std::byte{0});
 
 	/* "Success" using local convenience method */
 	return (createSuccess(proprietaryTemplate));
@@ -84,8 +84,8 @@ PFTIII::NullImplementation::createProprietaryTemplate(
 
 std::tuple<PFTIII::CompareProprietaryTemplatesStatus, double>
 PFTIII::NullImplementation::compareProprietaryTemplates(
-    const std::vector<uint8_t> &probeTemplate,
-    const std::vector<uint8_t> &referenceTemplate)
+    const std::vector<std::byte> &probeTemplate,
+    const std::vector<std::byte> &referenceTemplate)
 {
 	/* "Success" using local convenience method */
 	return (compareSuccess(100));
@@ -104,7 +104,7 @@ PFTIII::NullImplementation::compareProprietaryTemplates(
 
 std::shared_ptr<PFTIII::Interface>
 PFTIII::Interface::getImplementation(
-    const std::string &configurationDirectory)
+    const std::filesystem::path &configurationDirectory)
 {
 	return (std::make_shared<PFTIII::NullImplementation>(
 	    configurationDirectory));
@@ -120,7 +120,7 @@ PFTIII::Interface::getImplementation(
 
 std::tuple<PFTIII::FingerImageStatus, PFTIII::CreateProprietaryTemplateResult>
 PFTIII::NullImplementation::createSuccess(
-    const std::vector<uint8_t> &proprietaryTemplate,
+    const std::vector<std::byte> &proprietaryTemplate,
     const std::string &message)
 {
 	FingerImageStatus status{};
@@ -153,7 +153,7 @@ PFTIII::NullImplementation::createUnsupported(
 
 	CreateProprietaryTemplateResult result{};
 	result.result = Result::Failure;
-	result.proprietaryTemplate = std::vector<uint8_t>();
+	result.proprietaryTemplate = std::vector<std::byte>();
 	result.message = "";
 
 	return (std::make_tuple(status, result));
@@ -169,7 +169,7 @@ PFTIII::NullImplementation::createFailure(
 
 	CreateProprietaryTemplateResult result{};
 	result.result = Result::Failure;
-	result.proprietaryTemplate = std::vector<uint8_t>();
+	result.proprietaryTemplate = std::vector<std::byte>();
 	result.message = message;
 
 	return (std::make_tuple(status, result));

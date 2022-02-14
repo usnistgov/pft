@@ -30,16 +30,16 @@ namespace PFTIII
 
 		std::tuple<CompareProprietaryTemplatesStatus, double>
 		compareProprietaryTemplates(
-		    const std::vector<uint8_t> &probeTemplate,
-		    const std::vector<uint8_t> &referenceTemplate)
+		    const std::vector<std::byte> &probeTemplate,
+		    const std::vector<std::byte> &referenceTemplate)
 		    override;
 
 		NullImplementation(
-		    const std::string &configurationDirectory = "");
+		    const std::filesystem::path &configurationDirectory = "");
 		~NullImplementation() = default;
 
 	private:
-		const std::string configurationDirectory{};
+		const std::filesystem::path configurationDirectory{};
 
 		/*
 		 * These are some local convenience methods that you may copy
@@ -61,7 +61,7 @@ namespace PFTIII
 		static
 		std::tuple<FingerImageStatus, CreateProprietaryTemplateResult>
 		createSuccess(
-		    const std::vector<uint8_t> &proprietaryTemplate,
+		    const std::vector<std::byte> &proprietaryTemplate,
 		    const std::string &message = "");
 
 		/**

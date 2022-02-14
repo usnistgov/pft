@@ -39,17 +39,18 @@ Requirements
    - Because organizations must agree to NIST Special Database terms and
      conditions, the required fingerprint imagery is not included in this GitHub
      repository. Request and download the data from our [requests website].
- * CentOS 8.2.2004
-   - Even if this is not the latest version of CentOS, it will be the version
-     used to run the evaluation. Direct downloads are available from the [CentOS
-     Vault] ([🇺🇸 USA], [🇪🇺 Europe]). We will be using the base CentOS
-     Linux distribution (frozen) **not CentOS Stream**.
-   - We **highly suggest** installing this version of CentOS Linux directly from
-     the ISO without a network connection so that versions of all packages
-     are consistent with our operating environment.
-   - The [validate] script  requires these base CentOS packages:
-      - `binutils`, `centos-release`, `coreutils`, `curl`, `file`, `gawk`,
-        `gcc-c++`, `grep`, `iputils`, `make`, `sed`, `which`, `yum`
+ * Ubuntu Server 20.04.03 LTS
+   - Even if this is not the latest version of Ubuntu Server, it will be the
+     version used to run the evaluation. Direct downloads are available from the
+     [Ubuntu Mirrors] ([🇺🇸 USA], [🇪🇺 Europe]) and directly from the [NIST
+     Image Group].
+   - We **highly suggest** matching the exact versions of packages installed in
+     our environment. A link to the names and versions of these pacakages is
+     available.
+   - The [validate] script  requires these base Ubuntu Server packages:
+      - `base-files`, `binutils`, `cmake`, `coreutils`, `curl`, `dpkg`, `file`,
+        `findutils`, `g++`, `gawk`, `grep`, `libc-bin`, `make`, `sed`, `tar`,
+        `xz-utils`
 
 It is **highly suggested** that you make sure your submission will build and run
 as expected on environments as close as possible to the NIST evaluation
@@ -77,12 +78,15 @@ $ cp /path/to/libpftiii_nullimpl_0001.so lib/
 $ cp /path/to/config.txt config/
 $ cp /path/to/pftiii_validation_images_*.tar.gz .
 $ ./validate
-PFT III Validation (202102251554) -- Thu Feb 25 16:05:49 EST 2021
+================================================================================
+|    PFT III Validation | Version 202201261503 | 26 Jan 2022 | 20:04:37 UTC    |
 ================================================================================
 Checking for required packages... [OKAY]
 Checking for previous validation attempts... [OKAY]
-Checking validation version... (no Internet connection) [SKIP]
-Checking OS and version... (CentOS 8.2.2004) [OKAY]
+Checking validation version... (202201261503) [OKAY]
+Checking OS and version... (Ubuntu Server 20.04.3 LTS (Focal Fossa)) [OKAY]
+Checking for validation images... [DEFER]
+Expanding pftiii_validation_images_201912181310.tar.gz... [OKAY]
 Checking for validation images... [OKAY]
 Checking validation image versions... [OKAY]
 Looking for core library... (libpftiii_nullimpl_0001.so) [OKAY]
@@ -97,61 +101,40 @@ Checking compareProprietaryTemplates() logs... [OKAY]
 Creating validation submission... (pftiii_validation_nullimpl_0001.tar.gz) [OKAY]
 
 ================================================================================
-You have successfully completed the first step in PFT III validation. Please
-sign and encrypt the file listed below, send it to pft@nist.gov, and
-await a notification.
-
- -> pftiii_validation_nullimpl_0001.tar.gz
-
-Example of signing and encrypting with GnuPG:
-gpg --output pftiii_validation_nullimpl_0001.tar.gz.asc \
-    --default-key jdoe@nullimpl.com \
-    --recipient pft@nist.gov \
-    --recipient jdoe@nullimpl.com \
-    --armor --sign --encrypt \
-    pftiii_validation_nullimpl_0001.tar.gz
-
-Additionally, be sure to include the public key of the identity that signed the
-validation package. This key must be the key whose key fingerprint was printed
-on the PFT III application.
-
-Example of extracting public key with GnuPG:
-gpg --output nullimpl_0001_pftiii_public_key.asc --armor \
-    --export jdoe@nullimpl.com
+| You have successfully completed your part of PFT III validation. Please      |
+| sign and encrypt the file listed below (run './validate encrypt' for an      |
+| example).                                                                    |
+|                                                                              |
+|                    pftiii_validation_nullimpl_0001.tar.gz                    |
+|                                                                              |
+| Please attach both pftiii_validation_nullimpl_0001.tar.gz.asc and your       |
+| public key to an email addressed to pft@nist.gov.                            |
 ================================================================================
 
 ================================================================================
-Please review the marketing and CBEFF information compiled into your library to
-make sure it is correct:
-
- -> Feature Extraction Algorithm Marketing Identifier:
-    NIST Stub Implementation Extractor 0.1
- -> Comparison Marketing Identifier:
-    NIST Stub Implementation Comparator 0.1
- -> CBEFF Feature Extraction Algorithm Product Owner:
-    0x000F
- -> CBEFF Feature Extraction Algorithm Identifier:
-    0xFFFE
- -> CBEFF Comparison Algorithm Product Owner:
-    0x000F
- -> CBEFF Comparison Algorithm Identifier:
-    0xFFFE
+| Please review the marketing and CBEFF information compiled into your         |
+| library to make sure it is correct:                                          |
+|                                                                              |
+| Feature Extraction Algorithm Marketing Identifier:                           |
+| -> NIST Stub Implementation Extractor 0.1                                    |
+|                                                                              |
+| Comparison Marketing Identifier:                                             |
+| -> NIST Stub Implementation Comparator 0.1                                   |
+|                                                                              |
+| CBEFF Feature Extraction Algorithm Product Owner:                            |
+| -> 0x000F                                                                    |
+|                                                                              |
+| CBEFF Feature Extraction Algorithm Identifier:                               |
+| -> 0xFFFE                                                                    |
+|                                                                              |
+| CBEFF Comparison Algorithm Product Owner:                                    |
+| -> 0x000F                                                                    |
+|                                                                              |
+| CBEFF Comparison Algorithm Identifier:                                       |
+| -> 0xFFFE                                                                    |
 ================================================================================
 
-================================================================================
-IMPORTANT: This script was unable to check, so please ensure that you are using
-the latest version of the PFT III validation package before submitting. Using
-the latest version of the validation package is a requirement. You are
-currently running with version 202102251554.
-
-Information:
-https://github.com/usnistgov/pft/tree/master/pftiii/validation
-Version:
-https://github.com/usnistgov/pft/tree/master/pftiii/validation/VERSION
-Download:
-https://github.com/usnistgov/pft/releases
-================================================================================
-Thu Feb 25 16:06:07 EST 2021
+Completed: 26 Jan 2022 | 20:04:57 UTC (Runtime: 20s)
 ```
 </details>
 
@@ -208,8 +191,7 @@ to the [NIST PFT team].
 
 The PFT team sends updates about the PFT tests to their mailing list. Enter your
 e-mail address on the [mailing list site], or send a blank e-mail to
-PFT+subscribe@list.nist.gov to be automatically subscribed. Posts to the list
-are mirrored on an [RSS feed].
+PFT+subscribe@list.nist.gov to be automatically subscribed.
 
 License
 -------
@@ -217,9 +199,10 @@ The items in this repository are released in the public domain. See the
 [LICENSE] for details.
 
 [API]: https://pages.nist.gov/pft/doc/pftiii/api/
-[CentOS Vault]: https://vault.centos.org/
-[🇺🇸 USA]: https://mirrors.oit.uci.edu/centos/8.2.2004/isos/x86_64/CentOS-8.2.2004-x86_64-dvd1.iso
-[🇪🇺 Europe]: http://mirror.nsc.liu.se/centos-store/8.2.2004/isos/x86_64/CentOS-8.2.2004-x86_64-dvd1.iso
+[Ubuntu Mirrors]: https://launchpad.net/ubuntu/+cdmirrors
+[🇺🇸 USA]: https://mirror.math.princeton.edu/pub/ubuntu-iso/focal/ubuntu-20.04.3-live-server-amd64.iso
+[🇪🇺 Europe]: http://mirror.init7.net/ubuntu-releases/focal/ubuntu-20.04.3-live-server-amd64.iso
+[NIST Image Group]: https://nigos.nist.gov/evaluations/ubuntu-20.04.3-live-server-amd64.iso
 [lib/]: https://github.com/usnistgov/pft/blob/master/pftiii/validation/lib
 [../libpftiii/]: https://github.com/usnistgov/pft/blob/master/pftiii/libpftiii
 [../include/pftiii.h]: https://github.com/usnistgov/pft/blob/master/pftiii/include/pftiii.h
@@ -232,7 +215,6 @@ The items in this repository are released in the public domain. See the
 [NIST PFT team]: mailto:pft@nist.gov
 [open an issue]: https://github.com/usnistgov/pft/issues
 [mailing list site]: https://groups.google.com/a/list.nist.gov/forum/#!forum/pft/join
-[RSS feed]: https://groups.google.com/a/list.nist.gov/forum/feed/pft/msgs/rss.xml
 [LICENSE]: https://github.com/usnistgov/pft/blob/master/LICENSE.md
 [test plan]: https://pages.nist.gov/pft/doc/pftiii/testplan.pdf
 [requests website]: https://nigos.nist.gov/datasets/pftiii_validation/request

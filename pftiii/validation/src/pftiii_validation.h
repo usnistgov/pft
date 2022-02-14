@@ -201,7 +201,7 @@ namespace PFTIII
 		 * @throw runtime_error
 		 * Error reading from file.
 		 */
-		std::vector<uint8_t>
+		std::vector<std::byte>
 		readFile(
 		    const std::string &pathName);
 
@@ -285,7 +285,7 @@ namespace PFTIII
 		 */
 		void
 		writeFile(
-		    const std::vector<uint8_t> &data,
+		    const std::vector<std::byte> &data,
 		    const std::string &pathName);
 	}
 }

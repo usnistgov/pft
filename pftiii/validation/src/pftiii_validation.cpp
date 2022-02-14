@@ -21,6 +21,7 @@
 #include <fstream>
 #include <iomanip>
 #include <iterator>
+#include <limits>
 #include <sstream>
 #include <system_error>
 #include <thread>
@@ -223,7 +224,10 @@ PFTIII::Validation::parseArguments(
 			break;
 		case 'f': {	/* Number of processes */
 			try {
-				args.numProcs = std::stol(optarg);
+				auto numProcs = std::stoul(optarg);
+				if (numProcs > UINT8_MAX)
+					throw std::exception{};
+				args.numProcs = static_cast<uint8_t>(numProcs);
 			} catch (const std::exception&) {
 				throw std::invalid_argument{"Number of "
 				    "processes (-f): an error occurred when "
@@ -250,7 +254,7 @@ PFTIII::Validation::parseArguments(
 			break;
 		case 'r':	/* Random seed */
 			try {
-				args.randomSeed = std::stoll(optarg);
+				args.randomSeed = std::stoul(optarg);
 			} catch (const std::exception&) {
 				throw std::invalid_argument{"Random seed (-r): "
 				    "an error occurred when parsing \"" +
@@ -283,7 +287,7 @@ PFTIII::Validation::randomizeIndicies(
 	return (indicies);
 }
 
-std::vector<uint8_t>
+std::vector<std::byte>
 PFTIII::Validation::readFile(
     const std::string &pathName)
 {
@@ -297,12 +301,11 @@ PFTIII::Validation::readFile(
 	if (size == -1)
 		throw std::runtime_error{"Could not open " + pathName};
 
-	std::vector<uint8_t> buf{};
-	buf.reserve(size);
+	std::vector<std::byte> buf{};
+	buf.resize(static_cast<decltype(buf)::size_type>(size));
 
 	file.seekg(std::ifstream::beg);
-	buf.insert(buf.begin(), std::istream_iterator<uint8_t>(file),
-	    std::istream_iterator<uint8_t>());
+	file.read(reinterpret_cast<char*>(buf.data()), size);
 
 	return (buf);
 }
@@ -412,18 +415,28 @@ PFTIII::Validation::splitSet(
 	if (numSets == 1)
 		return {combinedSet};
 
+	using diff_t = decltype(combinedSet.begin())::difference_type;
+	if (combinedSet.size() >
+	    static_cast<uint64_t>(std::numeric_limits<diff_t>::max()))
+		return {combinedSet};
+
 	const std::vector<uint64_t>::size_type size{static_cast<
 	    std::vector<uint64_t>::size_type>(
-	    std::ceil(combinedSet.size() / static_cast<float>(numSets)))};
+	    std::ceil(static_cast<float>(combinedSet.size()) /
+	    static_cast<float>(numSets)))};
 	if (size < numSets)
 		throw std::invalid_argument("Too many sets.");
 
 	std::vector<std::vector<uint64_t>> sets{};
 	sets.reserve(numSets);
-	for (uint8_t i{0}; i < numSets; ++i)
-		sets.emplace_back(std::next(combinedSet.begin(), size * i),
-		    std::next(combinedSet.begin(), std::min(size * (i + 1),
-		    combinedSet.size())));
+	for (uint8_t i{0}; i < numSets; ++i) {
+
+		sets.emplace_back(std::next(combinedSet.begin(),
+		    static_cast<diff_t>(size * i)),
+		    std::next(combinedSet.begin(),
+		    static_cast<diff_t>(std::min(size * (i + 1u),
+		    combinedSet.size()))));
+	}
 
 	return (sets);
 }
@@ -549,7 +562,7 @@ PFTIII::Validation::waitForExit(
 
 void
 PFTIII::Validation::writeFile(
-    const std::vector<uint8_t> &data,
+    const std::vector<std::byte> &data,
     const std::string &pathName)
 {
 	std::ofstream file{pathName,
@@ -557,7 +570,10 @@ PFTIII::Validation::writeFile(
 	if (!file)
 		throw std::runtime_error{"Could not open " + pathName};
 
-	if (!file.write((char *)data.data(), data.size()))
+	if ((data.size() > static_cast<uint64_t>(
+	    std::numeric_limits<std::streamsize>::max())) ||
+	    !file.write(reinterpret_cast<const char*>(data.data()),
+	    static_cast<std::streamsize>(data.size())))
 		throw std::runtime_error("Could not write " + std::to_string(
 		    data.size()) + " bytes to " + pathName);
 }
@@ -570,10 +586,9 @@ main(
 	int rv{EXIT_FAILURE};
 
 	if (!((PFTIII::API_MAJOR_VERSION == 1) &&
-	    (PFTIII::API_MINOR_VERSION == 0) &&
-	    (PFTIII::API_PATCH_VERSION == 0))) {
+	    (PFTIII::API_MINOR_VERSION == 1))) {
 		std::cerr << "Incompatible API version encountered.\n "
-		    "- Validation: 1.0.0\n - Participant: " <<
+		    "- Validation: 1.1.*\n - Participant: " <<
 		    PFTIII::API_MAJOR_VERSION << '.' <<
 		    PFTIII::API_MINOR_VERSION << '.' <<
 		    PFTIII::API_PATCH_VERSION << '\n';

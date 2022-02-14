@@ -33,6 +33,8 @@
 #ifndef PFTIII_H_
 #define PFTIII_H_
 
+#include <cstddef>
+#include <filesystem>
 #include <memory>
 #include <string>
 #include <tuple>
@@ -116,7 +118,7 @@ namespace PFTIII
 		    const uint16_t width,
 		    const uint16_t height,
 		    const uint16_t ppi,
-		    const std::vector<uint8_t> &pixels,
+		    const std::vector<std::byte> &pixels,
 		    const Impression imp = Impression::Unknown,
 		    const FrictionRidgeCaptureTechnology frct =
 		        FrictionRidgeCaptureTechnology::Unknown,
@@ -144,7 +146,7 @@ namespace PFTIII
 		 * To pass pixels to a C-style array, invoke pixel's `data()`
 		 * method (`pixels.data()`).
 		 */
-		std::vector<uint8_t> pixels{};
+		std::vector<std::byte> pixels{};
 		/** Impression type of the depicted finger. */
 		Impression imp{Impression::Unknown};
 		/** Capture technology that created this image. */
@@ -218,7 +220,7 @@ namespace PFTIII
 		 */
 		static CreateProprietaryTemplateResult
 		success(
-		     const std::vector<uint8_t> &proprietaryTemplate,
+		     const std::vector<std::byte> &proprietaryTemplate,
 		     const std::string &message = "");
 
 		/**
@@ -238,7 +240,7 @@ namespace PFTIII
 		/** Result of extracting features and creating a template. */
 		Result result{Result::Success};
 		/** Contents of the proprietary template. */
-		std::vector<uint8_t> proprietaryTemplate{};
+		std::vector<std::byte> proprietaryTemplate{};
 		/** Explanatory message (optional). */
 		std::string message{};
 	};
@@ -568,8 +570,8 @@ namespace PFTIII
 		virtual
 		std::tuple<CompareProprietaryTemplatesStatus, double>
 		compareProprietaryTemplates(
-		    const std::vector<uint8_t> &probeTemplate,
-		    const std::vector<uint8_t> &referenceTemplate) = 0;
+		    const std::vector<std::byte> &probeTemplate,
+		    const std::vector<std::byte> &referenceTemplate) = 0;
 
 		/** Destructor. */
 		virtual ~Interface();
@@ -590,15 +592,19 @@ namespace PFTIII
 		 *
 		 * @note
 		 * A possible implementation might be:
-		 * `return (std::make_shared<Implementation>());`
+		 * `return (std::make_shared<Implementation>(
+		 * configurationDirectory));`
 		 *
 		 * @note
 		 * This method shall return in <= 10 seconds.
+		 * @note
+		 * `configurationDirectory` may be stored on a slow disk. NIST
+		 * suggests reading data into available RAM.
 		 */
 		static
 		std::shared_ptr<Interface>
 		getImplementation(
-		    const std::string &configurationDirectory);
+		    const std::filesystem::path &configurationDirectory);
 
 		/** @cond SUPPRESS_FROM_DOXYGEN */
 		/** Suppress copying polymorphic class (C.63). */
@@ -627,10 +633,17 @@ namespace PFTIII
 	/** API major version number. */
 	uint16_t API_MAJOR_VERSION{1};
 	/** API minor version number. */
-	uint16_t API_MINOR_VERSION{0};
+	uint16_t API_MINOR_VERSION{1};
 	/** API patch version number. */
 	uint16_t API_PATCH_VERSION{0};
 	#endif /* NIST_EXTERN_API_VERSION */
+
+	/*
+	 * Ensure that std::byte is exactly 8 bits, such that reinterpret_casts
+	 * may be safely used.
+	 */
+	static_assert(std::is_same_v<std::underlying_type_t<std::byte>,
+	    uint8_t>, "std::byte not represented as unsigned 8 bit type");
 }
 
 #endif /* PFTIII_H_ */

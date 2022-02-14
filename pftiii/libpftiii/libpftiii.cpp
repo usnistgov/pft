@@ -19,7 +19,7 @@ PFTIII::FingerImage::FingerImage(
     const uint16_t width,
     const uint16_t height,
     const uint16_t ppi,
-    const std::vector<uint8_t> &pixels,
+    const std::vector<std::byte> &pixels,
     const Impression imp,
     const FrictionRidgeCaptureTechnology frct,
     const FrictionRidgeGeneralizedPosition frgp) :
@@ -51,7 +51,7 @@ PFTIII::CreateProprietaryTemplateResult::failure(
 
 PFTIII::CreateProprietaryTemplateResult
 PFTIII::CreateProprietaryTemplateResult::success(
-    const std::vector<uint8_t> &proprietaryTemplate,
+    const std::vector<std::byte> &proprietaryTemplate,
     const std::string &message)
 {
 	CreateProprietaryTemplateResult cptr{};
