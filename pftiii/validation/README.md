@@ -55,7 +55,7 @@ Requirements
 It is **highly suggested** that you make sure your submission will build and run
 as expected on environments as close as possible to the NIST evaluation
 machines, in order to avoid validation delays. Timing statistics are reported
-when run on a **Intel Xeon Gold 6140** CPU, but all Intel CPU types shall be
+when run on a **Intel Xeon Gold 6254** CPU, but all Intel CPU types shall be
 supported. Use of unavailable intrinsics shall degrade gracefully.
 
 How to Run
