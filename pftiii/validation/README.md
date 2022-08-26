@@ -66,9 +66,10 @@ How to Run
     the directory containing this file, [README.md]).
  4. Execute [validate].
  5. **If successful**, sign *and* encrypt the resulting output archive in a
-    single step, and e-mail it, along with the encrypting identity's public key,
-    to pft@nist.gov. If unsuccessful, correct any errors described and try
-    again.
+    single step, and upload it, along with the encrypting identity's public key,
+    and your original signed evaluation agreement via [the PFT upload form].
+    For an example of how to use GnuPG to encrypt, run `validate encrypt`. If
+    unsuccessful, correct any errors described and try again.
 
 <details>
   <summary><em>Expand to view the output from an example run.</em></summary>
@@ -218,3 +219,4 @@ The items in this repository are released in the public domain. See the
 [LICENSE]: https://github.com/usnistgov/pft/blob/master/LICENSE.md
 [test plan]: https://pages.nist.gov/pft/doc/pftiii/testplan.pdf
 [requests website]: https://nigos.nist.gov/datasets/pftiii_validation/request
+[the PFT upload form]: https://pages.nist.gov/pft/upload

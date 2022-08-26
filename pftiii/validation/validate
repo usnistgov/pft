@@ -1251,17 +1251,9 @@ print_final_success()
 	box "${tar_file}" 80 '=' '|' 'c' 0 0
 	boxline
 
-	local file_size
-	file_size="$(du -m "${tar_file}" | cut -f 1)"
-	# Likely will be too big for email
-	if [ "${file_size}" -ge 20 ]; then
-		msg="${tar_file}.asc may be too big for NIST's email "
-		msg+="server, so please contact pft@nist.gov for an upload "
-		msg+="link for both ${tar_file}.asc and your public key."
-	else
-		msg="Please attach both ${tar_file}.asc and your public key to "
-		msg+="an email addressed to pft@nist.gov."
-	fi
+	msg="Please upload both ${tar_file}.asc and your public key via "
+	msg+="https://pages.nist.gov/pft/upload"
+
 	box "${msg}" 80 '=' '|' 'l' 0 1
 	font_reset
 
@@ -1346,9 +1338,9 @@ print_instructions()
 	echo "    a. Successful? Sign and encrypt the generated archive."
 	echo "    b. Unsuccessful? Work to resolve the listed errors, run"
 	echo "       './validate clean', and repeat these steps."
-	echo -n " 3. Email the signed and encrypted file along with your "
+	echo -n " 3. Upload the signed and encrypted file along with your "
 	echo "public key to"
-	echo "    pft@nist.gov."
+	echo "    https://pages.nist.gov/pft/upload"
 }
 
 # Print message when validation version couldn't be checked
