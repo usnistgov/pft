@@ -248,7 +248,7 @@ Min
 70
 </td>
 <td style="text-align:right;">
-248
+258
 </td>
 <td style="text-align:right;">
 70
@@ -411,7 +411,7 @@ Failures
 distribution of durations of time consumed when creating templates.
 Failures of all kinds are incorporated into these statistics, since this time would be observed by the end user of a template creation algorithm.</p>
 <p>Times are measured by running a single process on an isolated compute node
-equipped with an Intel Gold 6254 CPU.</p>
+equipped with an <a href="https://ark.intel.com/content/www/us/en/ark/products/192451/intel-xeon-gold-6254-processor-24-75m-cache-3-10-ghz.html">Intel Xeon Gold 6254</a> CPU.</p>
 
 <div class="figure" style="text-align: center"><span id="fig:fig-template-creation"></span>
 <img src="plots/innovatrics+0007_timing_enrollment-time.png" alt="Box plots of elapsed milliseconds when creating templates from a fixed sample of data from the PFT III evaluation. All times are used, even if a failure occurred. Tabular versions of this data are shown in Table 2.3." width="900" />
@@ -453,19 +453,19 @@ IARPA N2N
 Min
 </td>
 <td style="text-align:right;font-weight: bold;">
-20.4
+20.3
 </td>
 <td style="text-align:right;">
-102.4
+103.0
 </td>
 <td style="text-align:right;">
-47.8
+47.6
 </td>
 <td style="text-align:right;">
-20.4
+20.3
 </td>
 <td style="text-align:right;">
-20.6
+20.7
 </td>
 <td style="text-align:right;">
 105.3
@@ -476,42 +476,19 @@ Min
 25 %
 </td>
 <td style="text-align:right;font-weight: bold;">
-23.4
+21.7
 </td>
 <td style="text-align:right;">
-104.6
+109.6
 </td>
 <td style="text-align:right;">
-51.2
-</td>
-<td style="text-align:right;">
-23.2
+50.0
 </td>
 <td style="text-align:right;">
 21.3
 </td>
 <td style="text-align:right;">
-106.7
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-Median
-</td>
-<td style="text-align:right;font-weight: bold;">
-50.1
-</td>
-<td style="text-align:right;">
-105.1
-</td>
-<td style="text-align:right;">
-58.9
-</td>
-<td style="text-align:right;">
-23.4
-</td>
-<td style="text-align:right;">
-23.1
+21.6
 </td>
 <td style="text-align:right;">
 107.2
@@ -519,25 +496,48 @@ Median
 </tr>
 <tr>
 <td style="text-align:left;">
+Median
+</td>
+<td style="text-align:right;font-weight: bold;">
+49.8
+</td>
+<td style="text-align:right;">
+121.3
+</td>
+<td style="text-align:right;">
+50.5
+</td>
+<td style="text-align:right;">
+21.4
+</td>
+<td style="text-align:right;">
+22.0
+</td>
+<td style="text-align:right;">
+107.9
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
 Mean
 </td>
 <td style="text-align:right;font-weight: bold;">
-59.5
+60.4
 </td>
 <td style="text-align:right;">
-107.5
+118.7
 </td>
 <td style="text-align:right;">
-61.7
+55.9
 </td>
 <td style="text-align:right;">
-23.2
+21.5
 </td>
 <td style="text-align:right;">
-29.1
+28.7
 </td>
 <td style="text-align:right;">
-108.7
+110.2
 </td>
 </tr>
 <tr>
@@ -545,22 +545,22 @@ Mean
 75 %
 </td>
 <td style="text-align:right;font-weight: bold;">
-104.6
+107.1
 </td>
 <td style="text-align:right;">
-105.9
+126.9
 </td>
 <td style="text-align:right;">
-70.5
+66.5
 </td>
 <td style="text-align:right;">
-23.6
+21.6
 </td>
 <td style="text-align:right;">
-42.8
+40.1
 </td>
 <td style="text-align:right;">
-108.2
+109.5
 </td>
 </tr>
 <tr>
@@ -568,22 +568,22 @@ Mean
 Max
 </td>
 <td style="text-align:right;font-weight: bold;">
-138.1
+137.6
 </td>
 <td style="text-align:right;">
-138.1
+137.6
 </td>
 <td style="text-align:right;">
-83.4
+80.2
 </td>
 <td style="text-align:right;">
 26.9
 </td>
 <td style="text-align:right;">
-46.9
+48.7
 </td>
 <td style="text-align:right;">
-130.9
+134.8
 </td>
 </tr>
 <tr>
@@ -620,17 +620,17 @@ the distribution of durations of time consumed when comparing
 templates. Failures of any kind are incorporated into these statistics, since
 this time would be observed by the end user of a template comparison algorithm.</p>
 <p>Times are measured by running a single process on an isolated compute node
-equipped with an Intel Gold 6254 CPU.</p>
+equipped with an <a href="https://ark.intel.com/content/www/us/en/ark/products/192451/intel-xeon-gold-6254-processor-24-75m-cache-3-10-ghz.html">Intel Xeon Gold 6254</a> CPU.</p>
 
 <div class="figure" style="text-align: center"><span id="fig:fig-template-comparison"></span>
-<img src="plots/innovatrics+0007_timing_comparison-time.png" alt="Box plots of elapsed milliseconds when comparing two templates from a fixed sample of data from the PFT III evaluation. All times are used, even if a failure occurred.  Tabular versions of this data are shown in Table 2.4." width="900" />
+<img src="plots/innovatrics+0007_timing_comparison-time.png" alt="Box plots of elapsed microseconds when comparing two templates from a fixed sample of data from the PFT III evaluation. All times are used, even if a failure occurred.  Tabular versions of this data are shown in Table 2.4." width="900" />
 <p class="caption">
-Figure 2.3: Box plots of elapsed milliseconds when comparing two templates from a fixed sample of data from the PFT III evaluation. All times are used, even if a failure occurred. Tabular versions of this data are shown in <a href="timing-sample-dataset.html#tab:tab-template-comparison">Table <a href="timing-sample-dataset.html#tab:tab-template-comparison">2.4</a></a>.
+Figure 2.3: Box plots of elapsed microseconds when comparing two templates from a fixed sample of data from the PFT III evaluation. All times are used, even if a failure occurred. Tabular versions of this data are shown in <a href="timing-sample-dataset.html#tab:tab-template-comparison">Table <a href="timing-sample-dataset.html#tab:tab-template-comparison">2.4</a></a>.
 </p>
 </div>
 <table class="table table-striped table-hover" style="margin-left: auto; margin-right: auto;">
 <caption>
-<span id="tab:tab-template-comparison">Table 2.4: </span>Elapsed milliseconds when comparing two templates from a fixed sample of data from the PFT III evaluation. The bottom row, <em>Failures</em>, shows the number of failures to compare. Failures <em>are</em> included in these statistics. Box plots of this data are shown in <a href="timing-sample-dataset.html#tab:tab-template-comparison">Figure <a href="timing-sample-dataset.html#tab:tab-template-comparison">2.4</a></a>.
+<span id="tab:tab-template-comparison">Table 2.4: </span>Elapsed microseconds when comparing two templates from a fixed sample of data from the PFT III evaluation. The bottom row, <em>Failures</em>, shows the number of failures to compare. Failures <em>are</em> included in these statistics. Box plots of this data are shown in <a href="timing-sample-dataset.html#tab:tab-template-comparison">Figure <a href="timing-sample-dataset.html#tab:tab-template-comparison">2.4</a></a>.
 </caption>
 <thead>
 <tr>
@@ -662,22 +662,22 @@ IARPA N2N
 Min
 </td>
 <td style="text-align:right;font-weight: bold;">
-0.1
+128.7
 </td>
 <td style="text-align:right;">
-1.1
+1 019.0
 </td>
 <td style="text-align:right;">
-0.5
+533.5
 </td>
 <td style="text-align:right;">
-0.2
+197.7
 </td>
 <td style="text-align:right;">
-0.1
+128.7
 </td>
 <td style="text-align:right;">
-1.3
+1 257.4
 </td>
 </tr>
 <tr>
@@ -685,22 +685,22 @@ Min
 25 %
 </td>
 <td style="text-align:right;font-weight: bold;">
-1.9
+1 948.6
 </td>
 <td style="text-align:right;">
-7.6
+7 619.0
 </td>
 <td style="text-align:right;">
-4.2
+4 148.1
 </td>
 <td style="text-align:right;">
-1.5
+1 463.0
 </td>
 <td style="text-align:right;">
-1.5
+1 471.4
 </td>
 <td style="text-align:right;">
-4.9
+4 860.1
 </td>
 </tr>
 <tr>
@@ -708,22 +708,22 @@ Min
 Median
 </td>
 <td style="text-align:right;font-weight: bold;">
-4.5
+4 442.9
 </td>
 <td style="text-align:right;">
-9.5
+9 519.9
 </td>
 <td style="text-align:right;">
-5.2
+5 170.4
 </td>
 <td style="text-align:right;">
-1.8
+1 780.2
 </td>
 <td style="text-align:right;">
-1.8
+1 781.0
 </td>
 <td style="text-align:right;">
-6.5
+6 467.0
 </td>
 </tr>
 <tr>
@@ -731,22 +731,22 @@ Median
 Mean
 </td>
 <td style="text-align:right;font-weight: bold;">
-5.3
+5 263.3
 </td>
 <td style="text-align:right;">
-9.9
+9 965.4
 </td>
 <td style="text-align:right;">
-5.4
+5 395.4
 </td>
 <td style="text-align:right;">
-1.9
+1 885.9
 </td>
 <td style="text-align:right;">
-1.9
+1 939.7
 </td>
 <td style="text-align:right;">
-7.2
+7 160.4
 </td>
 </tr>
 <tr>
@@ -754,22 +754,22 @@ Mean
 75 %
 </td>
 <td style="text-align:right;font-weight: bold;">
-7.5
+7 471.3
 </td>
 <td style="text-align:right;">
-11.6
+11 613.2
 </td>
 <td style="text-align:right;">
-6.2
+6 249.6
 </td>
 <td style="text-align:right;">
-2.2
+2 165.9
 </td>
 <td style="text-align:right;">
-2.2
+2 214.2
 </td>
 <td style="text-align:right;">
-8.4
+8 413.0
 </td>
 </tr>
 <tr>
@@ -777,22 +777,22 @@ Mean
 Max
 </td>
 <td style="text-align:right;font-weight: bold;">
-36.1
+36 179.7
 </td>
 <td style="text-align:right;">
-26.8
+28 775.4
 </td>
 <td style="text-align:right;">
-17.9
+17 314.6
 </td>
 <td style="text-align:right;">
-7.5
+8 458.0
 </td>
 <td style="text-align:right;">
-7.8
+9 757.0
 </td>
 <td style="text-align:right;">
-36.1
+36 179.7
 </td>
 </tr>
 <tr>
