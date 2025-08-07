@@ -84,7 +84,7 @@ $ ./validate
 ================================================================================
 Checking for required packages... [OKAY]
 Checking for previous validation attempts... [OKAY]
-Checking validation version... (202201261503) [OKAY]
+Checking validation version... (202508071343) [OKAY]
 Checking OS and version... (Ubuntu Server 24.04.3 LTS (Noble Numbat)) [OKAY]
 Checking for validation images... [DEFER]
 Expanding pftiii_validation_images_201912181310.tar.gz... [OKAY]
