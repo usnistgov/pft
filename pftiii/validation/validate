@@ -33,6 +33,8 @@ validation_dl_url="https://github.com/usnistgov/pft/releases"
 # URL where the validation imagery is requested
 validation_image_request_url="https://nigos.nist.gov/datasets/"
 validation_image_request_url+="pftiii_validation/request"
+# Branch on GitHub where links should point
+git_branch="ubuntu24"
 
 # Directory containing validation materials
 wd="$(cd "$(dirname "${0}")" && pwd)"
@@ -505,7 +507,7 @@ check_validation_version()
 {
 	# URL with the most recent version number of the validation package
 	local version_url="https://raw.githubusercontent.com/usnistgov/pft/"
-	local version_url+="master/pftiii/validation/VERSION"
+	local version_url+="${git_branch}/pftiii/validation/VERSION"
 	# Confirm validation package version, if possible
 	local checked=0
 
@@ -1430,12 +1432,12 @@ print_instructions()
 print_couldnt_check_version()
 {
 	# URL where information about the validation package can be found
-	local info_url="https://github.com/usnistgov/pft/tree/master/pftiii/"
-	info_url+="validation"
+	local info_url="https://github.com/usnistgov/pft/tree/${git_branch}/"
+	info_url+="pftiii/validation"
 
 	# URL where the version of the validation driver can be found
-	local vers_url="https://github.com/usnistgov/pft/tree/master/pftiii/"
-	vers_url+="validation/VERSION"
+	local vers_url="https://github.com/usnistgov/pft/tree/${git_branch}/"
+	vers_url+="pftiii/validation/VERSION"
 
 	local msg="IMPORTANT: This script was unable to check, so please "
 	msg+="ensure that you are using the latest version of the PFT III "
