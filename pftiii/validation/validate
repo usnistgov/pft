@@ -783,6 +783,14 @@ compile()
 	done
 	echo >> "${log}"
 
+	if [ -n "${LD_LIBRARY_PATH}" ]; then
+		local msg="You appear to have set the variable "
+		msg+="LD_LIBRARY_PATH. This is something that you should not "
+		msg+="do. Instead, ensure the RUNPATH of your core library is "
+		msg+="set to \$ORIGIN."
+		fail "${msg}"
+	fi
+
 	if [ -e "${lib_dir}"/libpftiii.so ]; then
 		local msg="The library 'libpftiii.so' is in the directory "
 		msg+="$(rp "${lib_dir}"). This script will build its own copy "
@@ -943,6 +951,28 @@ compile()
 			msg+="will be ${core_lib}."
 
 			warn "${msg}"
+			echo -n "Still building... "
+		fi
+
+		# Does it look like we're finding libraries elsewhere?
+		if grep -q -v -e "=> /lib/x86_64-linux-gnu/" \
+		    -e "/ld-linux-x86-64.so" -e "linux-vdso.so.1 " \
+		    -e "=> /tmp/pftiii_libs." < \
+		    <(ldd "${binary}"); then
+			local msg="You may have required non-system libraries "
+			msg+="that are being found in a location other than "
+			msg+="the lib directory. Review the filtered "
+			msg+="'ldd' output below for more information (please "
+			msg+="report any false positives):"
+			warn "${msg}"
+
+			ldd "${binary}" | grep -v \
+			    -e "=> /lib/x86_64-linux-gnu/" -e " /lib64/" \
+			    -e "/ld-linux-x86-64.so" -e "linux-vdso.so.1 " \
+			    -e "=> /tmp/pftiii_libs."
+
+			echo
+
 			echo -n "Still building... "
 		fi
 	fi
