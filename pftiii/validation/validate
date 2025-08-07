@@ -755,33 +755,27 @@ compile()
 
 	local log="${output_dir}/compile.log"
 
-	declare -A md5s
-	md5s["../libpftiii/libpftiii.cpp"]="60dd06aa5b89347f20a855df08e4c198"
-	md5s["../include/pftiii.h"]="080ebc5dca512bb429db8a6a0933edb0"
-	md5s["src/pftiii_validation.cpp"]="bf3939c6c0235f08385a65a938bf1e78"
-	md5s["src/pftiii_validation_data.h"]="11cf95f37d0ae0fe9f3adf2f0447f1ff"
-	md5s["src/pftiii_validation.h"]="9509e197a7507b64a9a942f47c4877d9"
-	md5s["src/pftiii_validation_utils.h"]="ec7cab3840a7c7ae97ee0ee19fe3fb45"
+	# cksum -a sha256 "../libpftiii/libpftiii.cpp" \
+	#    "../include/pftiii.h" "src/CMakeLists.txt" \
+	#    "src/pftiii_validation.cpp" \
+	#    "src/pftiii_validation_data.h" \
+	#    "src/pftiii_validation.h" \
+	#    "src/pftiii_validation_utils.h" \
+	#    "validate" > \
+	#    CHECKSUMS
 
 	# Check checksums
-	local expected
-	local actual
 	echo "Source checksums:" >> "${log}"
-	for f in "${!md5s[@]}"; do
-		expected="${md5s[${f}]}"
-		actual=$(md5sum "${wd}/${f}" | cut -f 1 -d ' ')
-		if [ "${expected}" != "${actual}" ]; then
-			local bf
-			bf="$(basename "${f}")"
-			local msg="Your copy of ${bf} appears to be modified. "
-			msg+="Please restore the original copy. Making changes "
-			msg+="will almost certainly cause errors."
-			fail "${msg}"
-		fi
-
-		echo "${actual} ${f}" >> "${log}"
-	done
-	echo >> "${log}"
+	if ! cksum --strict --check "${wd}/CHECKSUMS" >> "${log}"; then
+		local msg="One or more validation source files appears to have "
+		msg+="been modified. Refer to \"${wd}/CHECKSUMS\"."
+		fail "${msg}"
+	fi
+	{
+		echo
+		cksum -a sha256 "${wd}/validate"
+		echo
+	} >> "${log}"
 
 	if [ -n "${LD_LIBRARY_PATH}" ]; then
 		local msg="You appear to have set the variable "
