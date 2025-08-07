@@ -39,7 +39,7 @@ Requirements
    - Because organizations must agree to NIST Special Database terms and
      conditions, the required fingerprint imagery is not included in this GitHub
      repository. Request and download the data from our [requests website].
- * Ubuntu Server 20.04.03 LTS
+ * Ubuntu Server 24.04.3 LTS
    - Even if this is not the latest version of Ubuntu Server, it will be the
      version used to run the evaluation. Direct downloads are available from the
      [Ubuntu Mirrors] ([🇺🇸 USA], [🇪🇺 Europe]) and directly from the [NIST
@@ -80,12 +80,12 @@ $ cp /path/to/config.txt config/
 $ cp /path/to/pftiii_validation_images_*.tar.gz .
 $ ./validate
 ================================================================================
-|    PFT III Validation | Version 202201261503 | 26 Jan 2022 | 20:04:37 UTC    |
+|    PFT III Validation | Version 202508071238 | 07 Aug 2025 | 12:39:38 EDT    |
 ================================================================================
 Checking for required packages... [OKAY]
 Checking for previous validation attempts... [OKAY]
 Checking validation version... (202201261503) [OKAY]
-Checking OS and version... (Ubuntu Server 20.04.3 LTS (Focal Fossa)) [OKAY]
+Checking OS and version... (Ubuntu Server 24.04.3 LTS (Noble Numbat)) [OKAY]
 Checking for validation images... [DEFER]
 Expanding pftiii_validation_images_201912181310.tar.gz... [OKAY]
 Checking for validation images... [OKAY]
@@ -106,10 +106,10 @@ Creating validation submission... (pftiii_validation_nullimpl_0001.tar.gz) [OKAY
 | sign and encrypt the file listed below (run './validate encrypt' for an      |
 | example).                                                                    |
 |                                                                              |
-|                    pftiii_validation_nullimpl_0001.tar.gz                    |
+|                    pftiii_validation_nullimpl_0001.tar.xz                    |
 |                                                                              |
-| Please attach both pftiii_validation_nullimpl_0001.tar.gz.asc and your       |
-| public key to an email addressed to pft@nist.gov.                            |
+| Please upload both pftiii_validation_nullimpl_0001.tar.xz.asc and your       |
+| public key via https://pages.nist.gov/pft/upload                             |
 ================================================================================
 
 ================================================================================
@@ -135,7 +135,7 @@ Creating validation submission... (pftiii_validation_nullimpl_0001.tar.gz) [OKAY
 | -> 0xFFFE                                                                    |
 ================================================================================
 
-Completed: 26 Jan 2022 | 20:04:57 UTC (Runtime: 20s)
+Completed: 07 Aug 2025 | 12:39:44 EDT (Runtime: 6s)
 ```
 </details>
 
@@ -201,9 +201,9 @@ The items in this repository are released in the public domain. See the
 
 [API]: https://pages.nist.gov/pft/doc/pftiii/api/
 [Ubuntu Mirrors]: https://launchpad.net/ubuntu/+cdmirrors
-[🇺🇸 USA]: https://mirror.math.princeton.edu/pub/ubuntu-iso/focal/ubuntu-20.04.3-live-server-amd64.iso
-[🇪🇺 Europe]: http://mirror.init7.net/ubuntu-releases/focal/ubuntu-20.04.3-live-server-amd64.iso
-[NIST Image Group]: https://nigos.nist.gov/evaluations/ubuntu-20.04.3-live-server-amd64.iso
+[🇺🇸 USA]: https://mirror.math.princeton.edu/pub/ubuntu-iso/noble/ubuntu-24.04.3-live-server-amd64.iso
+[🇪🇺 Europe]: http://mirror.init7.net/ubuntu-releases/noble/ubuntu-24.04.3-live-server-amd64.iso
+[NIST Image Group]: https://nigos.nist.gov/evaluations/ubuntu-24.04.3-live-server-amd64.iso
 [lib/]: https://github.com/usnistgov/pft/blob/master/pftiii/validation/lib
 [../libpftiii/]: https://github.com/usnistgov/pft/blob/master/pftiii/libpftiii
 [../include/pftiii.h]: https://github.com/usnistgov/pft/blob/master/pftiii/include/pftiii.h
