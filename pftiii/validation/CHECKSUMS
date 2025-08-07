@@ -5,4 +5,4 @@ SHA256 (src/pftiii_validation.cpp) = 87521f470924a6ae1ab44d3dcc941adad2e0d5341e9
 SHA256 (src/pftiii_validation_data.h) = bb1487a7c197c3284eca024b8863edf52d1d00a1321f0678898dba743a25bf5f
 SHA256 (src/pftiii_validation.h) = 825739e6c4e943a78bc7a2a6be7f300ee63b393d3f6d2e22e20657296361f269
 SHA256 (src/pftiii_validation_utils.h) = 2686551189affc9d893f18f97cc51081d1fc40377758f0d2a8db5e9577e47d5a
-SHA256 (validate) = f8ab588f676070e36205b7beb76527cc84bb24ef047a77c6b91b0aa7b7ccbb9f
+SHA256 (validate) = 7d465ebab1458a4f686b6efb644edf413908a4e655033cc0665e502f7b75554d
