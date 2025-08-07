@@ -80,7 +80,7 @@ $ cp /path/to/config.txt config/
 $ cp /path/to/pftiii_validation_images_*.tar.gz .
 $ ./validate
 ================================================================================
-|    PFT III Validation | Version 202508071238 | 07 Aug 2025 | 12:39:38 EDT    |
+|    PFT III Validation | Version 202508071343 | 07 Aug 2025 | 12:39:38 EDT    |
 ================================================================================
 Checking for required packages... [OKAY]
 Checking for previous validation attempts... [OKAY]
