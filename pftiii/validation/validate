@@ -34,7 +34,7 @@ validation_dl_url="https://github.com/usnistgov/pft/releases"
 validation_image_request_url="https://nigos.nist.gov/datasets/"
 validation_image_request_url+="pftiii_validation/request"
 # Branch on GitHub where links should point
-git_branch="ubuntu24"
+git_branch="master"
 
 # Directory containing validation materials
 wd="$(cd "$(dirname "${0}")" && pwd)"
