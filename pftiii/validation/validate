@@ -33,6 +33,8 @@ validation_dl_url="https://github.com/usnistgov/pft/releases"
 # URL where the validation imagery is requested
 validation_image_request_url="https://nigos.nist.gov/datasets/"
 validation_image_request_url+="pftiii_validation/request"
+# Branch on GitHub where links should point
+git_branch="ubuntu24"
 
 # Directory containing validation materials
 wd="$(cd "$(dirname "${0}")" && pwd)"
@@ -224,7 +226,7 @@ print_footer()
 	font_dim
 	echo -n "Completed: $(get_date)"
 	if [ "${start_sec}" != "" ]; then
-		local duration=$(( ("$(date +%s)" - start_sec) ))
+		local duration=$(( "$(date +%s)" - start_sec ))
 		echo " (Runtime: ${duration}s)"
 	else
 		echo
@@ -388,7 +390,6 @@ check_for_images()
 				echo -n "Expanding $(basename "${i}")... "
 				if ! tar xf "${i}" > /dev/null 2>&1; then
 					fail "Failed to expand ${i}"
-					return
 				else
 					okay
 					return
@@ -506,7 +507,7 @@ check_validation_version()
 {
 	# URL with the most recent version number of the validation package
 	local version_url="https://raw.githubusercontent.com/usnistgov/pft/"
-	local version_url+="master/pftiii/validation/VERSION"
+	local version_url+="${git_branch}/pftiii/validation/VERSION"
 	# Confirm validation package version, if possible
 	local checked=0
 
@@ -551,7 +552,7 @@ check_validation_version()
 # Check that the version of Ubuntu is the correct version.
 check_os()
 {
-	local expected="20.04.3 LTS (Focal Fossa)"
+	local expected="24.04.3 LTS (Noble Numbat)"
 	echo -n "Checking OS and version... "
 	if [ ! -e /etc/os-release ]; then
 		local msg="You do not appear to be using the appropriate "
@@ -599,7 +600,6 @@ get_core_library_name()
 		local msg="Library directory not found. Create it and place "
 		msg+="the core library inside."
 		fail "${msg}" "" "The library directory is:" "${lib_dir}"
-		return 1
 	fi
 
 	local core_lib=""
@@ -608,7 +608,6 @@ get_core_library_name()
 	    -regex "${lib_dir}/${lib_regex}" -printf "%P\n" | wc -l)
 	if [ "${count}" != "1" ]; then
 		fail "More than one core library found in ${lib_dir}"
-		return 1
 	fi
 
 	local core_lib
@@ -618,7 +617,6 @@ get_core_library_name()
 		local msg="No core library found in the library directory. "
 		msg+="Please review the PFT III library naming conventions."
 		fail "${msg}" "" "The library directory is:" "${lib_dir}"
-		return 1
 	fi
 
 	echo "${core_lib}"
@@ -666,7 +664,6 @@ check_library()
 			msg+="naming conventions."
                 	fail "${msg}" "" "The library directory is:" \
 			    "${lib_dir}"
-			return 1
 		fi
 
 		return 1
@@ -760,33 +757,35 @@ compile()
 
 	local log="${output_dir}/compile.log"
 
-	declare -A md5s
-	md5s["../libpftiii/libpftiii.cpp"]="60dd06aa5b89347f20a855df08e4c198"
-	md5s["../include/pftiii.h"]="080ebc5dca512bb429db8a6a0933edb0"
-	md5s["src/pftiii_validation.cpp"]="bf3939c6c0235f08385a65a938bf1e78"
-	md5s["src/pftiii_validation_data.h"]="11cf95f37d0ae0fe9f3adf2f0447f1ff"
-	md5s["src/pftiii_validation.h"]="9509e197a7507b64a9a942f47c4877d9"
-	md5s["src/pftiii_validation_utils.h"]="ec7cab3840a7c7ae97ee0ee19fe3fb45"
+	# cksum -a sha256 "../libpftiii/libpftiii.cpp" \
+	#    "../include/pftiii.h" "src/CMakeLists.txt" \
+	#    "src/pftiii_validation.cpp" \
+	#    "src/pftiii_validation_data.h" \
+	#    "src/pftiii_validation.h" \
+	#    "src/pftiii_validation_utils.h" \
+	#    "validate" > \
+	#    CHECKSUMS
 
 	# Check checksums
-	local expected
-	local actual
 	echo "Source checksums:" >> "${log}"
-	for f in "${!md5s[@]}"; do
-		expected="${md5s[${f}]}"
-		actual=$(md5sum "${wd}/${f}" | cut -f 1 -d ' ')
-		if [ "${expected}" != "${actual}" ]; then
-			local bf
-			bf="$(basename "${f}")"
-			local msg="Your copy of ${bf} appears to be modified. "
-			msg+="Please restore the original copy. Making changes "
-			msg+="will almost certainly cause errors."
-			fail "${msg}"
-		fi
+	if ! cksum --strict --check "${wd}/CHECKSUMS" >> "${log}"; then
+		local msg="One or more validation source files appears to have "
+		msg+="been modified. Refer to \"${wd}/CHECKSUMS\"."
+		fail "${msg}"
+	fi
+	{
+		echo
+		cksum -a sha256 "${wd}/validate"
+		echo
+	} >> "${log}"
 
-		echo "${actual} ${f}" >> "${log}"
-	done
-	echo >> "${log}"
+	if [ -n "${LD_LIBRARY_PATH}" ]; then
+		local msg="You appear to have set the variable "
+		msg+="LD_LIBRARY_PATH. This is something that you should not "
+		msg+="do. Instead, ensure the RUNPATH of your core library is "
+		msg+="set to \$ORIGIN."
+		fail "${msg}"
+	fi
 
 	if [ -e "${lib_dir}"/libpftiii.so ]; then
 		local msg="The library 'libpftiii.so' is in the directory "
@@ -891,9 +890,54 @@ compile()
 	local num_libs
 	num_libs="$(find "${lib_dir}" -name "lib*" -type f | wc -l)"
 	if [ "${num_libs}" -gt 2 ]; then
-		if ! readelf -d "${lib_dir}/${core_lib}" | \
-		    grep RUNPATH | grep "\$ORIGIN" > /dev/null
-		then
+		# RUNPATH preferred over RPATH
+		local uses_rpath=0
+		if readelf -d "${lib_dir}/${core_lib}" | grep -q RPATH; then
+			uses_rpath=1
+		fi
+		if [ "${uses_rpath}" == "1" ]; then
+			local msg="You are setting RPATH, but RUNPATH is "
+			msg+="preferred for new development. Please consider "
+			msg+="setting RUNPATH instead of RPATH."
+
+			warn "${msg}"
+			echo -n "Still building... "
+		fi
+
+		# Check for $ORIGIN in both RPATH and RUNPATH
+		local origin_in_rpath=0
+		if [ "${uses_rpath}" == "1" ]; then
+			if readelf -d "${lib_dir}/${core_lib}" | \
+			    grep RPATH | grep -q "\$ORIGIN"; then
+				for p in $(readelf -d "${lib_dir}/${core_lib}" \
+				    | grep RUNPATH | grep "\$ORIGIN" | \
+				    cut -f 2 -d '[' | tr -d ']' | tr ':' ' ');
+				    do
+					if [ "${p}" == "\$ORIGIN" ] || \
+					    [ "${p}" == "\$ORIGIN/" ]; then
+						origin_in_rpath=1
+						break
+					fi
+				done
+			fi
+		fi
+		local origin_in_runpath=0
+		if readelf -d "${lib_dir}/${core_lib}" | \
+		    grep RUNPATH | grep -q "\$ORIGIN"; then
+			for p in $(readelf -d "${lib_dir}/${core_lib}" \
+			    | grep RUNPATH | grep "\$ORIGIN" | \
+			    cut -f 2 -d '[' | tr -d ']' | tr ':' ' ');
+			    do
+				if [ "${p}" == "\$ORIGIN" ] || \
+				    [ "${p}" == "\$ORIGIN/" ]; then
+					origin_in_runpath=1
+					break
+				fi
+			done
+		fi
+
+		if [ "${origin_in_rpath}" == "0" ] && \
+		    [ "${origin_in_runpath}" == "0" ]; then
 			local msg="You have supplied multiple libraries, but "
 			msg+="${core_lib} does not have an RUNPATH of \$ORIGIN."
 			msg+=" This may cause runtime issues, because the "
@@ -905,6 +949,28 @@ compile()
 			warn "${msg}"
 			echo -n "Still building... "
 		fi
+
+		# Does it look like we're finding libraries elsewhere?
+		if grep -q -v -e "=> /lib/x86_64-linux-gnu/" \
+		    -e "/ld-linux-x86-64.so" -e "linux-vdso.so.1 " \
+		    -e "=> /tmp/pftiii_libs." < \
+		    <(ldd "${binary}"); then
+			local msg="You may have required non-system libraries "
+			msg+="that are being found in a location other than "
+			msg+="the lib directory. Review the filtered "
+			msg+="'ldd' output below for more information (please "
+			msg+="report any false positives):"
+			warn "${msg}"
+
+			ldd "${binary}" | grep -v \
+			    -e "=> /lib/x86_64-linux-gnu/" -e " /lib64/" \
+			    -e "/ld-linux-x86-64.so" -e "linux-vdso.so.1 " \
+			    -e "=> /tmp/pftiii_libs."
+
+			echo
+
+			echo -n "Still building... "
+		fi
 	fi
 
 	# Suspected non libraries in library directory
@@ -912,9 +978,16 @@ compile()
 	non_libs="$(find "${local_lib_dir}" \! -name "lib*" -a \! \
 	    -name README | wc -l)"
 	if [ "${non_libs}" -gt 0 ]; then
-		local msg="You have files in ${local_lib_dir} that don't "
+		local short_libdir
+		short_libdir="$(rp "${local_lib_dir}")"
+		short_libdir="$(basename "${short_libdir}" ${move_suffix})"
+		local short_configdir
+		short_configdir="$(rp "${local_config_dir}")"
+		short_configdir="$(basename "${short_configdir}" ${move_suffix})"
+
+		local msg="You have files in \"${short_libdir}\" that don't "
 		msg+="appear to be libraries. That's fine, but are you sure "
-		msg+="they don't belong in \"${local_config_dir}\" instead?"
+		msg+="they don't belong in \"${short_configdir}\" instead?"
 
 		warn "${msg}"
 		echo -n "Still building... "
@@ -950,9 +1023,26 @@ compile()
 			echo
 		done < <(find "${lib_dir}" -type f -name "lib*")
 
+		echo "CPU Info = "
+		if [ -e /proc/cpuinfo ]; then
+			cat /proc/cpuinfo
+		else
+			echo "NA"
+		fi
+
+		echo -n "MemTotal = "
+		if [ -e /proc/meminfo ]; then
+			grep "MemTotal" /proc/meminfo | cut -f2 -d ':' | xargs
+		else
+			echo "NA"
+		fi
+
 		echo "Validation properties:"
 		echo "Validation Version = ${validation_version}"
 		echo "Random Seed = $1"
+
+		echo -n "Image Version = "
+		cat "${wd}/${validation_image_dir}/VERSION"
 	} >> "${log}"
 
 	okay
@@ -971,7 +1061,6 @@ check_api_level()
 		output=$(<"${tempfile}")
 		rm "${tempfile}"
 		fail "${output}"
-		return 1
 	fi
 
 	rm "${tempfile}"
@@ -985,13 +1074,11 @@ clean_previous_attempts()
 	rm -rf "${bin_dir}"
 	if [ -d "${bin_dir}" ]; then
 		fail "Failed to remove" "${bin_dir}"
-		return 1
 	fi
 
 	rm -rf "${output_dir}"
 	if [ -d "${output_dir}" ]; then
 		fail "Failed to remove" "${output_dir}"
-		return 1
 	fi
 
 	rm -f "${lib_dir}/libpftiii.so"
@@ -1014,7 +1101,6 @@ clean_previous_attempts()
 	    "pftiii_validation_${org_name}_*" | wc -l)" != "0" ];
 	    then
 	    	fail "Failed to remove some output. Please delete it manually."
-		return 1
 	fi
 
 	okay
@@ -1228,7 +1314,6 @@ make_tarball()
 
 	# Update globals
 	output_dir="$(dirname "${output_dir}")/$(get_final_output_name)"
-	driver_output_dir="${output_dir}/driver"
 
 	okay "${tar_file}"
 }
@@ -1347,12 +1432,12 @@ print_instructions()
 print_couldnt_check_version()
 {
 	# URL where information about the validation package can be found
-	local info_url="https://github.com/usnistgov/pft/tree/master/pftiii/"
-	info_url+="validation"
+	local info_url="https://github.com/usnistgov/pft/tree/${git_branch}/"
+	info_url+="pftiii/validation"
 
 	# URL where the version of the validation driver can be found
-	local vers_url="https://github.com/usnistgov/pft/tree/master/pftiii/"
-	vers_url+="validation/VERSION"
+	local vers_url="https://github.com/usnistgov/pft/tree/${git_branch}/"
+	vers_url+="pftiii/validation/VERSION"
 
 	local msg="IMPORTANT: This script was unable to check, so please "
 	msg+="ensure that you are using the latest version of the PFT III "

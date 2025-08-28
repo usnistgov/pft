@@ -6,11 +6,11 @@
 # its use by other parties, and makes no guarantees, expressed or implied,
 # about its quality, reliability, or any other characteristic.
 
-cmake_minimum_required(VERSION 3.11)
+cmake_minimum_required(VERSION 3.28.3)
 
 project(pftiii_mineximpl)
 
-set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED True)
 
 set(MINEXIII_LIBRARY "" CACHE PATH "Path to MINEX III library dependent on this PFT III library")
